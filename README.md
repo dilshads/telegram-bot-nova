@@ -1,6 +1,6 @@
 # TelegramBot Node.js getUpdates Method
 
-**Beware that this class and documentation is not complete yet but has the functionalities listed before. More stuff and improvements are being added in time.**
+**Beware that this class and its documentation is not yet complete. The current functionality is stable and usable to run commands. More stuff and improvements are being added in time.**
 
 ## Setting Up
 In order to setup your bot. You'll need to download the .zip and extract the contents on your drive. Your Desktop will be fine.
