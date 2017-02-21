@@ -25,6 +25,7 @@ If success. Simple have your command terminal open and enter: `node "location/of
 
 ## Events
 To setup up an event. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
+
 ### onCommand
 Gets called every time the bot is issued a command and provides the following perimeters:
 * `chat` provides a **chat object** were the command occurred.
@@ -97,8 +98,10 @@ To setup up an action. You'll need to had required the bot class and declared a 
 Use this to return information about the target chat.
 
 *Required*
-* `chat_id_or_chat_username` This is the target chat id **Number** or chat username **String** for the chat object. Chat username example "@MyChannel".
-* `callback` **Function** Called after the bot fails or succeeds in obtaining the chat object. Provides a **Boolean** in the first perimeter if it was a success or not and the target **chat object** in the second perimeter if success.
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
+    * `obtainedChat` **chat object**
 
 E.g
 
@@ -109,11 +112,13 @@ E.g
 You'll notice I've named it `obtainedChat` just to avoid name collision with `chat`.
 
 ### getChatAdministrators
-Returns an array containing all the users that are "administrator" status of the group. The "creator" will be the first index 0.
+Returns an array containing all the users that are "administrator" status of the group. The "creator" will be the first index 0 while administrators are 1 and higher, if they exist.
 
 *Required*
-* `chat_id_or_chat_username` The target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `callback` **Function** Called after the bot fails or succeeds in obtaining the information. Provides a **Boolean** in the first perimeter if it was a success or not and **Array** of **user object** in the second.
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
+    * `users` **Array** containing a **user object** per chat authority.
 
 E.g
 
@@ -137,9 +142,11 @@ Example prints all the chat authorities and their status. Be aware that this fun
 Returns an **user object** and a **String** of the user's chat status. The chat status can be either: "administrator", "creator", "kicked", "left" or "member".
 
 *Required*
-* `chat_id_or_chat_username` The target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `user_id` **Integer** The ID of the target user.
-* `callback` **Function** Called after the bot fails or succeeds in obtaining the information. Provides a **Boolean** in the first perimeter if it was a success or not, an **user object** of the target user in the second and a **String** of the user's status in the third.
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
+    * `user` **user object**
+    * `status` **String**
 
 E.g
 
@@ -154,8 +161,10 @@ E.g
 Returns an **Integer** of the number of members in a chat.
 
 *Required*
-* `chat_id_or_chat_username` This is the target chat id **Number** or chat username **String**. Chat username example "@MyChannel".
-* `callback` **Function** Called after the bot fails or succeeds in obtaining the information. Provides a **Boolean** in the first perimeter if it was a success or not and an **Integer** of the member count in the second perimeter on success.
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
+    * `count` **Integer**
 
 E.g
 
@@ -169,8 +178,10 @@ E.g
 Use this to get information about a **file_id**.
 
 *Required*
-* `file_id` **String** The id of the file you want to obtain information about.
-* `callback` **Function** Called after the bot fails or succeeds in obtaining **file object**. Provides a **Boolean** in the first perimeter if it was a success or not and a bot **file object** in the second perimeter on success.
+* `file_id` **String** Target file you want to obtain information about.
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
+    * `file` **file object**
 
 E.g
 
@@ -184,7 +195,9 @@ E.g
 Use this to get information about the bot. By default the class automatically uses it when start.
 
 *Required*
-* `callback` **Function** Called after the bot fails or succeeds kicking the member. Provides a **Boolean** in the first perimeter if it was a success or not and a bot **user object** in the second perimeter on success.
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
+    * `bot` **user object**
 
 E.g
 
@@ -204,7 +217,7 @@ E.g
     console.log(bot.getUsername());
 
 ### getStartUpTime
-Use this to return an **Integer** millisecond value. This is a saved `new Date().getTime()` value from when the bot was declared without the class.
+Use this to return an **Integer** millisecond value. This is a saved `new Date().getTime()` value from when the bot was declared.
 
 *No Perimeters*
 
@@ -216,11 +229,12 @@ E.g
 Use this to remove a member from the target chat. Supergroups will require an unban unfortunately due to how the Telegram server handles this command.
 
 *Required*
-* `chat_id_or_chat_username` This is the target chat id **Number** or chat username **String** were the member is to be removed. Chat username example "@MyChannel".
-* `user_id` **Integer** The ID of the target user to kick.
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `user_id` **Integer** Target user id to kick.
 
 *Optional*
-* `callback` **Function** Called after the bot fails or succeeds kicking the member. Provides a **Boolean** in the first perimeter if it was a success or not.
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
 
 E.g
 
@@ -236,10 +250,11 @@ Note that this example should bypass the user from being actually banned from a 
 Use this to make your bot leave a chat.
 
 *Required*
-* `chat_id_or_chat_username` This is the target chat id **Number** or chat username **String** to leave. Chat username example "@MyChannel".
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
 
 *Optional*
-* `callback` **Function** Called after the bot fails or succeeds leaving the chat. Provides a **Boolean** in the first perimeter if it was a success or not.
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
 
 E.g
 
@@ -248,15 +263,16 @@ E.g
     });
 
 ### toString
-Returns "[object TelegramBot]" **String** that identifies the class.
+Returns **String** "[object TelegramBot]" that identifies the class.
 
 ### sendChatAction
 Use this to send a status notification to your bot. It's recommended only to use this if it going to perform a long action such as sending a video.
 
 *Required*
-* `chat_id_or_chat_username` This is the target chat id **Number** or chat username **String** to send the status notification to. Chat username example "@MyChannel".
-* `action` **String** Can either have: `find_location`, `record_audio`, `record_video`, `typing`, `upload_audio`, `upload_document`, `upload_photo` or `upload_video`. Sending a string not matching any of those will cause the action to fail.
-* `callback` **Function** Called after the status notification fails or succeeds sending. Provides a **Boolean** in the first perimeter if it was a success or not.
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `action` **String** Can either have: "find_location", "record_audio", "record_video", "typing", "upload_audio", "upload_document", "upload_photo" or "upload_video". Sending a string not matching any of those will cause the action to fail.
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
 
 E.g
 
@@ -266,16 +282,17 @@ E.g
 Use this to send a plain text message to a chat. Note that Telegram automatically formats links, hash tags and @username automatically.
 
 *Required Perimeters*
-* `chat_id_or_chat_username` This is the target chat id **Number** or chat username **String** to send the message to. Chat username example "@MyChannel".
-* `text` The text **String** to send in the message.
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `text` **String** Message text to send. Note that text is replaced with `html` for sendHtml and `markdown` for sendMarkdown respectively.
 
 *Optional Perimeters*
-* `settings` Provide an **Object** with extra perimeters.
+* `settings` **Object** Use for providing extra perimeters.
     * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `disable_web_page_preview` **Boolean** Default false. If a link or @username exists in the message, setting this to true will prevent it sending a thumbnail image.
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
-    * `reply_to_message_id` **Integer** Default NaN. Used for sending a reply to a message id.
-* `callback` **Function** Called after the message succeeds or fails sending the message. Provides a **Boolean** in the first perimeter if it was a success or not.
+    * `reply_to_message_id` **Integer** Use for sending a reply to a message id.
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
 
 E.g
 
@@ -293,34 +310,45 @@ E.g
         console.log("Message sent successfully: " + isSuccess);
     });
 
-Note that text is replaced with html for html and markdown for markdown respectively.
+All html and markdown tags must be closed else the message won't send.
 
 ### sendVideo
 Use this to send a video to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that video.file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
 *Required Perimeters*
-* `chat_id_or_chat_username` This is the target chat id **Number** or chat username **String** to send the message to. Chat username example "@MyChannel".
-* `video_file_id` **String** The file_id from the video object.
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `video_file_id` **String** Target video file_id.
 
 *Optional Perimeters*
-* `settings` **Object** Provide an **Object** with extra perimeters.
+* `settings` **Object** Use for providing extra perimeters.
     * `duration` **Integer**
     * `width` **Integer**
     * `height` **Integer**
     * `caption` **String** Adds a caption text message to the video. 0-200 characters max.
     * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
-* `callback` **Function** Called after the message succeeds or fails sending the message. Provides a **Boolean** in the first perimeter if it was a success or not.
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
+
+E.g
+
+    var settings = {
+        "caption": "Video from @MyChannel"
+    }
+    bot.sendVideo(chat_id, video_file_id, settings, function (isSuccess) {
+        console.log("Video sent successfully: " + isSuccess);
+    });
 
 ### unbanChatMember
 Unbans a user from a chat. The bot has to be present in the group an an administrator for this to work.
 
 *Required*
-* `chat_id_or_chat_username` This is the target group chat id **Number** or chat username **String** to send the message to. Chat username example "@MyGroup".
-* `user_id` **Integer** The ID of the target user to unban.
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `user_id` **Integer** Target user id to unban.
 
 *Optional*
-* `callback` **Function** Called after the unban succeeds or fails. Provides a **Boolean** `isSuccess` in the first perimeter if it was a success or not.
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
 
 E.g
 
