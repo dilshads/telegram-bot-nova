@@ -58,6 +58,23 @@ E.g
 
 If you're wondering what is a good use of `from` and `user` user objects. You could compare `from.id === user.id` to check if that user invited themselves or `from.id !== user.id` that someone else invited them.
 
+### onPhoto
+Gets called every time a user sends a video and the perimeters are:
+* `chat` provides a **chat object** were the video sent.
+* `from` provides an **user object** of the user who sent the video.
+* `photo` provides an **Array** of **photo object** that provides information about the photo.
+
+E.g
+
+    var photos = [];
+    bot.onPhoto = function (chat, from, photo) {
+        if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+            photos.push(photo[photo.length].file_id);
+        }
+    }
+
+This example shows how to effectively make your bot memorize photos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
+
 ### onText
 Gets called every time a user sends a message. However, this excludes supergroups if the bot isn't an administrator. The perimeters are:
 * `chat` provides a **chat object** were the message sent.
@@ -311,6 +328,28 @@ E.g
     });
 
 All html and markdown tags must be closed else the message won't send.
+
+### sendPhoto
+Use this to send an image to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that video.file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
+
+*Required Perimeters*
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `image_file_id_or_image_url` **String** Target image file_id or url.
+
+*Optional Perimeters*
+* `settings` **Object** Use for providing extra perimeters.
+    * `caption` **String** Adds a caption text message to the video. 0-200 characters max.
+    * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_to_message_id` **Integer** Use for sending a reply to a message id.
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
+
+E.g
+
+    bot.sendPhoto(chat_id, video_file_id, {}, function (isSuccess) {
+        console.log("Image sent successfully: " + isSuccess);
+    });
 
 ### sendVideo
 Use this to send a video to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that video.file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.

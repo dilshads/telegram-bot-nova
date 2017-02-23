@@ -92,6 +92,15 @@ module.exports = function (token, isDebug) {
             }
         }
 
+        // onPhoto
+        if (hasDeepProperty(content, "photo")) {
+            try {
+                self.onPhoto(content.chat, content.from, content.photo);
+            } catch (onGroupJoinError) {
+                self.onError("onPhoto", onGroupJoinError);
+            }
+        }
+
         // onGroupJoin
         if (hasDeepProperty(content, "new_chat_member")) {
             try {
@@ -346,6 +355,22 @@ module.exports = function (token, isDebug) {
         });
     };
 
+    this.sendPhoto = function (chatId, fileIdOrLink, settings, callback) {
+        var urlQuery = {
+            "chat_id": chatId,
+            "photo": fileIdOrLink
+        };
+        if (typeof settings === "object") {
+            Object.assign(urlQuery, settings);
+        }
+        web("POST", "/sendPhoto", urlQuery, function (data) {
+            if (typeof callback === "function") {
+                callback(data.ok);
+            }
+        });
+        return;
+    };
+
     this.sendHtml = function (chatId, html, settings, callback) {
         var urlQuery = {
             "chat_id": chatId,
@@ -354,7 +379,6 @@ module.exports = function (token, isDebug) {
         };
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
-            console.log(urlQuery);
         }
         web("POST", "/sendMessage", urlQuery, function (data) {
             if (typeof callback === "function") {
@@ -394,10 +418,10 @@ module.exports = function (token, isDebug) {
         });
     };
 
-    this.sendVideo = function (chatId, videoLinkOrId, settings, callback) {
+    this.sendVideo = function (chatId, fileIdOrLink, settings, callback) {
         var urlQuery = {
             "chat_id": chatId,
-            "video": videoLinkOrId
+            "video": fileIdOrLink
         };
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
