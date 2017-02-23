@@ -59,9 +59,9 @@ E.g
 If you're wondering what is a good use of `from` and `user` user objects. You could compare `from.id === user.id` to check if that user invited themselves or `from.id !== user.id` that someone else invited them.
 
 ### onPhoto
-Gets called every time a user sends a video and the perimeters are:
-* `chat` provides a **chat object** were the video sent.
-* `from` provides an **user object** of the user who sent the video.
+Gets called every time a user sends a photo and the perimeters are:
+* `chat` provides a **chat object** were the photo sent.
+* `from` provides an **user object** of the user who sent the photo.
 * `photo` provides an **Array** of **photo object** that provides information about the photo.
 
 E.g
@@ -330,7 +330,7 @@ E.g
 All html and markdown tags must be closed else the message won't send.
 
 ### sendPhoto
-Use this to send an image to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that video.file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
+Use this to send an image to a target chat. You'll need to collect the `photo[photo.length].file_id` with onPhoto. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
 *Required Perimeters*
 * `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
@@ -352,7 +352,7 @@ E.g
     });
 
 ### sendVideo
-Use this to send a video to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that video.file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
+Use this to send a video to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
 *Required Perimeters*
 * `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
