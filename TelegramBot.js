@@ -10,7 +10,26 @@ module.exports = function (token, isDebug) {
         username = "",
         updateId = 0;
 
-    var getUpdates, hasDeepProperty, loop, processEvent, web;
+    var defaultsDeep, getUpdates, hasDeepProperty, loop, processEvent, web;
+
+    defaultsDeep = function (target, defaults) {
+        var clone = JSON.parse(JSON.stringify(target));
+        function run(clone, defaults) {
+            const DEFAULTS_PROPERTY_NAMES = Object.getOwnPropertyNames(defaults);
+            DEFAULTS_PROPERTY_NAMES.forEach(function (property) {
+                if (Object.prototype.toString.call(defaults[property]) === "[object Object]") {
+                    if (!clone.hasOwnProperty(property)) {
+                        clone[property] = {};
+                    }
+                    run(clone[property], defaults[property]);
+                } else if (!clone.hasOwnProperty(property)) {
+                    clone[property] = defaults[property];
+                }
+            });
+        }
+        run(clone, defaults);
+        return clone;
+    };
 
     getUpdates = function () {
         web("GET", "/getUpdates", {"offset": updateId}, function (data) {
@@ -51,6 +70,11 @@ module.exports = function (token, isDebug) {
             content,
             split;
 
+        const defaults = {
+            caption: "",
+            from: {}
+        };
+
         updateId = result.update_id + 1;
 
         // Since result.message and result.channel_post hold the same content.
@@ -64,9 +88,16 @@ module.exports = function (token, isDebug) {
             return;
         }
 
-        // Saves users having to check if from is defind first due to channels.
-        if (!content.hasOwnProperty("from")) {
-            content.from = {};
+        // Adds default values only for those that are missing.
+        content = defaultsDeep(content, defaults);
+
+        // onAudio
+        if (content.hasOwnProperty("audio")) {
+            try {
+                self.onAudio(content.audio, content.caption, content.chat, content.from);
+            } catch (onAudioError) {
+                self.onError("onAudio", onAudioError);
+            }
         }
 
         // onCommand
@@ -93,16 +124,16 @@ module.exports = function (token, isDebug) {
         }
 
         // onPhoto
-        if (hasDeepProperty(content, "photo")) {
+        if (content.hasOwnProperty("photo")) {
             try {
-                self.onPhoto(content.chat, content.from, content.photo);
-            } catch (onGroupJoinError) {
-                self.onError("onPhoto", onGroupJoinError);
+                self.onPhoto(content.caption, content.chat, content.from, content.photo);
+            } catch (onPhotoError) {
+                self.onError("onPhoto", onPhotoError);
             }
         }
 
         // onGroupJoin
-        if (hasDeepProperty(content, "new_chat_member")) {
+        if (content.hasOwnProperty("new_chat_member")) {
             try {
                 self.onGroupJoin(content.chat, content.from, content.new_chat_member);
             } catch (onGroupJoinError) {
@@ -111,7 +142,7 @@ module.exports = function (token, isDebug) {
         }
 
         // onText
-        if (!hasDeepProperty(content, "entities") && hasDeepProperty(content, "text")) {
+        if (!content.hasOwnProperty("entities") && content.hasOwnProperty("text")) {
             try {
                 self.onText(content.chat, content.from, content.text);
             } catch (onTextError) {
@@ -120,9 +151,9 @@ module.exports = function (token, isDebug) {
         }
 
         // onVideo
-        if (hasDeepProperty(content, "video")) {
+        if (content.hasOwnProperty("video")) {
             try {
-                self.onVideo(content.chat, content.from, content.video);
+                self.onVideo(content.caption, content.chat, content.from, content.video);
             } catch (onVideoError) {
                 self.onError("onVideo", onVideoError);
             }
@@ -224,7 +255,11 @@ module.exports = function (token, isDebug) {
         };
         web("GET", "/getChatMember", urlQuery, function (data) {
             if (typeof callback === "function") {
-                callback(data.ok, data.result.user, data.result.status);
+                if (data.ok) {
+                    callback(data.ok, data.result.user, data.result.status);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };
@@ -272,12 +307,11 @@ module.exports = function (token, isDebug) {
             "limit": limit
         };
         web("GET", "/getUserProfilePhotos", urlQuery, function (data) {
-            console.log(JSON.stringify(data));
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result);
                 } else {
-                    callback(data.ok, false);
+                    callback(data.ok);
                 }
             }
         });
@@ -341,6 +375,21 @@ module.exports = function (token, isDebug) {
 
     this.onVideo = function () {
         console.log("onVideo: no handler.");
+    };
+
+    this.sendAudio = function (chatIdOrTag, fileIdOrLink, settings, callback) {
+        var urlQuery = {
+            "chat_id": chatIdOrTag,
+            "audio": fileIdOrLink
+        };
+        if (typeof settings === "object") {
+            Object.assign(urlQuery, settings);
+        }
+        web("GET", "/sendAudio", urlQuery, function (data) {
+            if (typeof callback === "function") {
+                callback(data.ok);
+            }
+        });
     };
 
     this.sendChatAction = function (chatIdOrTag, action, callback) {

@@ -6,10 +6,14 @@
 In order to setup your bot. You'll need to download the .zip and extract the contents on your drive. Your Desktop will be fine.
 
 Next you'll need to open **example.js** in your preferred code editor. Some example software are:
-* Visual Studio Code (Windows) - My preferred and current lightweight editor.
-* Notepad++ (Windows) - An editor I use to use. Is also lightweight but doesn't contain a run debug console to instantly test the code. But is handy for formatting .json.
-* Notepad (Windows) - Not recommended for coding.
-* Bluefish (Linux) - A lightweight code editor for Linux.
+
+**Windows**
+* Visual Studio Code - My preferred and current lightweight editor.
+* Notepad++ - An editor I use to use. Is also lightweight but doesn't contain a run debug console to instantly test the code. But is handy for formatting .json.
+* Notepad - Not recommended for coding.
+
+**Linux**
+* Bluefish - A lightweight code editor for Linux.
 
 ... Sorry I don't know what to suggest for Mac.
 
@@ -25,6 +29,24 @@ If success. Simple have your command terminal open and enter: `node "location/of
 
 ## Events
 To setup up an event. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
+
+### onAudio
+Gets called every time a user sends a video and the perimeters are:
+* `caption` provides a **String** of the provided caption. No caption is "".
+* `chat` provides a **chat object** were the video sent.
+* `from` provides an **user object** of the user who sent the video.
+* `video` provides a **video object** that provides information about the video. Use video.file_id to keep track of the videos seen.
+
+E.g
+
+    var audios = [];
+    bot.onAudio = function (audio, caption, chat, from) {
+        if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+            audios.push(audio.file_id);
+        }
+    }
+
+This example shows how to effectively make your bot memorize audios. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
 
 ### onCommand
 Gets called every time the bot is issued a command and provides the following perimeters:
@@ -60,6 +82,7 @@ If you're wondering what is a good use of `from` and `user` user objects. You co
 
 ### onPhoto
 Gets called every time a user sends a photo and the perimeters are:
+* `caption` provides a **String** of the provided caption. No caption is "".
 * `chat` provides a **chat object** were the photo sent.
 * `from` provides an **user object** of the user who sent the photo.
 * `photo` provides an **Array** of **photo object** that provides information about the photo.
@@ -93,6 +116,7 @@ When ever anyone says "hello bot" in any part of the message. This example will 
 
 ### onVideo
 Gets called every time a user sends a video and the perimeters are:
+* `caption` provides a **String** of the provided caption. No caption is "".
 * `chat` provides a **chat object** were the video sent.
 * `from` provides an **user object** of the user who sent the video.
 * `video` provides a **video object** that provides information about the video. Use video.file_id to keep track of the videos seen.
@@ -100,7 +124,7 @@ Gets called every time a user sends a video and the perimeters are:
 E.g
 
     var videos = [];
-    bot.onVideo = function (chat, from, video) {
+    bot.onVideo = function (caption, chat, from, video) {
         if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
             videos.push(video.file_id);
         }
@@ -281,6 +305,33 @@ E.g
 
 ### toString
 Returns **String** "[object TelegramBot]" that identifies the class.
+
+### sendAudio
+Use this to send a mp3 to a target chat. You'll need to collect the `photo[photo.length].file_id` with onPhoto. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
+
+*Required Perimeters*
+* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `mp3_file_id_or_mp3_url` **String** Target mp3 file_id or url.
+
+*Optional Perimeters*
+* `settings` **Object** Use for providing extra perimeters.
+    * `caption` **String** Adds a caption text message to the video. 0-200 characters max.
+    * `duration` **Integer**
+    * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+    * `performer` **String**
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_to_message_id` **Integer** Use for sending a reply to a message id.
+    * `title` **String**
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
+
+E.g
+
+    bot.sendPhoto(chat_id, video_file_id, {}, function (isSuccess) {
+        console.log("Image sent successfully: " + isSuccess);
+    });
+
+Note that `duration`, `performer` and `title` don't work after testing mp3 file_id and url.
 
 ### sendChatAction
 Use this to send a status notification to your bot. It's recommended only to use this if it going to perform a long action such as sending a video.
