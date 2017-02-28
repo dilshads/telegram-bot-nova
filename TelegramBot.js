@@ -70,7 +70,7 @@ module.exports = function (token, isDebug) {
             content,
             split;
 
-        const defaults = {
+        const DEFAULTS = {
             caption: "",
             from: {}
         };
@@ -89,7 +89,7 @@ module.exports = function (token, isDebug) {
         }
 
         // Adds default values only for those that are missing.
-        content = defaultsDeep(content, defaults);
+        content = defaultsDeep(content, DEFAULTS);
 
         // onAudio
         if (content.hasOwnProperty("audio")) {

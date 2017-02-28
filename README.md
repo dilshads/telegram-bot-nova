@@ -1,4 +1,16 @@
+[![completion](https://img.shields.io/badge/completion-50%25-orange.svg)]()
+[![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
+[![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)]()
+
 # TelegramBot Node.js getUpdates Method
+
+No external dependencies required.
+
+Uses only 2 built-in node.js modules in order to be able to run.
+
+* https - to perform secure web communication with the Telegram Server. http isn't supported.
+* querystring - to convert objects into a url query string to be able to post information with the actions listed below.
 
 **Beware that this class and its documentation is not yet complete. The current functionality is stable and usable to run commands. More stuff and improvements are being added in time.**
 
@@ -31,7 +43,9 @@ If success. Simple have your command terminal open and enter: `node "location/of
 To setup up an event. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
 
 ### onAudio
-Gets called every time a user sends a video and the perimeters are:
+Gets called every time the bot sees a mp3.
+
+*Arguments*
 * `caption` provides a **String** of the provided caption. No caption is "".
 * `chat` provides a **chat object** were the video sent.
 * `from` provides an **user object** of the user who sent the video.
@@ -39,17 +53,21 @@ Gets called every time a user sends a video and the perimeters are:
 
 E.g
 
-    var audios = [];
-    bot.onAudio = function (audio, caption, chat, from) {
-        if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
-            audios.push(audio.file_id);
-        }
+```javascript
+var audios = [];
+bot.onAudio = function (audio, caption, chat, from) {
+    if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+        audios.push(audio.file_id);
     }
+}
+```
 
 This example shows how to effectively make your bot memorize audios. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
 
 ### onCommand
-Gets called every time the bot is issued a command and provides the following perimeters:
+Gets called every time the bot sees a command.
+
+*Arguments*
 * `chat` provides a **chat object** were the command occurred.
 * `from` provides an **user object** who the user who triggered it.
 * `text` provides a **string** of the whole text.
@@ -67,21 +85,27 @@ E.g
 Notice that the id from chat always returns the source were the command was triggered so the bot can reply to. Private message, group, supergroup or even a channel.
 
 ### onGroupJoin
-Gets called every time an user joins a group or a supergroup the bot is in and provides the follow perimeters:
+Gets called every time the bot sees someone joining the group.
+
+*Arguments*
 * `chat` provides a **chat object** were the user joined.
 * `from` provides an **user object** who invited the new user. This can be the user who's in the group who manually added the new user or the user who joined manually themselves.
 * `user` provides a **user object** of the user who joined.
 
 E.g
 
-    bot.onGroupJoin = function (chat, from, user) {
-        bot.sendText(chat.id, "Welcome to our group, " + user.first_name + ".");
-    }
+```javascript
+bot.onGroupJoin = function (chat, from, user) {
+    bot.sendText(chat.id, "Welcome to our group, " + user.first_name + ".");
+}
+```
 
 If you're wondering what is a good use of `from` and `user` user objects. You could compare `from.id === user.id` to check if that user invited themselves or `from.id !== user.id` that someone else invited them.
 
 ### onPhoto
-Gets called every time a user sends a photo and the perimeters are:
+Gets called every time the bot sees a new photo.
+
+*Arguments*
 * `caption` provides a **String** of the provided caption. No caption is "".
 * `chat` provides a **chat object** were the photo sent.
 * `from` provides an **user object** of the user who sent the photo.
@@ -89,33 +113,41 @@ Gets called every time a user sends a photo and the perimeters are:
 
 E.g
 
-    var photos = [];
-    bot.onPhoto = function (chat, from, photo) {
-        if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
-            photos.push(photo[photo.length].file_id);
-        }
+```javascript
+var photos = [];
+bot.onPhoto = function (chat, from, photo) {
+    if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+        photos.push(photo[photo.length].file_id);
     }
+}
+```
 
 This example shows how to effectively make your bot memorize photos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
 
 ### onText
-Gets called every time a user sends a message. However, this excludes supergroups if the bot isn't an administrator. The perimeters are:
+Gets called every time the bot sees a new message. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots.
+
+*Arguments*
 * `chat` provides a **chat object** were the message sent.
 * `from` provides an **user object** of the user who sent the message.
 * `text` provides a **string** of the message itself.
 
 E.g
 
-    bot.onText = function (chat, from, text) {
-        if (text.toLowerCase().indexOf("hello bot") > -1) {
-            bot.sendText(chat.id, "Hello, " + from.first_name + ".");
-        }
+```javascript
+bot.onText = function (chat, from, text) {
+    if (text.toLowerCase().indexOf("hello bot") > -1) {
+        bot.sendText(chat.id, "Hello, " + from.first_name + ".");
     }
+}
+```
 
 When ever anyone says "hello bot" in any part of the message. This example will respond with a hello back.
 
 ### onVideo
-Gets called every time a user sends a video and the perimeters are:
+Gets called every time the bot sees a new video.
+
+*Arguments*
 * `caption` provides a **String** of the provided caption. No caption is "".
 * `chat` provides a **chat object** were the video sent.
 * `from` provides an **user object** of the user who sent the video.
@@ -123,12 +155,14 @@ Gets called every time a user sends a video and the perimeters are:
 
 E.g
 
-    var videos = [];
-    bot.onVideo = function (caption, chat, from, video) {
-        if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
-            videos.push(video.file_id);
-        }
+```javascript
+var videos = [];
+bot.onVideo = function (caption, chat, from, video) {
+    if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+        videos.push(video.file_id);
     }
+}
+```
 
 This example shows how to effectively make your bot memorize videos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
 
@@ -146,9 +180,11 @@ Use this to return information about the target chat.
 
 E.g
 
-    bot.getChat("@MyGroup", function (isSuccess, obtainedChat) {
-        console.log(obtainedChat.first_name);
-    });
+```javascript
+bot.getChat("@MyGroup", function (isSuccess, obtainedChat) {
+    console.log(obtainedChat.first_name);
+});
+```
 
 You'll notice I've named it `obtainedChat` just to avoid name collision with `chat`.
 
@@ -163,19 +199,21 @@ Returns an array containing all the users that are "administrator" status of the
 
 E.g
 
-    bot.getChatAdministrators(chat_id, function (isSuccess, users) {
-        if (isSuccess) {
-            var i, length = users.length;
-            while (i < length) {
-                if (i === 0) {
-                    console.log(users[i].first_name + " (Creator)");
-                } else {
-                    console.log(users[i].first_name + " (Administrator)");
-                }
-                i = i + 1;
+```javascript
+bot.getChatAdministrators(chat_id, function (isSuccess, users) {
+    if (isSuccess) {
+        var i, length = users.length;
+        while (i < length) {
+            if (i === 0) {
+                console.log(users[i].first_name + " (Creator)");
+            } else {
+                console.log(users[i].first_name + " (Administrator)");
             }
+            i = i + 1;
         }
-    });
+    }
+});
+```
 
 Example prints all the chat authorities and their status. Be aware that this function doesn't work in PM.
 
@@ -191,12 +229,13 @@ Returns an **user object** and a **String** of the user's chat status. The chat 
 
 E.g
 
-    bot.getChatMember(chat_id, user_id, function (isSuccess, user, status) {
-        if (isSuccess) {
-            console.log(user.first_name + "'s status is: " + status);
-        }
-    });
-
+```javascript
+bot.getChatMember(chat_id, user_id, function (isSuccess, user, status) {
+    if (isSuccess) {
+        console.log(user.first_name + "'s status is: " + status);
+    }
+});
+```
 
 ### getChatMembersCount
 Returns an **Integer** of the number of members in a chat.
@@ -209,11 +248,13 @@ Returns an **Integer** of the number of members in a chat.
 
 E.g
 
-    bot.getChatMembersCount(chat_id, function (isSuccess, count) {
-        if (isSuccess) {
-            console.log(count);
-        }
-    });
+```javascript
+bot.getChatMembersCount(chat_id, function (isSuccess, count) {
+    if (isSuccess) {
+        console.log(count);
+    }
+});
+```
 
 ### getFile
 Use this to get information about a **file_id**.
@@ -226,11 +267,13 @@ Use this to get information about a **file_id**.
 
 E.g
 
-    bot.getFile(file_id, function (isSuccess, file) {
-        if (isSuccess) {
-            console.log(JSON.stringify(file));
-        }
-    });
+```javascript
+bot.getFile(file_id, function (isSuccess, file) {
+    if (isSuccess) {
+        console.log(JSON.stringify(file));
+    }
+});
+```
 
 ### getMe
 Use this to get information about the bot. By default the class automatically uses it when start.
@@ -242,11 +285,13 @@ Use this to get information about the bot. By default the class automatically us
 
 E.g
 
-    bot.getMe(function (isSuccess, bot) {
-        if (isSuccess) {
-            console.log(bot.first_name);
-        }
-    });
+```javascript
+bot.getMe(function (isSuccess, bot) {
+    if (isSuccess) {
+        console.log(bot.first_name);
+    }
+});
+```
 
 ### getUsername
 Use this to return a **String** of the bot username. Example "MyBot".
@@ -255,7 +300,9 @@ Use this to return a **String** of the bot username. Example "MyBot".
 
 E.g
 
-    console.log(bot.getUsername());
+```javascript
+console.log(bot.getUsername());
+```
 
 ### getStartUpTime
 Use this to return an **Integer** millisecond value. This is a saved `new Date().getTime()` value from when the bot was declared.
@@ -264,7 +311,9 @@ Use this to return an **Integer** millisecond value. This is a saved `new Date()
 
 E.g
 
-    var dateAndTimeWhenBotDeclared = bot.getStartUpTime();
+```javascript
+var dateAndTimeWhenBotDeclared = bot.getStartUpTime();
+```
 
 ### kickChatMember
 Use this to remove a member from the target chat. Supergroups will require an unban unfortunately due to how the Telegram server handles this command.
@@ -279,11 +328,13 @@ Use this to remove a member from the target chat. Supergroups will require an un
 
 E.g
 
-    bot.kickChatMember(chat_id, user_id, function (isSuccess) {
-        if (isSuccess) {
-            bot.unban(chat_id, user_id);
-        }
-    });
+```javascript
+bot.kickChatMember(chat_id, user_id, function (isSuccess) {
+    if (isSuccess) {
+        bot.unban(chat_id, user_id);
+    }
+});
+```
 
 Note that this example should bypass the user from being actually banned from a supergroup to an actual kick were they can rejoin.
 
@@ -299,9 +350,11 @@ Use this to make your bot leave a chat.
 
 E.g
 
-    bot.leaveChat(chat_id, function (isSuccess) {
-        console.log("Left successfully: " + isSuccess);
-    });
+```javascript
+bot.leaveChat(chat_id, function (isSuccess) {
+    console.log("Left successfully: " + isSuccess);
+});
+```
 
 ### toString
 Returns **String** "[object TelegramBot]" that identifies the class.
@@ -327,9 +380,11 @@ Use this to send a mp3 to a target chat. You'll need to collect the `photo[photo
 
 E.g
 
-    bot.sendPhoto(chat_id, video_file_id, {}, function (isSuccess) {
-        console.log("Image sent successfully: " + isSuccess);
-    });
+```javascript
+bot.sendPhoto(chat_id, video_file_id, {}, function (isSuccess) {
+    console.log("Image sent successfully: " + isSuccess);
+});
+```
 
 Note that `duration`, `performer` and `title` don't work after testing mp3 file_id and url.
 
@@ -344,7 +399,9 @@ Use this to send a status notification to your bot. It's recommended only to use
 
 E.g
 
-    bot.sendChatAction(chat_id, "typing"); // It wouldn't be necessary to check callback if it was success but it's there anyway.
+```javascript
+bot.sendChatAction(chat_id, "typing"); // It wouldn't be necessary to check callback if it was success but it's there anyway.
+```
 
 ### sendHtml / sendMarkdown / sendText
 Use this to send a plain text message to a chat. Note that Telegram automatically formats links, hash tags and @username automatically.
@@ -364,19 +421,21 @@ Use this to send a plain text message to a chat. Note that Telegram automaticall
 
 E.g
 
-    // Short basic message.
-    bot.sendText(chat.id, "Hello world.");
-    
-    // Sends a message while giving it optional settings.
-    bot.sendText("@ChatUsername", "Hello world.", {
-        "disable_web_page_preview": true
-    });
+```javascript
+// Short basic message.
+bot.sendText(chat.id, "Hello world.");
 
-    // Sends a message while returning a callback telling you if the message sent successfully or not.
-    var settings = {};
-    bot.sendText("@" + chat.username, "Hello world.", settings, function (isSuccess) {
-        console.log("Message sent successfully: " + isSuccess);
-    });
+// Sends a message while giving it optional settings.
+bot.sendText("@ChatUsername", "Hello world.", {
+    "disable_web_page_preview": true
+});
+
+// Sends a message while returning a callback telling you if the message sent successfully or not.
+var settings = {};
+bot.sendText("@" + chat.username, "Hello world.", settings, function (isSuccess) {
+    console.log("Message sent successfully: " + isSuccess);
+});
+```
 
 All html and markdown tags must be closed else the message won't send.
 
@@ -398,9 +457,11 @@ Use this to send an image to a target chat. You'll need to collect the `photo[ph
 
 E.g
 
-    bot.sendPhoto(chat_id, video_file_id, {}, function (isSuccess) {
-        console.log("Image sent successfully: " + isSuccess);
-    });
+```javascript
+bot.sendPhoto(chat_id, video_file_id, {}, function (isSuccess) {
+    console.log("Image sent successfully: " + isSuccess);
+});
+```
 
 ### sendVideo
 Use this to send a video to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
@@ -422,15 +483,17 @@ Use this to send a video to a target chat. You'll need to collect the `video.fil
 
 E.g
 
-    var settings = {
-        "caption": "Video from @MyChannel"
-    }
-    bot.sendVideo(chat_id, video_file_id, settings, function (isSuccess) {
-        console.log("Video sent successfully: " + isSuccess);
-    });
+```javascript
+var settings = {
+    "caption": "Video from @MyChannel"
+}
+bot.sendVideo(chat_id, video_file_id, settings, function (isSuccess) {
+    console.log("Video sent successfully: " + isSuccess);
+});
+```
 
 ### unbanChatMember
-Unbans a user from a chat. The bot has to be present in the group an an administrator for this to work.
+Unbans a user from a chat. The bot has to be present in the group and an administrator for this to work.
 
 *Required*
 * `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
@@ -442,6 +505,18 @@ Unbans a user from a chat. The bot has to be present in the group an an administ
 
 E.g
 
-    bot.unbanChatMember(chat_id, user_id, function (isSuccess) {
-        console.log("User was unbanned: " + isSuccess);
-    });
+```javascript
+bot.unbanChatMember(chat_id, user_id, function (isSuccess) {
+    console.log("User was unbanned: " + isSuccess);
+});
+```
+
+## Contributing
+* Casing: CONSTANT_NAMING, ClassNaming, functionNaming, variableNaming
+* Linting: JSLint
+* Spacing: 4 Spaces
+* Use-Strict: Allowed
+
+Make sure your editor is set for 4 spaces and not tabs. Notepad++ is set to tab with a spacing of 4 but not actual spaces.
+
+Sorry if the guidelines aren't the best. I'm currently the only user working on this project.
