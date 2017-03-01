@@ -2,7 +2,7 @@
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![jslint_issues](https://img.shields.io/badge/jslint%20issues-none-brightgreen.svg)]()
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)]()
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 # TelegramBot Node.js getUpdates Method
 
@@ -573,7 +573,9 @@ bot.unbanChatMember(chat_id, user_id, function (isSuccess) {
 
 ## Contributing
 * Casing: CONSTANT_NAMING, ClassNaming, functionNaming, variableNaming
-* Linting: JSLint
+* Linting:
+    * Visual Studio Code : `/*jslint es6: true, node: true, this: true */`
+    * jslint.com : es6 true, node true, multiple vars true, this true
 * Spacing: 4 Spaces
 * Use-Strict: Allowed
 

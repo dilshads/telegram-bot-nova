@@ -5,13 +5,13 @@ const querystring = require("querystring");
 module.exports = function (token, isDebug) {
     "use strict";
     const DEFAULTS = {
-        caption: "",
-        from: {}
+        "caption": "",
+        "from": {}
     };
 
     var loopDelay = 3000,
         self = this,
-        startUpTime = new Date().getTime(),
+        startUpTime = Date.now(),
         username = "",
         updateId = 0;
 
@@ -79,7 +79,7 @@ module.exports = function (token, isDebug) {
 
         updateId = result.update_id + 1;
 
-        // Since result.message and result.channel_post hold the same content.
+        // Since result.message and result.channel_post hold near the same content.
         // This simplfies the checking.
         if (result.hasOwnProperty("message")) {
             content = result.message;
