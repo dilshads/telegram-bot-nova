@@ -36,6 +36,10 @@
         * [unbanChatMember](#unbanchatmember)
 * [Contributing](#contributing)
 
+All the returned objects objects can be found under this section on the [Telegram Bot API/Available Types](https://core.telegram.org/bots/api#available-types) page. The first 2 **chat object** and **user object** will be the most common ones. Keep note of their values that are optional since you'll need to condition check if they are given or not.
+
+Important note. To avoid unnessary checking for the `from` **user object** exists, if one isn't sent it will be auto declared but without any properties inside.
+
 No external dependencies required.
 
 Uses only 2 built-in node.js modules in order to be able to run.
@@ -338,15 +342,38 @@ console.log(bot.getUsername());
 ```
 
 ### getStartUpTime
-Use this to return an **Number** millisecond value. This is a saved `new Date().getTime()` value from when the bot was declared.
+Use this to return a **Number** millisecond value. This is a saved `new Date().getTime()` value from when the bot was declared.
 
 *No Perimeters*
 
 E.g
 
 ```javascript
-var dateAndTimeWhenBotDeclared = bot.getStartUpTime();
+console.log(bot.getStartUpTime());
 ```
+
+### getUserProfilePhotos
+Use this to return a UserProfilePhotos object.
+
+*Required*
+* `user_id` **Number** Target user id.
+* `offset` **Number** Starting index of photos to return. Default 0.
+* `limit` **Number** Last index of photos to return. Default 100.
+* `callback` **Function** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **Boolean**
+    * `photos`**UserProfilePhotos object** An object containing information about the targets profile photos.
+
+E.g
+
+```javascript
+bot.getUserProfilePhotos(user_id, 0, 100, function (isSuccess, photos) {
+    if (isSuccess) {
+        console.log(JSON.stringify(photos));
+    }
+});
+```
+
+I know it's probably not the best example but seeing the json tree will be easiler to understand than explaining it.
 
 ### kickChatMember
 Use this to remove a member from the target chat. Supergroups will require an unban unfortunately due to how the Telegram server handles this command.
