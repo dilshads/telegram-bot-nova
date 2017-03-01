@@ -6,6 +6,36 @@
 
 # TelegramBot Node.js getUpdates Method
 
+* [Setting Up](#setting-up)
+* Class
+    * [Events](#events)
+        * [onAudio](#onaudio)
+        * [onCommand](#oncommand)
+        * [onGroupJoin](#ongroupjoin)
+        * [onPhoto](#onphoto)
+        * [onText](#ontext)
+        * [onVideo](#onvideo)
+    * [Actions](#actions)
+        * [getChat](#getchat)
+        * [getChatAdministrators](#getchatadministrators)
+        * [getChatMember](#getchatmember)
+        * [getChatMembersCount](#getchatmemberscount)
+        * [getFile](#getfile)
+        * [getMe](#getme)
+        * [getStartUpTime](#getstartuptime)
+        * [getUsername](#getusername)
+        * [getUserProfilePhotos](#getuserprofilephotos)
+        * [kickChatMember](#kickchatmember)
+        * [leaveChat](#leavechat)
+        * [sendAudio](#sendaudio)
+        * [sendChatAction](#sendchataction)
+        * [sendPhoto](#sendphoto)
+        * [sendHtml / sendMarkdown / sendText](#sendhtml--sendmarkdown--sendtext)
+        * [sendVideo](#sendvideo)
+        * [toString](#tostring)
+        * [unbanChatMember](#unbanchatmember)
+* [Contributing](#contributing)
+
 No external dependencies required.
 
 Uses only 2 built-in node.js modules in order to be able to run.
