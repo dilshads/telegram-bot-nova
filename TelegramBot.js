@@ -4,6 +4,11 @@ const querystring = require("querystring");
 
 module.exports = function (token, isDebug) {
     "use strict";
+    const DEFAULTS = {
+        caption: "",
+        from: {}
+    };
+
     var loopDelay = 3000,
         self = this,
         startUpTime = new Date().getTime(),
@@ -15,8 +20,7 @@ module.exports = function (token, isDebug) {
     defaultsDeep = function (target, defaults) {
         var clone = JSON.parse(JSON.stringify(target));
         function run(clone, defaults) {
-            const DEFAULTS_PROPERTY_NAMES = Object.getOwnPropertyNames(defaults);
-            DEFAULTS_PROPERTY_NAMES.forEach(function (property) {
+            Object.getOwnPropertyNames(defaults).forEach(function (property) {
                 if (Object.prototype.toString.call(defaults[property]) === "[object Object]") {
                     if (!clone.hasOwnProperty(property)) {
                         clone[property] = {};
@@ -32,7 +36,10 @@ module.exports = function (token, isDebug) {
     };
 
     getUpdates = function () {
-        web("GET", "/getUpdates", {"offset": updateId}, function (data) {
+        var urlQuery = {
+            "offset": updateId
+        };
+        web("GET", "/getUpdates", urlQuery, function (data) {
             if (!data.ok) {
                 console.error("getUpdates: Warning data returned false. " + JSON.stringify(data));
                 return;
@@ -69,11 +76,6 @@ module.exports = function (token, isDebug) {
             commandData = "",
             content,
             split;
-
-        const DEFAULTS = {
-            caption: "",
-            from: {}
-        };
 
         updateId = result.update_id + 1;
 
@@ -160,31 +162,7 @@ module.exports = function (token, isDebug) {
         }
     };
 
-    web = function (method, command) {
-        var i = 2, l = arguments.length, callback, urlData;
-        // Check the argument's types for optional passed parameter options.
-        while (i < l) {
-            if (typeof arguments[i] === "object" && urlData === undefined) {
-                urlData = arguments[i];
-            } else if (typeof arguments[i] === "function" && callback === undefined) {
-                callback = arguments[i];
-            } else {
-                break;
-            }
-            i += 1;
-        }
-        // Callback with rest parameter doesn't work on Servers Ultimate Pro on Android.
-        /*
-        args.forEach(function (arg) {
-            if (typeof arg === "object" && urlData === undefined) {
-                urlData = arg;
-            } else if (typeof arg === "function" && callback === undefined) {
-                callback = arg;
-            } else {
-                return;
-            }
-        });
-        */
+    web = function (method, command, urlData, callback) {
         var postData = querystring.stringify(urlData);
         var options = {
             "hostname": "api.telegram.org",
@@ -287,7 +265,8 @@ module.exports = function (token, isDebug) {
     };
 
     this.getMe = function (callback) {
-        web("GET", "/getMe", function (data) {
+        var urlQuery = {};
+        web("GET", "/getMe", urlQuery, function (data) {
             callback(data.ok, data.result);
         });
     };
@@ -341,40 +320,35 @@ module.exports = function (token, isDebug) {
     };
 
     this.onCommand = function () {
-        console.log("onCommand: no handler.");
+        return;
     };
 
-    this.onDocument = function () { // Compressed images are counted as documents.
-        console.log("onDocument: no handler.");
+    this.onDocument = function () { // Compressed images on Desktop Telegram are counted as documents.
+        return;
     };
 
     this.onError = function () {
-        console.log("onError: no handler.");
+        return;
     };
 
     this.onGroupJoin = function () {
-        /**
-          * 0 chat - "object chat" group were the join occured.
-          * 1 from - "object user" user that joined theirself or the group member adder.
-          * 2 user - "object user" user that is joining.
-          */
-        console.log("onGroupJoin: no handler.");
+        return;
     };
 
     this.onPhoto = function () {
-        console.log("onPhoto: no handler.");
+        return;
     };
 
     this.onText = function () {
-        console.log("onText: no handler.");
+        return;
     };
 
     this.onStartUp = function () {
-        console.log("onStartUp: no handler.");
+        return;
     };
 
     this.onVideo = function () {
-        console.log("onVideo: no handler.");
+        return;
     };
 
     this.sendAudio = function (chatIdOrTag, fileIdOrLink, settings, callback) {

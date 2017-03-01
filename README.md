@@ -1,6 +1,7 @@
 [![completion](https://img.shields.io/badge/completion-50%25-orange.svg)]()
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
+[![jslint_errors](https://img.shields.io/badge/jslint%20errors-none-brightgreen.svg)]()
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)]()
 
 # TelegramBot Node.js getUpdates Method
@@ -76,11 +77,13 @@ Gets called every time the bot sees a command.
 
 E.g
 
-    bot.onCommand = function (chat, from, text, command, commandData) {
-        if (command === "start") {
-            bot.sendText(chat.id, "Hello world.");
-        }
+```javascript
+bot.onCommand = function (chat, from, text, command, commandData) {
+    if (command === "start") {
+        bot.sendText(chat.id, "Hello world.");
     }
+}
+```
 
 Notice that the id from chat always returns the source were the command was triggered so the bot can reply to. Private message, group, supergroup or even a channel.
 
@@ -117,7 +120,7 @@ E.g
 var photos = [];
 bot.onPhoto = function (chat, from, photo) {
     if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
-        photos.push(photo[photo.length].file_id);
+        photos.push(photo[photo.length - 1].file_id);
     }
 }
 ```
@@ -238,13 +241,13 @@ bot.getChatMember(chat_id, user_id, function (isSuccess, user, status) {
 ```
 
 ### getChatMembersCount
-Returns an **Integer** of the number of members in a chat.
+Returns an **Number** of the number of members in a chat.
 
 *Required*
 * `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
 * `callback` **Function** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **Boolean**
-    * `count` **Integer**
+    * `count` **Number**
 
 E.g
 
@@ -305,7 +308,7 @@ console.log(bot.getUsername());
 ```
 
 ### getStartUpTime
-Use this to return an **Integer** millisecond value. This is a saved `new Date().getTime()` value from when the bot was declared.
+Use this to return an **Number** millisecond value. This is a saved `new Date().getTime()` value from when the bot was declared.
 
 *No Perimeters*
 
@@ -320,7 +323,7 @@ Use this to remove a member from the target chat. Supergroups will require an un
 
 *Required*
 * `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `user_id` **Integer** Target user id to kick.
+* `user_id` **Number** Target user id to kick.
 
 *Optional*
 * `callback` **Function** Called after sending the content and returns the following result perimeters.
@@ -369,11 +372,11 @@ Use this to send a mp3 to a target chat. You'll need to collect the `photo[photo
 *Optional Perimeters*
 * `settings` **Object** Use for providing extra perimeters.
     * `caption` **String** Adds a caption text message to the video. 0-200 characters max.
-    * `duration` **Integer**
+    * `duration` **Number**
     * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `performer` **String**
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
-    * `reply_to_message_id` **Integer** Use for sending a reply to a message id.
+    * `reply_to_message_id` **Number** Use for sending a reply to a message id.
     * `title` **String**
 * `callback` **Function** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **Boolean**
@@ -415,7 +418,7 @@ Use this to send a plain text message to a chat. Note that Telegram automaticall
     * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `disable_web_page_preview` **Boolean** Default false. If a link or @username exists in the message, setting this to true will prevent it sending a thumbnail image.
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
-    * `reply_to_message_id` **Integer** Use for sending a reply to a message id.
+    * `reply_to_message_id` **Number** Use for sending a reply to a message id.
 * `callback` **Function** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **Boolean**
 
@@ -440,7 +443,7 @@ bot.sendText("@" + chat.username, "Hello world.", settings, function (isSuccess)
 All html and markdown tags must be closed else the message won't send.
 
 ### sendPhoto
-Use this to send an image to a target chat. You'll need to collect the `photo[photo.length].file_id` with onPhoto. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
+Use this to send an image to a target chat. You'll need to collect the `photo[photo.length - 1].file_id` with onPhoto. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
 *Required Perimeters*
 * `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
@@ -451,7 +454,7 @@ Use this to send an image to a target chat. You'll need to collect the `photo[ph
     * `caption` **String** Adds a caption text message to the video. 0-200 characters max.
     * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
-    * `reply_to_message_id` **Integer** Use for sending a reply to a message id.
+    * `reply_to_message_id` **Number** Use for sending a reply to a message id.
 * `callback` **Function** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **Boolean**
 
@@ -472,9 +475,9 @@ Use this to send a video to a target chat. You'll need to collect the `video.fil
 
 *Optional Perimeters*
 * `settings` **Object** Use for providing extra perimeters.
-    * `duration` **Integer**
-    * `width` **Integer**
-    * `height` **Integer**
+    * `duration` **Number**
+    * `width` **Number**
+    * `height` **Number**
     * `caption` **String** Adds a caption text message to the video. 0-200 characters max.
     * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
@@ -497,7 +500,7 @@ Unbans a user from a chat. The bot has to be present in the group and an adminis
 
 *Required*
 * `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `user_id` **Integer** Target user id to unban.
+* `user_id` **Number** Target user id to unban.
 
 *Optional*
 * `callback` **Function** Called after sending the content and returns the following result perimeters.
