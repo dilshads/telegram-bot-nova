@@ -101,7 +101,7 @@ var bot = new TelegramBot("YOUR_BOT_TOKEN", {
 });
 ```
 
-* `isDebug` **Boolean** Prints full JSON of the getUpdates obtained. This is what I use for coding more events.
+* `isDebug` **Boolean** Prints full JSON of the getUpdates obtained on the console screen. This is what I use for coding more events.
 * `loopDelay` **Number** The number of milliseconds per getUpdates request and events of processed and triggered.
 * `port` **Number** The port number to use.
 
