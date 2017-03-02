@@ -2,7 +2,7 @@
 const TelegramBot = require("./TelegramBot");
 
 // Declare a new instance and connect by your bot token.
-var bot = new TelegramBot("bot206334655:AAHpwp_GqBTW8FJnQ2Y_XKAxvN4vlFt8vY8");
+var bot = new TelegramBot("YOUR_BOT_TOKEN");
 
 // Setup catched events to make your bot responsive.
 bot.onCommand = function (chat, from, text, command, commandData) {

@@ -2,18 +2,27 @@
 const https = require("https");
 const querystring = require("querystring");
 
-module.exports = function (token, isDebug) {
+module.exports = function (token, declareSettings) {
     "use strict";
-    const DEFAULTS = {
+    const EVENT_DEFAULTS = {
         "caption": "",
         "from": {}
     };
 
-    var loopDelay = 3000,
-        self = this,
+    var botSettings = {
+        "isDebug": false,
+        "loopDelay": 3000,
+        "port": 443
+    };
+
+    var self = this,
         startUpTime = Date.now(),
-        username = "",
-        updateId = 0;
+        updateId = 0,
+        username = "";
+
+    if (typeof declareSettings === "object") {
+        Object.assign(botSettings, declareSettings);
+    }
 
     var defaultsDeep, getUpdates, hasDeepProperty, loop, processEvent, web;
 
@@ -44,7 +53,7 @@ module.exports = function (token, isDebug) {
                 console.error("getUpdates: Warning data returned false. " + JSON.stringify(data));
                 return;
             }
-            if (isDebug && data.result.length) {
+            if (botSettings.isDebug && data.result.length) {
                 console.log("**** Debug ****\n" + JSON.stringify(data) + "\n **** End Debug ****");
             }
             data.result.forEach(function (result) {
@@ -68,7 +77,7 @@ module.exports = function (token, isDebug) {
     };
 
     loop = function () {
-        setTimeout(getUpdates, loopDelay);
+        setTimeout(getUpdates, botSettings.loopDelay);
     };
 
     processEvent = function (result) {
@@ -91,7 +100,7 @@ module.exports = function (token, isDebug) {
         }
 
         // Adds default values only for those that are missing.
-        content = defaultsDeep(content, DEFAULTS);
+        content = defaultsDeep(content, EVENT_DEFAULTS);
 
         // onAudio
         if (content.hasOwnProperty("audio")) {
@@ -166,8 +175,8 @@ module.exports = function (token, isDebug) {
         var postData = querystring.stringify(urlData);
         var options = {
             "hostname": "api.telegram.org",
-            "port": 443, // default 443
-            "path": "/" + token + command,
+            "port": botSettings.port,
+            "path": "/bot" + token + command,
             "method": method,
             "headers": {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -480,7 +489,7 @@ module.exports = function (token, isDebug) {
         }
         username = bot.username;
         console.log("Loaded: " + username);
-        console.log("Loop calling every " + loopDelay + " milliseconds.");
+        console.log("Loop calling every " + botSettings.loopDelay + " milliseconds.");
         self.onStartUp();
         loop();
     });

@@ -7,7 +7,7 @@
 # TelegramBot Node.js getUpdates Method
 
 * [Setting Up](#setting-up)
-* Class
+* [Declaring](#declaring)
     * [Events](#events)
         * [onAudio](#onaudio)
         * [onCommand](#oncommand)
@@ -73,6 +73,39 @@ Now you're ready to run and test the example. You should already have Node.js in
 To test if it's installed. Open Command Prompt if you're on Windows or Terminal if you're on Linux and enter: `node --version` which just prints the current version of node installed.
 
 If success. Simple have your command terminal open and enter: `node "location/of/example.js"` Operating system directories are different so, if your command terminal supports it, you can just click-and-drag **app.js** into it after the space.
+
+## Declaring
+In order to use this class. You'll need to require the TelegramBot.js class into your script and declare an instance.
+
+```javascript
+// Require the TelegramBot class.
+const TelegramBot = require("./TelegramBot");
+
+// Declare a bot instance and connect by your bot token.
+var bot = new TelegramBot("YOUR_BOT_TOKEN");
+
+// From here. Just attach events and actions to "bot" directly.
+// See the examples under events and actions here or example.js file.
+```
+You can adjust the default settings during declaration under this example. Missing properties will be set as default.
+
+```javascript
+// Require the TelegramBot class.
+const TelegramBot = require("./TelegramBot");
+
+// Declare a bot instance and connect by your bot token with additional settings.
+var bot = new TelegramBot("YOUR_BOT_TOKEN", {
+    "isDebug": false,
+    "loopDelay": 3000,
+    "port": 443
+});
+```
+
+* `isDebug` **Boolean** Prints full JSON of the getUpdates obtained. This is what I use for coding more events.
+* `loopDelay` **Number** The number of milliseconds per getUpdates request and events of processed and triggered.
+* `port` **Number** The port number to use.
+
+The default declare values are listed in the example above.
 
 ## Events
 To setup up an event. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
