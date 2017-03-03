@@ -203,6 +203,23 @@ module.exports = function (token, declareSettings) {
         request.end();
     };
 
+    this.editText = function (chatIdOrTag, messageId, text, settings, callback) {
+        var urlQuery = {
+            "chat_id": chatIdOrTag,
+            "message_id": messageId,
+            "text": text
+        };
+        if (typeof settings === "object") {
+            Object.assign(urlQuery, settings);
+        }
+        web("POST", "/editMessageText", urlQuery, function (data) {
+            console.log(data);
+            if (typeof callback === "function") {
+                callback(data.ok);
+            }
+        });
+    };
+
     this.getChat = function (chatIdOrTag, callback) {
         var urlQuery = {
             "chat_id": chatIdOrTag

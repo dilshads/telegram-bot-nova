@@ -18,6 +18,7 @@ Badges from [Shields.io](http://shields.io)
         * [onText](#ontext)
         * [onVideo](#onvideo)
     * [Actions](#actions)
+        * [editOwnText](#edittext)
         * [getChat](#getchat)
         * [getChatAdministrators](#getchatadministrators)
         * [getChatMember](#getchatmember)
@@ -38,9 +39,9 @@ Badges from [Shields.io](http://shields.io)
         * [unbanChatMember](#unbanchatmember)
 * [Contributing](#contributing)
 
-All the returned objects objects can be found under this section on the [Telegram Bot API/Available Types](https://core.telegram.org/bots/api#available-types) page. The first 2 **chat object** and **user object** will be the most common ones. Keep note of their values that are optional since you'll need to condition check if they are given or not.
+All the returned objects objects can be found under this section on the [Telegram Bot API/Available Types](https://core.telegram.org/bots/api#available-types) page. The first 2 **{Chat Object}** and **{User Object}** will be the most common ones. Keep note of their values that are optional since you'll need to condition check if they are given or not.
 
-Important note. To avoid unnessary checking for the `from` **user object** exists, if one isn't sent it will be auto declared but without any properties inside.
+Important note. To avoid unnessary checking for the `from` **{User Object}** exists, if one isn't sent it will be auto declared but without any properties inside.
 
 No external dependencies required.
 
@@ -66,7 +67,7 @@ Next you'll need to open **example.js** in your preferred code editor. Some exam
 
 ... Sorry I don't know what to suggest for Mac.
 
-Inside, replace **YOUR_BOT_TOKEN_HERE** with your bot token you obtained from BotFather. If you do not have a bot token. Open your Telegram app and search for @BotFather and PM him. This is used for setting up a bot account and being given an access code address for it.
+Inside, replace `YOUR_BOT_TOKEN` with your bot token you obtained from BotFather. If you do not have a bot token. Open your Telegram app and search for @BotFather and PM him. This is used for setting up a bot account and being given an access code address for it.
 
 Before you ask. This script "does not" publish your bot token unless you program it too. If you don't believe me you're free to look up the source code of **TelegramBot.js**. All it does is allow the class to communicate with the bot, were the class is made to make it easier for you program it.
 
@@ -103,9 +104,9 @@ var bot = new TelegramBot("YOUR_BOT_TOKEN", {
 });
 ```
 
-* `isDebug` **Boolean** Prints full JSON of the getUpdates obtained on the console screen. This is what I use for coding more events.
-* `loopDelay` **Number** The number of milliseconds per getUpdates request and events of processed and triggered.
-* `port` **Number** The port number to use.
+* `isDebug` **{Boolean}** Prints full JSON of the getUpdates obtained on the console screen. This is what I use for coding more events.
+* `loopDelay` **{Number}** The number of milliseconds per getUpdates request and events of processed and triggered.
+* `port` **{Number}** The port number to use.
 
 The default declare values are listed in the example above.
 
@@ -116,10 +117,10 @@ To setup up an event. You'll need to had required the bot class and declared a b
 Gets called every time the bot sees a mp3.
 
 *Arguments*
-* `caption` provides a **String** of the provided caption. No caption is "".
-* `chat` provides a **chat object** were the video sent.
-* `from` provides an **user object** of the user who sent the video.
-* `video` provides a **video object** that provides information about the video. Use video.file_id to keep track of the videos seen.
+* `caption` provides a **{String}** of the provided caption. No caption is "".
+* `chat` provides a **{Chat Object}** were the video sent.
+* `from` provides an **{User Object}** of the user who sent the video.
+* `video` provides a **{Video Object}** that provides information about the video. Use video.file_id to keep track of the videos seen.
 
 E.g
 
@@ -138,11 +139,11 @@ This example shows how to effectively make your bot memorize audios. Note that P
 Gets called every time the bot sees a command.
 
 *Arguments*
-* `chat` provides a **chat object** were the command occurred.
-* `from` provides an **user object** who the user who triggered it.
-* `text` provides a **string** of the whole text.
-* `command` provides a **string** the command used (E.g "start" when the user enters "/start").
-* `commandData` provides a **string** of the remaining text after the first space.
+* `chat` provides a **{Chat Object}** were the command occurred.
+* `from` provides an **{User Object}** who the user who triggered it.
+* `text` provides a **{String}** of the whole text.
+* `command` provides a **{String}** the command used (E.g "start" when the user enters "/start").
+* `commandData` provides a **{String}** of the remaining text after the first space.
 
 E.g
 
@@ -160,9 +161,9 @@ Notice that the id from chat always returns the source were the command was trig
 Gets called every time the bot sees someone joining the group.
 
 *Arguments*
-* `chat` provides a **chat object** were the user joined.
-* `from` provides an **user object** who invited the new user. This can be the user who's in the group who manually added the new user or the user who joined manually themselves.
-* `user` provides a **user object** of the user who joined.
+* `chat` provides a **{Chat Object}** were the user joined.
+* `from` provides an **{User Object}** who invited the new user. This can be the user who's in the group who manually added the new user or the user who joined manually themselves.
+* `user` provides a **{User Object}** of the user who joined.
 
 E.g
 
@@ -178,10 +179,10 @@ If you're wondering what is a good use of `from` and `user` user objects. You co
 Gets called every time the bot sees a new photo.
 
 *Arguments*
-* `caption` provides a **String** of the provided caption. No caption is "".
-* `chat` provides a **chat object** were the photo sent.
-* `from` provides an **user object** of the user who sent the photo.
-* `photo` provides an **Array** of **photo object** that provides information about the photo.
+* `caption` provides a **{String}** of the provided caption. No caption is "".
+* `chat` provides a **{Chat Object}** were the photo sent.
+* `from` provides an **{User Object}** of the user who sent the photo.
+* `photo` provides an **{Array}** of **{PhotoSize Object}** that provides information about the photo.
 
 E.g
 
@@ -200,9 +201,9 @@ This example shows how to effectively make your bot memorize photos. Note that P
 Gets called every time the bot sees a new message. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots.
 
 *Arguments*
-* `chat` provides a **chat object** were the message sent.
-* `from` provides an **user object** of the user who sent the message.
-* `text` provides a **string** of the message itself.
+* `chat` provides a **{Chat Object}** were the message sent.
+* `from` provides an **{User Object}** of the user who sent the message.
+* `text` provides a **{String}** of the message itself.
 
 E.g
 
@@ -220,10 +221,10 @@ When ever anyone says "hello bot" in any part of the message. This example will 
 Gets called every time the bot sees a new video.
 
 *Arguments*
-* `caption` provides a **String** of the provided caption. No caption is "".
-* `chat` provides a **chat object** were the video sent.
-* `from` provides an **user object** of the user who sent the video.
-* `video` provides a **video object** that provides information about the video. Use video.file_id to keep track of the videos seen.
+* `caption` provides a **{String}** of the provided caption. No caption is "".
+* `chat` provides a **{Chat Object}** were the video sent.
+* `from` provides an **{User Object}** of the user who sent the video.
+* `video` provides a **{Video Object}** that provides information about the video. Use video.file_id to keep track of the videos seen.
 
 E.g
 
@@ -241,14 +242,18 @@ This example shows how to effectively make your bot memorize videos. Note that P
 ## Actions
 To setup up an action. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
 
+### editText
+TO-DO...
+
+
 ### getChat
 Use this to return information about the target chat.
 
 *Required*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
-    * `obtainedChat` **chat object**
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+    * `obtainedChat` **{Chat Object}**
 
 E.g
 
@@ -264,10 +269,10 @@ You'll notice I've named it `obtainedChat` just to avoid name collision with `ch
 Returns an array containing all the users that are "administrator" status of the group. The "creator" will be the first index 0 while administrators are 1 and higher, if they exist.
 
 *Required*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
-    * `users` **Array** containing a **user object** per chat authority.
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+    * `users` **{Array}** containing a **{User Object}** per chat authority.
 
 E.g
 
@@ -290,14 +295,14 @@ bot.getChatAdministrators(chat_id, function (isSuccess, users) {
 Example prints all the chat authorities and their status. Be aware that this function doesn't work in PM.
 
 ### getChatMember
-Returns an **user object** and a **String** of the user's chat status. The chat status can be either: "administrator", "creator", "kicked", "left" or "member".
+Returns an **{User Object}** and a **{String}** of the user's chat status. The chat status can be either: "administrator", "creator", "kicked", "left" or "member".
 
 *Required*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
-    * `user` **user object**
-    * `status` **String**
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+    * `user` **{User Object}**
+    * `status` **{String}**
 
 E.g
 
@@ -310,13 +315,13 @@ bot.getChatMember(chat_id, user_id, function (isSuccess, user, status) {
 ```
 
 ### getChatMembersCount
-Returns an **Number** of the number of members in a chat.
+Returns an **{Number}** of the number of members in a chat.
 
 *Required*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
-    * `count` **Number**
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+    * `count` **{Number}**
 
 E.g
 
@@ -332,10 +337,10 @@ bot.getChatMembersCount(chat_id, function (isSuccess, count) {
 Use this to get information about a **file_id**.
 
 *Required*
-* `file_id` **String** Target file you want to obtain information about.
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
-    * `file` **file object**
+* `file_id` **{String}** Target file you want to obtain information about.
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+    * `file` **{File Object}**
 
 E.g
 
@@ -351,9 +356,9 @@ bot.getFile(file_id, function (isSuccess, file) {
 Use this to get information about the bot. By default the class automatically uses it when start.
 
 *Required*
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
-    * `bot` **user object**
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+    * `bot` **{User Object}**
 
 E.g
 
@@ -366,7 +371,7 @@ bot.getMe(function (isSuccess, bot) {
 ```
 
 ### getUsername
-Use this to return a **String** of the bot username. Example "MyBot".
+Use this to return a **{String}** of the bot username. Example "MyBot".
 
 *No Perimeters*
 
@@ -377,7 +382,7 @@ console.log(bot.getUsername());
 ```
 
 ### getStartUpTime
-Use this to return a **Number** millisecond value. This is a saved `new Date().getTime()` value from when the bot was declared.
+Use this to return a **{Number}** millisecond value. This is a saved `new Date().getTime()` value from when the bot was declared.
 
 *No Perimeters*
 
@@ -391,11 +396,11 @@ console.log(bot.getStartUpTime());
 Use this to return a UserProfilePhotos object.
 
 *Required*
-* `user_id` **Number** Target user id.
-* `offset` **Number** Starting index of photos to return. Default 0.
-* `limit` **Number** Last index of photos to return. Default 100.
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
+* `user_id` **{Number}** Target user id.
+* `offset` **{Number}** Starting index of photos to return. Default 0.
+* `limit` **{Number}** Last index of photos to return. Default 100.
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
     * `photos`**UserProfilePhotos object** An object containing information about the targets profile photos.
 
 E.g
@@ -414,12 +419,12 @@ I know it's probably not the best example but seeing the json tree will be easil
 Use this to remove a member from the target chat. Supergroups will require an unban unfortunately due to how the Telegram server handles this command.
 
 *Required*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `user_id` **Number** Target user id to kick.
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `user_id` **{Number}** Target user id to kick.
 
 *Optional*
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
 
 E.g
 
@@ -437,11 +442,11 @@ Note that this example should bypass the user from being actually banned from a 
 Use this to make your bot leave a chat.
 
 *Required*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
 
 *Optional*
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
 
 E.g
 
@@ -452,26 +457,26 @@ bot.leaveChat(chat_id, function (isSuccess) {
 ```
 
 ### toString
-Returns **String** "[object TelegramBot]" that identifies the class.
+Returns **{String}** "[object TelegramBot]" that identifies the class.
 
 ### sendAudio
 Use this to send a mp3 to a target chat. You'll need to collect the `photo[photo.length].file_id` with onPhoto. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
 *Required Perimeters*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `mp3_file_id_or_mp3_url` **String** Target mp3 file_id or url.
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `mp3_file_id_or_mp3_url` **{String}** Target mp3 file_id or url.
 
 *Optional Perimeters*
-* `settings` **Object** Use for providing extra perimeters.
-    * `caption` **String** Adds a caption text message to the video. 0-200 characters max.
-    * `duration` **Number**
-    * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-    * `performer` **String**
+* `settings` **{Object}** Use for providing extra perimeters.
+    * `caption` **{String}** Adds a caption text message to the video. 0-200 characters max.
+    * `duration` **{Number}**
+    * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+    * `performer` **{String}**
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
-    * `reply_to_message_id` **Number** Use for sending a reply to a message id.
-    * `title` **String**
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
+    * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
+    * `title` **{String}**
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
 
 E.g
 
@@ -487,10 +492,10 @@ Note that `duration`, `performer` and `title` don't work after testing mp3 file_
 Use this to send a status notification to your bot. It's recommended only to use this if it going to perform a long action such as sending a video.
 
 *Required*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `action` **String** Can either have: "find_location", "record_audio", "record_video", "typing", "upload_audio", "upload_document", "upload_photo" or "upload_video". Sending a string not matching any of those will cause the action to fail.
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `action` **{String}** Can either have: "find_location", "record_audio", "record_video", "typing", "upload_audio", "upload_document", "upload_photo" or "upload_video". Sending a string not matching any of those will cause the action to fail.
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
 
 E.g
 
@@ -502,17 +507,17 @@ bot.sendChatAction(chat_id, "typing"); // It wouldn't be necessary to check call
 Use this to send a plain text message to a chat. Note that Telegram automatically formats links, hash tags and @username automatically.
 
 *Required Perimeters*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `text` **String** Message text to send. Note that text is replaced with `html` for sendHtml and `markdown` for sendMarkdown respectively.
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `text` **{String}** Message text to send. Note that text is replaced with `html` for sendHtml and `markdown` for sendMarkdown respectively.
 
 *Optional Perimeters*
-* `settings` **Object** Use for providing extra perimeters.
-    * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-    * `disable_web_page_preview` **Boolean** Default false. If a link or @username exists in the message, setting this to true will prevent it sending a thumbnail image.
+* `settings` **{Object}** Use for providing extra perimeters.
+    * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+    * `disable_web_page_preview` **{Boolean}** Default false. If a link or @username exists in the message, setting this to true will prevent it sending a thumbnail image.
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
-    * `reply_to_message_id` **Number** Use for sending a reply to a message id.
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
+    * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
 
 E.g
 
@@ -538,17 +543,17 @@ All html and markdown tags must be closed else the message won't send.
 Use this to send an image to a target chat. You'll need to collect the `photo[photo.length - 1].file_id` with onPhoto. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
 *Required Perimeters*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `image_file_id_or_image_url` **String** Target image file_id or url.
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `image_file_id_or_image_url` **{String}** Target image file_id or url.
 
 *Optional Perimeters*
-* `settings` **Object** Use for providing extra perimeters.
-    * `caption` **String** Adds a caption text message to the video. 0-200 characters max.
-    * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+* `settings` **{Object}** Use for providing extra perimeters.
+    * `caption` **{String}** Adds a caption text message to the video. 0-200 characters max.
+    * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
-    * `reply_to_message_id` **Number** Use for sending a reply to a message id.
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
+    * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
 
 E.g
 
@@ -562,19 +567,19 @@ bot.sendPhoto(chat_id, video_file_id, {}, function (isSuccess) {
 Use this to send a video to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
 *Required Perimeters*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `video_file_id` **String** Target video file_id.
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `video_file_id` **{String}** Target video file_id.
 
 *Optional Perimeters*
-* `settings` **Object** Use for providing extra perimeters.
-    * `duration` **Number**
-    * `width` **Number**
-    * `height` **Number**
-    * `caption` **String** Adds a caption text message to the video. 0-200 characters max.
-    * `disable_notification` **Boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+* `settings` **{Object}** Use for providing extra perimeters.
+    * `duration` **{Number}**
+    * `width` **{Number}**
+    * `height` **{Number}**
+    * `caption` **{String}** Adds a caption text message to the video. 0-200 characters max.
+    * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
 
 E.g
 
@@ -591,12 +596,12 @@ bot.sendVideo(chat_id, video_file_id, settings, function (isSuccess) {
 Unbans a user from a chat. The bot has to be present in the group and an administrator for this to work.
 
 *Required*
-* `chat_id_or_chat_username` Target chat id **Number** or chat username **String**. Chat username example "@MyGroup".
-* `user_id` **Number** Target user id to unban.
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `user_id` **{Number}** Target user id to unban.
 
 *Optional*
-* `callback` **Function** Called after sending the content and returns the following result perimeters.
-    * `isSuccess` **Boolean**
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
 
 E.g
 
