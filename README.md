@@ -1,4 +1,4 @@
-[![completion](https://img.shields.io/badge/completion-50%25-orange.svg)]()
+[![completion](https://img.shields.io/badge/completion-70%25-orange.svg)]()
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![jslint_issues](https://img.shields.io/badge/jslint%20issues-none-brightgreen.svg)](http://jslint.com)
@@ -18,7 +18,7 @@ Badges from [Shields.io](http://shields.io)
         * [onText](#ontext)
         * [onVideo](#onvideo)
     * [Actions](#actions)
-        * [editOwnText](#edittext)
+        * [editOwnText](#editHtml--editMarkdown--editText)
         * [getChat](#getchat)
         * [getChatAdministrators](#getchatadministrators)
         * [getChatMember](#getchatmember)
@@ -242,8 +242,39 @@ This example shows how to effectively make your bot memorize videos. Note that P
 ## Actions
 To setup up an action. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
 
-### editText
-TO-DO...
+### editHtml / editMarkdown / editText
+Use this to replace a target message. Be aware bots can only replace their own messages.
+
+*Required Perimeters*
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `messageId` **{Number}** Target id of one of the bot own messages.
+* `text` **{String}** The replacement text.
+
+*Optional Perimeters*
+* `settings` **{Object}** Use for providing extra perimeters.
+    * `disable_web_page_preview` **{Boolean}** Default false. If a link or @username exists in the message, setting this to true will prevent it sending a thumbnail image.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+
+E.g
+
+```javascript
+bot.sendText("@MyGroup", "Counter: 0", {}, function (isSuccess, messageId) {
+    if (isSuccess) {
+        var count = 0;
+        setInterval(function () {
+            count += 1;
+            bot.editText(chat.id, messageId, "Counter: " + count);
+            if (count === Number.MAX_SAFE_INTEGER) {
+                clearInterval(this);
+            }
+        }, 1000);
+    }
+});
+```
+
+This example sends "Counter: 0" message to the target chat. If successful, the `setInterval` loop starts and replaces the last messageId with "Counter: 1", 2, 3 and so on every second.
 
 
 ### getChat
@@ -500,7 +531,7 @@ Use this to send a status notification to your bot. It's recommended only to use
 E.g
 
 ```javascript
-bot.sendChatAction(chat_id, "typing"); // It wouldn't be necessary to check callback if it was success but it's there anyway.
+bot.sendChatAction(chat_id, "typing");
 ```
 
 ### sendHtml / sendMarkdown / sendText
@@ -518,6 +549,7 @@ Use this to send a plain text message to a chat. Note that Telegram automaticall
     * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
+    * `messageId` **{Number}** Use this to keep the messageId reference to editText later.
 
 E.g
 

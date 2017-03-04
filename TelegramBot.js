@@ -203,6 +203,40 @@ module.exports = function (token, declareSettings) {
         request.end();
     };
 
+    this.editHtml = function (chatIdOrTag, messageId, html, settings, callback) {
+        var urlQuery = {
+            "chat_id": chatIdOrTag,
+            "message_id": messageId,
+            "text": html,
+            "parse_mode": "HTML"
+        };
+        if (typeof settings === "object") {
+            Object.assign(urlQuery, settings);
+        }
+        web("POST", "/editMessageText", urlQuery, function (data) {
+            if (typeof callback === "function") {
+                callback(data.ok);
+            }
+        });
+    };
+
+    this.editMarkdown = function (chatIdOrTag, messageId, md, settings, callback) {
+        var urlQuery = {
+            "chat_id": chatIdOrTag,
+            "message_id": messageId,
+            "text": md,
+            "parse_mode": "Markdown"
+        };
+        if (typeof settings === "object") {
+            Object.assign(urlQuery, settings);
+        }
+        web("POST", "/editMessageText", urlQuery, function (data) {
+            if (typeof callback === "function") {
+                callback(data.ok);
+            }
+        });
+    };
+
     this.editText = function (chatIdOrTag, messageId, text, settings, callback) {
         var urlQuery = {
             "chat_id": chatIdOrTag,
@@ -213,7 +247,6 @@ module.exports = function (token, declareSettings) {
             Object.assign(urlQuery, settings);
         }
         web("POST", "/editMessageText", urlQuery, function (data) {
-            console.log(data);
             if (typeof callback === "function") {
                 callback(data.ok);
             }
@@ -431,7 +464,11 @@ module.exports = function (token, declareSettings) {
         }
         web("POST", "/sendMessage", urlQuery, function (data) {
             if (typeof callback === "function") {
-                callback(data.ok);
+                if (data.ok) {
+                    callback(data.ok, data.result.message_id);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };
@@ -447,7 +484,11 @@ module.exports = function (token, declareSettings) {
         }
         web("POST", "/sendMessage", urlQuery, function (data) {
             if (typeof callback === "function") {
-                callback(data.ok);
+                if (data.ok) {
+                    callback(data.ok, data.result.message_id);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };
@@ -462,7 +503,11 @@ module.exports = function (token, declareSettings) {
         }
         web("POST", "/sendMessage", urlQuery, function (data) {
             if (typeof callback === "function") {
-                callback(data.ok);
+                if (data.ok) {
+                    callback(data.ok, data.result.message_id);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };
