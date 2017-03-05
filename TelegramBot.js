@@ -169,6 +169,15 @@ module.exports = function (token, declareSettings) {
                 self.onError("onVideo", onVideoError);
             }
         }
+
+        // onVoice
+        if (content.hasOwnProperty("voice")) {
+            try {
+                self.onVoice(content.caption, content.chat, content.from, content.voice);
+            } catch (onVoiceError) {
+                self.onError("onAudio", onVoiceError);
+            }
+        }
     };
 
     web = function (method, command, urlData, callback) {
@@ -360,7 +369,7 @@ module.exports = function (token, declareSettings) {
             "chat_id": chatIdOrTag,
             "user_id": userId
         };
-        web("GET", "/kickChatMember", urlQuery, function (data) {
+        web("POST", "/kickChatMember", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }
@@ -371,11 +380,15 @@ module.exports = function (token, declareSettings) {
         var urlQuery = {
             "chat_id": chatIdOrTag
         };
-        web("GET", "/leaveChat", urlQuery, function (data) {
+        web("POST", "/leaveChat", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }
         });
+    };
+
+    this.onAudio = function () {
+        return;
     };
 
     this.onCommand = function () {
@@ -410,6 +423,10 @@ module.exports = function (token, declareSettings) {
         return;
     };
 
+    this.onVoice = function () {
+        return;
+    };
+
     this.sendAudio = function (chatIdOrTag, fileIdOrLink, settings, callback) {
         var urlQuery = {
             "chat_id": chatIdOrTag,
@@ -418,7 +435,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("GET", "/sendAudio", urlQuery, function (data) {
+        web("POST", "/sendAudio", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }
@@ -430,7 +447,7 @@ module.exports = function (token, declareSettings) {
             "chat_id": chatIdOrTag,
             "action": action
         };
-        web("GET", "/sendChatAction", urlQuery, function (data) {
+        web("POST", "/sendChatAction", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }
@@ -521,6 +538,21 @@ module.exports = function (token, declareSettings) {
             Object.assign(urlQuery, settings);
         }
         web("POST", "/sendVideo", urlQuery, function (data) {
+            if (typeof callback === "function") {
+                callback(data.ok);
+            }
+        });
+    };
+
+    this.sendVoice = function (chatIdOrTag, fileIdOrLink, settings, callback) {
+        var urlQuery = {
+            "chat_id": chatIdOrTag,
+            "voice": fileIdOrLink
+        };
+        if (typeof settings === "object") {
+            Object.assign(urlQuery, settings);
+        }
+        web("POST", "/sendVoice", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }

@@ -114,13 +114,13 @@ The default declare values are listed in the example above.
 To setup up an event. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
 
 ### onAudio
-Gets called every time the bot sees a mp3.
+Gets called every time the bot sees a `.mp3` sound file.
 
 *Arguments*
+* `audio` provides a **{Audio Object}** that provides information about the audio. Use `audio.file_id` to keep track of the audios seen.
 * `caption` provides a **{String}** of the provided caption. No caption is "".
 * `chat` provides a **{Chat Object}** were the video sent.
 * `from` provides an **{User Object}** of the user who sent the video.
-* `video` provides a **{Video Object}** that provides information about the video. Use video.file_id to keep track of the videos seen.
 
 E.g
 
@@ -143,7 +143,7 @@ Gets called every time the bot sees a command.
 * `from` provides an **{User Object}** who the user who triggered it.
 * `text` provides a **{String}** of the whole text.
 * `command` provides a **{String}** the command used (E.g "start" when the user enters "/start").
-* `commandData` provides a **{String}** of the remaining text after the first space.
+* `commandData` provides a **{String}** of the remaining text after the first space (E.g "hi" when user enters "/start hi".
 
 E.g
 
@@ -238,6 +238,28 @@ bot.onVideo = function (caption, chat, from, video) {
 ```
 
 This example shows how to effectively make your bot memorize videos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
+
+### onVoice
+Gets called every time the bot sees a `.ogg` voice message.
+
+*Arguments*
+* `caption` provides a **{String}** of the provided caption. No caption is "".
+* `chat` provides a **{Chat Object}** were the video sent.
+* `from` provides an **{User Object}** of the user who sent the video.
+* `voice` provides a **{Voice Object}** that provides information about the video. Use `voice.file_id` to keep track of the voice messages seen.
+
+E.g
+
+```javascript
+var voices = [];
+bot.onVoice = function (caption, chat, from, voice) {
+    if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+        voices.push(voice.file_id);
+    }
+}
+```
+
+This example shows how to effectively make your bot memorize voices. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
 
 ## Actions
 To setup up an action. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
@@ -491,7 +513,7 @@ bot.leaveChat(chat_id, function (isSuccess) {
 Returns **{String}** "[object TelegramBot]" that identifies the class.
 
 ### sendAudio
-Use this to send a mp3 to a target chat. You'll need to collect the `photo[photo.length].file_id` with onPhoto. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
+Use this to send a mp3 to a target chat. You'll need to collect the `audio.file_id` with onPhoto. Be aware that `file_id` is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work. Also they can only send up to 50 mb.
 
 *Required Perimeters*
 * `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
@@ -512,12 +534,10 @@ Use this to send a mp3 to a target chat. You'll need to collect the `photo[photo
 E.g
 
 ```javascript
-bot.sendPhoto(chat_id, video_file_id, {}, function (isSuccess) {
-    console.log("Image sent successfully: " + isSuccess);
+bot.sendAudio(chat_id, video_file_id, {}, function (isSuccess) {
+    console.log("MP3 sent successfully: " + isSuccess);
 });
 ```
-
-Note that `duration`, `performer` and `title` don't work after testing mp3 file_id and url.
 
 ### sendChatAction
 Use this to send a status notification to your bot. It's recommended only to use this if it going to perform a long action such as sending a video.
@@ -621,6 +641,31 @@ var settings = {
 }
 bot.sendVideo(chat_id, video_file_id, settings, function (isSuccess) {
     console.log("Video sent successfully: " + isSuccess);
+});
+```
+
+### sendVoice
+Use this to send a ogg voice file to a target chat. You'll need to collect the `voice.file_id` with onVoice. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work. If uploading from external source. The file needs to be .ogg with OPUS encoding to send.
+
+*Required Perimeters*
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `ogg_file_id_or_ogg_url` **{String}** Target ogg file id or url. 50 mb is the size limit.
+
+*Optional Perimeters*
+* `settings` **{Object}** Use for providing extra perimeters.
+    * `caption` **{String}** Adds a caption text message to the video. 0-200 characters max.
+    * `duration` **{Number}**
+    * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+
+E.g
+
+```javascript
+bot.sendVoice(chat_id, voice_file_id, {}, function (isSuccess) {
+    console.log("Voice sent successfully: " + isSuccess);
 });
 ```
 
