@@ -117,7 +117,7 @@ To setup up an event. You'll need to had required the bot class and declared a b
 Gets called every time the bot sees a `.mp3` sound file.
 
 *Arguments*
-* `audio` provides a **{Audio Object}** that provides information about the audio. Use `audio.file_id` to keep track of the audios seen.
+* `audio` provides an **{Audio Object}** that provides information about the audio. Use `audio.file_id` to keep track of the audios seen.
 * `caption` provides a **{String}** of the provided caption. No caption is "".
 * `chat` provides a **{Chat Object}** were the video sent.
 * `from` provides an **{User Object}** of the user who sent the video.
@@ -454,7 +454,7 @@ Use this to return a UserProfilePhotos object.
 * `limit` **{Number}** Last index of photos to return. Default 100.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
-    * `photos`**UserProfilePhotos object** An object containing information about the targets profile photos.
+    * `photos`**{UserProfilePhotos Object}** An object containing information about the targets profile photos.
 
 E.g
 
@@ -466,7 +466,7 @@ bot.getUserProfilePhotos(user_id, 0, 100, function (isSuccess, photos) {
 });
 ```
 
-I know it's probably not the best example but seeing the json tree will be easiler to understand than explaining it.
+I know it's probably not the best example but seeing the JSON tree will be easiler to understand than explaining it.
 
 ### kickChatMember
 Use this to remove a member from the target chat. Supergroups will require an unban unfortunately due to how the Telegram server handles this command.
