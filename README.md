@@ -581,6 +581,8 @@ E.g
 bot.sendContact(chat.id, "012345 012345", "John");
 ```
 
+Note this is just a random number to illistrate the example.
+
 ### sendDocument
 Use this to send a file to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
