@@ -454,6 +454,37 @@ module.exports = function (token, declareSettings) {
         });
     };
 
+    this.sendContact = function (chatIdOrTag, phoneNumber, firstName, settings, callback) {
+        var urlQuery = {
+            "chat_id": chatIdOrTag,
+            "phone_number": phoneNumber,
+            "first_name": firstName
+        };
+        if (typeof settings === "object") {
+            Object.assign(urlQuery, settings);
+        }
+        web("POST", "/sendContact", urlQuery, function (data) {
+            if (typeof callback === "function") {
+                callback(data.ok);
+            }
+        });
+    };
+
+    this.sendDocument = function (chatId, fileIdOrLink, settings, callback) {
+        var urlQuery = {
+            "chat_id": chatId,
+            "document": fileIdOrLink
+        };
+        if (typeof settings === "object") {
+            Object.assign(urlQuery, settings);
+        }
+        web("POST", "/sendDocument", urlQuery, function (data) {
+            if (typeof callback === "function") {
+                callback(data.ok);
+            }
+        });
+    };
+
     this.sendPhoto = function (chatId, fileIdOrLink, settings, callback) {
         var urlQuery = {
             "chat_id": chatId,
@@ -467,7 +498,6 @@ module.exports = function (token, declareSettings) {
                 callback(data.ok);
             }
         });
-        return;
     };
 
     this.sendHtml = function (chatId, html, settings, callback) {

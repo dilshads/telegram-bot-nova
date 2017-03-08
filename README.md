@@ -1,4 +1,4 @@
-[![completion](https://img.shields.io/badge/completion-70%25-orange.svg)]()
+[![completion](https://img.shields.io/badge/completion-75%25-orange.svg)]()
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![jslint_issues](https://img.shields.io/badge/jslint%20issues-none-brightgreen.svg)](http://jslint.com)
@@ -33,6 +33,8 @@ Badges from [Shields.io](http://shields.io)
         * [leaveChat](#leavechat)
         * [sendAudio](#sendaudio)
         * [sendChatAction](#sendchataction)
+        * [sendContact](#sendcontact)
+        * [sendDocument](#senddocument)
         * [sendPhoto](#sendphoto)
         * [sendHtml / sendMarkdown / sendText](#sendhtml--sendmarkdown--sendtext)
         * [sendVideo](#sendvideo)
@@ -519,7 +521,7 @@ Use this to send a mp3 to a target chat. You'll need to collect the `audio.file_
 
 *Required Perimeters*
 * `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
-* `mp3_file_id_or_mp3_url` **{String}** Target mp3 file_id or url.
+* `mp3_file_id_or_mp3_url` **{String}** Target mp3 file.
 
 *Optional Perimeters*
 * `settings` **{Object}** Use for providing extra perimeters.
@@ -554,6 +556,51 @@ E.g
 
 ```javascript
 bot.sendChatAction(chat_id, "typing");
+```
+
+### sendContact
+Use this to send a made contact.
+
+*Required*
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `phoneNumber` **{String}** Contact's phone number.
+* `firstName` **{String}** Contact's first name.
+*Optional Perimeters*
+* `settings` **{Object}** Use for providing extra perimeters.
+    * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+    * `last_name` **{String}** Contact's last name.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+
+E.g
+
+```javascript
+bot.sendContact(chat.id, "012345 012345", "John");
+```
+
+### sendDocument
+Use this to send a file to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
+
+*Required Perimeters*
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `file_id_or_file_url` **{String}** Target document.
+
+*Optional Perimeters*
+* `settings` **{Object}** Use for providing extra perimeters.
+    * `caption` **{String}** Adds a caption text message to the video. 0-200 characters max.
+    * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+
+E.g
+
+```javascript
+bot.sendDocument(chat_id, video_file_id, {}, function (isSuccess) {
+    console.log("File sent successfully: " + isSuccess);
+});
 ```
 
 ### sendHtml / sendMarkdown / sendText
