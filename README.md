@@ -565,6 +565,7 @@ Use this to send a made contact.
 * `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
 * `phoneNumber` **{String}** Contact's phone number.
 * `firstName` **{String}** Contact's first name.
+
 *Optional Perimeters*
 * `settings` **{Object}** Use for providing extra perimeters.
     * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
