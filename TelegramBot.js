@@ -152,6 +152,15 @@ module.exports = function (token, declareSettings) {
             }
         }
 
+        // onGroupLeft
+        if (content.hasOwnProperty("left_chat_member")) {
+            try {
+                self.onGroupLeft(content.chat, content.from, content.left_chat_member);
+            } catch (onGroupLeftError) {
+                self.onError("onGroupLeft", onGroupLeftError);
+            }
+        }
+
         // onText
         if (!content.hasOwnProperty("entities") && content.hasOwnProperty("text")) {
             try {
@@ -404,6 +413,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onGroupJoin = function () {
+        return;
+    };
+
+    this.onGroupLeft = function () {
         return;
     };
 

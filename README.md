@@ -7,13 +7,13 @@
 Badges from [Shields.io](http://shields.io)
 
 # TelegramBot Node.js getUpdates Method
-
 * [Setting Up](#setting-up)
 * [Declaring](#declaring)
     * [Events](#events)
         * [onAudio](#onaudio)
         * [onCommand](#oncommand)
         * [onGroupJoin](#ongroupjoin)
+        * [onGroupLeft](#ongroupleft)
         * [onPhoto](#onphoto)
         * [onText](#ontext)
         * [onVideo](#onvideo)
@@ -41,6 +41,7 @@ Badges from [Shields.io](http://shields.io)
         * [sendVoice](#sendvoice)
         * [toString](#tostring)
         * [unbanChatMember](#unbanchatmember)
+* [FAQ](#faq)
 * [Contributing](#contributing)
 
 All the returned objects objects can be found under this section on the [Telegram Bot API/Available Types](https://core.telegram.org/bots/api#available-types) page. The first 2 **{Chat Object}** and **{User Object}** will be the most common ones. Keep note of their values that are optional since you'll need to condition check if they are given or not.
@@ -61,19 +62,18 @@ In order to setup your bot. You'll need to download the .zip and extract the con
 
 Next you'll need to open **example.js** in your preferred code editor. Some example software are:
 
-**Windows**
-* Visual Studio Code - My preferred and current lightweight editor.
-* Notepad++ - An editor I use to use. Is also lightweight but doesn't contain a run debug console to instantly test the code. But is handy for formatting .json.
-* Notepad - Not recommended for coding.
-
 **Linux**
-* Bluefish - A lightweight code editor for Linux.
+* [Bluefish](http://bluefish.openoffice.nl)
+* [Visual Studio Code](https://code.visualstudio.com)
 
+**Mac**
 ... Sorry I don't know what to suggest for Mac.
 
-Inside, replace `YOUR_BOT_TOKEN` with your bot token you obtained from BotFather. If you do not have a bot token. Open your Telegram app and search for @BotFather and PM him. This is used for setting up a bot account and being given an access code address for it.
+**Windows**
+* [Notepad++](https://notepad-plus-plus.org)
+* [Visual Studio Code](https://code.visualstudio.com)
 
-Before you ask. This script "does not" publish your bot token unless you program it too. If you don't believe me you're free to look up the source code of **TelegramBot.js**. All it does is allow the class to communicate with the bot, were the class is made to make it easier for you program it.
+Inside, replace `YOUR_BOT_TOKEN` with your bot token you obtained from BotFather. If you do not have a bot token. Open your Telegram app and search for @BotFather and PM him. This is used for setting up a bot account and being given an access code address for it.
 
 Now you're ready to run and test the example. You should already have Node.js installed on your operating system. For Windows it's just a simple install, for other OS you may have issues.
 
@@ -178,6 +178,24 @@ bot.onGroupJoin = function (chat, from, user) {
 ```
 
 If you're wondering what is a good use of `from` and `user` user objects. You could compare `from.id === user.id` to check if that user invited themselves or `from.id !== user.id` that someone else invited them.
+
+### onGroupLeft
+Gets called every time the bot sees someone leaving the group.
+
+*Arguments*
+* `chat` provides a **{Chat Object}** were the user left.
+* `from` provides an **{User Object}**. This can be the user who's in the group who manually removed the user or the user who left themselves.
+* `user` provides a **{User Object}** of the user who left.
+
+E.g
+
+```javascript
+bot.onGroupLeft = function (chat, from, user) {
+    bot.sendText(chat.id, user.first_name + " left the group.");
+}
+```
+
+If you're wondering what is a good use of `from` and `user` user objects. You could compare `from.id === user.id` to check if that user left themselves or `from.id !== user.id` that someone else removed them.
 
 ### onPhoto
 Gets called every time the bot sees a new photo.
@@ -739,6 +757,13 @@ bot.unbanChatMember(chat_id, user_id, function (isSuccess) {
     console.log("User was unbanned: " + isSuccess);
 });
 ```
+
+## FAQ
+Q: Why did you make this class when there's already others available?
+A: Some lacked how-to documentation and examples. Also, setting up a certifcate and domain seemed for webhook method seems too complex.
+
+Q: Will my bot token get misused using this class?
+A: Definitely not. If you don't believe me. Feel free to look through the source code.
 
 ## Contributing
 * Casing: CONSTANT_NAMING, ClassNaming, functionNaming, variableNaming
