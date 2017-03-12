@@ -627,7 +627,7 @@ module.exports = function (token, declareSettings) {
         username = bot.username;
         console.log("Loaded: " + username);
         console.log("Loop calling every " + botSettings.loopDelay + " milliseconds.");
-        self.onStartUp();
+        self.onStartup();
         loop();
     });
 
