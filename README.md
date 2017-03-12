@@ -774,7 +774,7 @@ bot.unbanChatMember(chat_id, user_id, function (isSuccess) {
 
 ## FAQ
 * Q: Why did you make this class when there's already others available?
-    * A: Some lacked how-to documentation and examples. Also, setting up a certifcate and domain seemed for webhook method seems too complex.
+    * A: Some lacked how-to documentation and examples. Also, setting up a certifcate and domain for webhook method seems too complex.
 * Q: Will my bot token get misused using this class?
     * A: Definitely not. If you don't believe me. Feel free to look through the source code.
 
