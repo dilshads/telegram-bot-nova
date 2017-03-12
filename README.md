@@ -15,6 +15,7 @@ Badges from [Shields.io](http://shields.io)
         * [onGroupJoin](#ongroupjoin)
         * [onGroupLeft](#ongroupleft)
         * [onPhoto](#onphoto)
+        * [onStartup](#startup)
         * [onText](#ontext)
         * [onVideo](#onvideo)
         * [onVoice](#onvoice)
@@ -218,6 +219,19 @@ bot.onPhoto = function (chat, from, photo) {
 ```
 
 This example shows how to effectively make your bot memorize photos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
+
+### onStartup
+Gets called right after the instance declare has succeeded in obtaining getMe data to communicate with the bot. However, it doesn't get called if it fails to start properly.
+
+*No Arguments*
+
+E.g
+
+```javascript
+bot.onStartup = function () {
+    console.log("Bot startup success.");
+};
+```
 
 ### onText
 Gets called every time the bot sees a new message. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots.

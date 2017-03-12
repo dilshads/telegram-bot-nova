@@ -428,7 +428,7 @@ module.exports = function (token, declareSettings) {
         return;
     };
 
-    this.onStartUp = function () {
+    this.onStartup = function () {
         return;
     };
 
