@@ -18,7 +18,8 @@ Badges from [Shields.io](http://shields.io)
         * [onPhoto](#onphoto)
         * [onPinnedPhoto](#onpinnedphoto)
         * [onPinnedText](#onpinnedtext)
-        * [onStartup](#startup)
+        * [onStartup](#onstartup)
+        * [onSticker](#onsticker)
         * [onText](#ontext)
         * [onVideo](#onvideo)
         * [onVoice](#onvoice)
@@ -290,6 +291,22 @@ E.g
 bot.onStartup = function () {
     console.log("Bot startup success.");
 };
+```
+
+### onSticker
+Gets called every time the bot sees a new message. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the message.
+* `sticker` **{Sticker Object}** Sticker information. Use `sticker.file_id` to keep track of the stickers seen.
+
+E.g
+
+```javascript
+bot.onSticker = function (chat, from, sticker) {
+    console.log(from.first_name + " sent a sticker with " + sticker.width + "x" + sticker.height + " resolution.");
+}
 ```
 
 ### onText

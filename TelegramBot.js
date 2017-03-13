@@ -197,6 +197,15 @@ module.exports = function (token, declareSettings) {
             }
         }
 
+        // onSticker
+        if (content.hasOwnProperty("sticker")) {
+            try {
+                self.onSticker(content.chat, content.from, content.sticker);
+            } catch (onStickerError) {
+                self.onError("onSticker", onStickerError);
+            }
+        }
+
         // onVideo
         if (content.hasOwnProperty("video")) {
             try {
@@ -464,6 +473,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onStartup = function () {
+        return;
+    };
+
+    this.onSticker = function () {
         return;
     };
 
