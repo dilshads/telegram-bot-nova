@@ -1,4 +1,4 @@
-[![completion](https://img.shields.io/badge/completion-75%25-orange.svg)]()
+[![completion](https://img.shields.io/badge/completion-80%25-orange.svg)]()
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![jslint_issues](https://img.shields.io/badge/jslint%20issues-none-brightgreen.svg)](http://jslint.com)
@@ -12,9 +12,12 @@ Badges from [Shields.io](http://shields.io)
     * [Events](#events)
         * [onAudio](#onaudio)
         * [onCommand](#oncommand)
+        * [onFile](#onfile)
         * [onGroupJoin](#ongroupjoin)
         * [onGroupLeft](#ongroupleft)
         * [onPhoto](#onphoto)
+        * [onPinnedPhoto](#onpinnedphoto)
+        * [onPinnedText](#onpinnedtext)
         * [onStartup](#startup)
         * [onText](#ontext)
         * [onVideo](#onvideo)
@@ -122,10 +125,10 @@ To setup up an event. You'll need to had required the bot class and declared a b
 Gets called every time the bot sees a `.mp3` sound file.
 
 *Arguments*
-* `audio` provides an **{Audio Object}** that provides information about the audio. Use `audio.file_id` to keep track of the audios seen.
-* `caption` provides a **{String}** of the provided caption. No caption is "".
-* `chat` provides a **{Chat Object}** were the video sent.
-* `from` provides an **{User Object}** of the user who sent the video.
+* `audio` **{Audio Object}** Audio information. Use `audio.file_id` to keep track of the audios seen.
+* `caption` **{String}** Caption text. No caption is "".
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who send the audio.
 
 E.g
 
@@ -144,11 +147,11 @@ This example shows how to effectively make your bot memorize audios. Note that P
 Gets called every time the bot sees a command.
 
 *Arguments*
-* `chat` provides a **{Chat Object}** were the command occurred.
-* `from` provides an **{User Object}** who the user who triggered it.
-* `text` provides a **{String}** of the whole text.
-* `command` provides a **{String}** the command used (E.g "start" when the user enters "/start").
-* `commandData` provides a **{String}** of the remaining text after the first space (E.g "hi" when user enters "/start hi".
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who used the command.
+* `text` **{String}** Full command message.
+* `command` **{String}** The command that was used. (E.g "start" when the user enters "/start".).
+* `commandData` **{String}** The remaining text after the first space. No data is "". (E.g "hi" when user enters "/start hi".)
 
 E.g
 
@@ -162,13 +165,35 @@ bot.onCommand = function (chat, from, text, command, commandData) {
 
 Notice that the id from chat always returns the source were the command was triggered so the bot can reply to. Private message, group, supergroup or even a channel.
 
+### onFile
+Calls when a user sends a file. Full quality non-thumbnail images are counted files.
+
+*Arguments*
+* `caption` **{String}** File caption text. No caption is "".
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the file.
+* `file` **{Document Object}** File information. Use `file.file_id` to keep track of the files seen.
+
+E.g
+
+```javascript
+var files = [];
+bot.onFile = function (caption, chat, from, file) {
+    if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+        files.push(file.file_id);
+    }
+}
+```
+
+This example shows how to effectively make your bot memorize files. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
+
 ### onGroupJoin
 Gets called every time the bot sees someone joining the group.
 
 *Arguments*
-* `chat` provides a **{Chat Object}** were the user joined.
-* `from` provides an **{User Object}** who invited the new user. This can be the user who's in the group who manually added the new user or the user who joined manually themselves.
-* `user` provides a **{User Object}** of the user who joined.
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** Triggering user. This can be the user who's in the group who added the new user or the user who joined themselves.
+* `user` **{User Object}** The user who joined.
 
 E.g
 
@@ -184,9 +209,9 @@ If you're wondering what is a good use of `from` and `user` user objects. You co
 Gets called every time the bot sees someone leaving the group.
 
 *Arguments*
-* `chat` provides a **{Chat Object}** were the user left.
-* `from` provides an **{User Object}**. This can be the user who's in the group who manually removed the user or the user who left themselves.
-* `user` provides a **{User Object}** of the user who left.
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}**. Triggering user. This can be the user who's in the group who removed the user or the user who left themselves.
+* `user` **{User Object}** The user who left.
 
 E.g
 
@@ -202,10 +227,10 @@ If you're wondering what is a good use of `from` and `user` user objects. You co
 Gets called every time the bot sees a new photo.
 
 *Arguments*
-* `caption` provides a **{String}** of the provided caption. No caption is "".
-* `chat` provides a **{Chat Object}** were the photo sent.
-* `from` provides an **{User Object}** of the user who sent the photo.
-* `photo` provides an **{Array}** of **{PhotoSize Object}** that provides information about the photo.
+* `caption` **{String}** File caption text. No caption is "".
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** of the user who sent the photo.
+* `photo` **{Array} of {PhotoSize Object}** Provides photo information.
 
 E.g
 
@@ -219,6 +244,40 @@ bot.onPhoto = function (chat, from, photo) {
 ```
 
 This example shows how to effectively make your bot memorize photos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
+
+### onPinnedPhoto
+Calls when a user pins a photo. This excludes supergroups if the bot isn't an administrator.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `message_user` **{User Object}** User who wrote the pinned message.
+* `pinned_user` **{User Object}** User who pinned the message.
+* `photo` **{Array} of {PhotoSize Object}** Provides photo information.
+
+E.g
+
+```javascript
+bot.onPinnedPhoto = function (chat, message_user, pinned_user, text) {
+    console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s photo.");
+}
+```
+
+### onPinnedText
+Calls when a user pins text. This excludes supergroups if the bot isn't an administrator.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `message_user` **{User Object}** User who wrote the pinned message.
+* `pinned_user` **{User Object}** User who pinned the message.
+* `text` **{String}** Message text.
+
+E.g
+
+```javascript
+bot.onPinnedText = function (chat, message_user, pinned_user, text) {
+    console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s message that says: " + text);
+}
+```
 
 ### onStartup
 Gets called right after the instance declare has succeeded in obtaining getMe data to communicate with the bot. However, it doesn't get called if it fails to start properly.
@@ -237,9 +296,9 @@ bot.onStartup = function () {
 Gets called every time the bot sees a new message. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots.
 
 *Arguments*
-* `chat` provides a **{Chat Object}** were the message sent.
-* `from` provides an **{User Object}** of the user who sent the message.
-* `text` provides a **{String}** of the message itself.
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the message.
+* `text` **{String}** Message text.
 
 E.g
 
@@ -251,16 +310,16 @@ bot.onText = function (chat, from, text) {
 }
 ```
 
-When ever anyone says "hello bot" in any part of the message. This example will respond with a hello back.
+When someone says "hello bot" in any part of the message. This example will respond with a hello back.
 
 ### onVideo
 Gets called every time the bot sees a new video.
 
 *Arguments*
-* `caption` provides a **{String}** of the provided caption. No caption is "".
-* `chat` provides a **{Chat Object}** were the video sent.
-* `from` provides an **{User Object}** of the user who sent the video.
-* `video` provides a **{Video Object}** that provides information about the video. Use video.file_id to keep track of the videos seen.
+* `caption` **{String}** File caption text. No caption is "".
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the video.
+* `video` **{Video Object}** Video information. Use `video.file_id` to keep track of the videos seen.
 
 E.g
 
@@ -279,10 +338,10 @@ This example shows how to effectively make your bot memorize videos. Note that P
 Gets called every time the bot sees a `.ogg` voice message.
 
 *Arguments*
-* `caption` provides a **{String}** of the provided caption. No caption is "".
-* `chat` provides a **{Chat Object}** were the video sent.
-* `from` provides an **{User Object}** of the user who sent the video.
-* `voice` provides a **{Voice Object}** that provides information about the video. Use `voice.file_id` to keep track of the voice messages seen.
+* `caption` **{String}** File caption text. No caption is "".
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the voice message.
+* `voice` **{Voice Object}** Voice information. Use `voice.file_id` to keep track of the voice messages seen.
 
 E.g
 
@@ -776,7 +835,7 @@ bot.unbanChatMember(chat_id, user_id, function (isSuccess) {
 * Q: Why did you make this class when there's already others available?
     * A: Some lacked how-to documentation and examples. Also, setting up a certifcate and domain for webhook method seems too complex.
 * Q: Will my bot token get misused using this class?
-    * A: Definitely not. If you don't believe me. Feel free to look through the source code.
+    * A: No. If you don't believe me. Feel free to look through the source code.
 
 ## Contributing
 * Casing: CONSTANT_NAMING, ClassNaming, functionNaming, variableNaming

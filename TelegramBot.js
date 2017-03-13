@@ -134,6 +134,15 @@ module.exports = function (token, declareSettings) {
             }
         }
 
+        // onFile
+        if (content.hasOwnProperty("document")) {
+            try {
+                self.onFile(content.caption, content.chat, content.from, content.photo);
+            } catch (onFileError) {
+                self.onError("onFile", onFileError);
+            }
+        }
+
         // onPhoto
         if (content.hasOwnProperty("photo")) {
             try {
@@ -161,8 +170,26 @@ module.exports = function (token, declareSettings) {
             }
         }
 
+        // onPinnedPhoto
+        if (hasDeepProperty(content, "pinned_message.photo")) {
+            try {
+                self.onPinnedPhoto(content.chat, content.pinned_message.from, content.from, content.pinned_message.photo);
+            } catch (onPinnedPhotoError) {
+                self.onError("onPinnedPhoto", onPinnedPhotoError);
+            }
+        }
+
+        // onPinnedText
+        if (hasDeepProperty(content, "pinned_message.text")) {
+            try {
+                self.onPinnedText(content.chat, content.pinned_message.from, content.from, content.pinned_message.text);
+            } catch (onPinnedTextError) {
+                self.onError("onPinnedText", onPinnedTextError);
+            }
+        }
+
         // onText
-        if (!content.hasOwnProperty("entities") && content.hasOwnProperty("text")) {
+        if (content.hasOwnProperty("text")) {
             try {
                 self.onText(content.chat, content.from, content.text);
             } catch (onTextError) {
@@ -404,11 +431,11 @@ module.exports = function (token, declareSettings) {
         return;
     };
 
-    this.onDocument = function () { // Compressed images on Desktop Telegram are counted as documents.
+    this.onError = function () {
         return;
     };
 
-    this.onError = function () {
+    this.onFile = function () {
         return;
     };
 
@@ -421,6 +448,14 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onPhoto = function () {
+        return;
+    };
+
+    this.onPinnedPhoto = function () {
+        return;
+    };
+
+    this.onPinnedText = function () {
         return;
     };
 
