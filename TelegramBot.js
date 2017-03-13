@@ -377,6 +377,10 @@ module.exports = function (token, declareSettings) {
         });
     };
 
+    this.getLoopDelay = function () {
+        return botSettings.loopDelay;
+    };
+
     this.getMe = function (callback) {
         var urlQuery = {};
         web("GET", "/getMe", urlQuery, function (data) {
@@ -668,15 +672,13 @@ module.exports = function (token, declareSettings) {
 
     // Initialize the bot.
     self.getMe(function (isSuccess, bot) {
-        if (!isSuccess) {
-            console.error("Unable to getMe with bot token. Make sure token is correct and connected to the internet.");
-            return;
+        if (isSuccess) {
+            username = bot.username;
+            self.onStartup(true);
+            loop();
+        } else {
+            self.onStartup(false);
         }
-        username = bot.username;
-        console.log("Loaded: " + username);
-        console.log("Loop calling every " + botSettings.loopDelay + " milliseconds.");
-        self.onStartup();
-        loop();
     });
 
 };

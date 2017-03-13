@@ -29,6 +29,7 @@ Badges from [Shields.io](http://shields.io)
         * [getChatAdministrators](#getchatadministrators)
         * [getChatMember](#getchatmember)
         * [getChatMembersCount](#getchatmemberscount)
+        * [getLoopDelay](#getloopdelay)
         * [getMe](#getme)
         * [getStartUpTime](#getstartuptime)
         * [getUsername](#getusername)
@@ -280,15 +281,22 @@ bot.onPinnedText = function (chat, message_user, pinned_user, text) {
 ```
 
 ### onStartup
-Gets called right after the instance declare has succeeded in obtaining getMe data to communicate with the bot. However, it doesn't get called if it fails to start properly.
+Called after when the bot instance is declared and when the getMe data is obtained. This is before the getUpdates loop is started.
 
-*No Arguments*
+*Arguments*
+* `isSuccess` **{Boolean}**
 
 E.g
 
 ```javascript
-bot.onStartup = function () {
-    console.log("Bot startup success.");
+bot.onStartup = function (isSuccess) {
+    if (isSuccess) {
+        console.log("Loaded: " + bot.getUsername());
+        console.log("Loop calling every " + bot.getLoopDelay() + " milliseconds.");
+        console.log("Startup Time: " + (new Date().toLocaleTimeString()));
+    } else {
+        console.error("Unable to getMe with bot token. Make sure token is correct and connected to the internet.");
+    }
 };
 ```
 
@@ -514,6 +522,17 @@ bot.getFile(file_id, function (isSuccess, file) {
         console.log(JSON.stringify(file));
     }
 });
+```
+
+### getLoopDelay
+Use this to return a **{Number}** of the bot loop delay in milliseconds.
+
+*No Perimeters*
+
+E.g
+
+```javascript
+console.log(bot.getLoopDelay());
 ```
 
 ### getMe
