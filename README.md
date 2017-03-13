@@ -29,7 +29,6 @@ Badges from [Shields.io](http://shields.io)
         * [getChatAdministrators](#getchatadministrators)
         * [getChatMember](#getchatmember)
         * [getChatMembersCount](#getchatmemberscount)
-        * [getFile](#getfile)
         * [getMe](#getme)
         * [getStartUpTime](#getstartuptime)
         * [getUsername](#getusername)
@@ -39,7 +38,7 @@ Badges from [Shields.io](http://shields.io)
         * [sendAudio](#sendaudio)
         * [sendChatAction](#sendchataction)
         * [sendContact](#sendcontact)
-        * [sendDocument](#senddocument)
+        * [sendFile](#sendfile)
         * [sendPhoto](#sendphoto)
         * [sendHtml / sendMarkdown / sendText](#sendhtml--sendmarkdown--sendtext)
         * [sendVideo](#sendvideo)
@@ -691,8 +690,8 @@ bot.sendContact(chat.id, "012345 012345", "John");
 
 Note this is just a random number to illistrate the example.
 
-### sendDocument
-Use this to send a file to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
+### sendFile
+Use this to send a file to a target chat. You'll need to collect the `file.file_id` with files. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
 *Required Perimeters*
 * `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
@@ -709,7 +708,7 @@ Use this to send a file to a target chat. You'll need to collect the `video.file
 E.g
 
 ```javascript
-bot.sendDocument(chat_id, video_file_id, {}, function (isSuccess) {
+bot.sendFile(chat_id, file_id, {}, function (isSuccess) {
     console.log("File sent successfully: " + isSuccess);
 });
 ```
