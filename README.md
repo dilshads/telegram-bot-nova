@@ -72,7 +72,7 @@ Next you'll need to open **example.js** in your preferred code editor. Some exam
 * [Visual Studio Code](https://code.visualstudio.com)
 
 **Mac**
-... Sorry I don't know what to suggest for Mac.
+* ... Sorry I don't know what to suggest for Mac.
 
 **Windows**
 * [Notepad++](https://notepad-plus-plus.org)
