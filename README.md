@@ -230,7 +230,7 @@ Gets called every time the bot sees a new photo.
 *Arguments*
 * `caption` **{String}** File caption text. No caption is "".
 * `chat` **{Chat Object}** Chat were event occured.
-* `from` **{User Object}** of the user who sent the photo.
+* `from` **{User Object}** User who sent the photo.
 * `photo` **{Array} of {PhotoSize Object}** Provides photo information.
 
 E.g
@@ -388,7 +388,7 @@ Use this to replace a target message. Be aware bots can only replace their own m
 
 *Required Perimeters*
 * `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
-* `messageId` **{Number}** Target id of one of the bot own messages.
+* `message_id` **{Number}** Target id of one of the bot own messages.
 * `text` **{String}** The replacement text.
 
 *Optional Perimeters*
@@ -401,12 +401,12 @@ Use this to replace a target message. Be aware bots can only replace their own m
 E.g
 
 ```javascript
-bot.sendText("@MyGroup", "Counter: 0", {}, function (isSuccess, messageId) {
+bot.sendText("@MyGroup", "Counter: 0", {}, function (isSuccess, message_id) {
     if (isSuccess) {
         var count = 0;
         setInterval(function () {
             count += 1;
-            bot.editText(chat.id, messageId, "Counter: " + count);
+            bot.editText("@MyGroup", message_id, "Counter: " + count);
             if (count === Number.MAX_SAFE_INTEGER) {
                 clearInterval(this);
             }
@@ -415,7 +415,7 @@ bot.sendText("@MyGroup", "Counter: 0", {}, function (isSuccess, messageId) {
 });
 ```
 
-This example sends "Counter: 0" message to the target chat. If successful, the `setInterval` loop starts and replaces the last messageId with "Counter: 1", 2, 3 and so on every second.
+This example sends "Counter: 0" message to the target chat. If successful, the `setInterval` loop starts and replaces the last message with "Counter: 1", 2, 3 and so on every second.
 
 
 ### getChat
