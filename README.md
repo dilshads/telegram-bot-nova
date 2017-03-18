@@ -17,12 +17,14 @@ Badges from [Shields.io](http://shields.io)
         * [onGroupJoin](#ongroupjoin)
         * [onGroupLeft](#ongroupleft)
         * [onPhoto](#onphoto)
+        * [onPinnedAudio](#onpinnedaudio)
         * [onPinnedContact](#onpinnedcontact)
         * [onPinnedFile](#onpinnedfile)
         * [onPinnedPhoto](#onpinnedphoto)
         * [onPinnedSticker](#onpinnedsticker)
         * [onPinnedText](#onpinnedtext)
         * [onPinnedVideo](#onpinnedvideo)
+        * [onPinnedVoice](#onpinnedvoice)
         * [onStartup](#onstartup)
         * [onSticker](#onsticker)
         * [onText](#ontext)
@@ -276,6 +278,24 @@ bot.onPhoto = function (chat, from, photo) {
 
 This example shows how to effectively make your bot memorize photos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
 
+### onPinnedAudio
+Calls when a user pins an audio. This excludes supergroups if the bot isn't an administrator.
+
+*Arguments*
+* `audio` **{Audio Object}** Provides audio information.
+* `chat` **{Chat Object}** Chat were event occured.
+* `message_id` **{Number}** The message reference that was pinned.
+* `message_user` **{User Object}** User who wrote the pinned message.
+* `pinned_user` **{User Object}** User who pinned the message.
+
+E.g
+
+```javascript
+bot.onPinnedAudio = function (audio, chat, message_user, pinned_user) {
+    console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s audio.");
+}
+```
+
 ### onPinnedContact
 Calls when a user pins a contact. This excludes supergroups if the bot isn't an administrator.
 
@@ -382,6 +402,24 @@ E.g
 
 ```javascript
 bot.onPinnedVideo = function (chat, message_user, pinned_user, video) {
+    console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s video.");
+}
+```
+
+### onPinnedVoice
+Calls when a user pins a voice. This excludes supergroups if the bot isn't an administrator.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `message_id` **{Number}** The message reference that was pinned.
+* `message_user` **{User Object}** User who wrote the pinned message.
+* `pinned_user` **{User Object}** User who pinned the message.
+* `voice` **{Voice Object}** Provides voice information.
+
+E.g
+
+```javascript
+bot.onPinnedVoice = function (chat, message_user, pinned_user, voice) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s video.");
 }
 ```

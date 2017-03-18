@@ -219,6 +219,21 @@ module.exports = function (token, declareSettings) {
             }
         }
 
+        // onPinnedAudio
+        if (hasDeepProperty(content, "pinned_message.audio")) {
+            try {
+                self.onPinnedAudio(
+                    content.pinned_message.audio,
+                    content.chat,
+                    content.message_id,
+                    content.pinned_message.from,
+                    content.from
+                );
+            } catch (onPinnedAudioError) {
+                self.onError("onPinnedAudio", onPinnedAudioError);
+            }
+        }
+
         // onPinnedContact
         if (hasDeepProperty(content, "pinned_message.contact")) {
             try {
@@ -306,6 +321,21 @@ module.exports = function (token, declareSettings) {
                 );
             } catch (onPinnedVideoError) {
                 self.onError("onPinnedVideo", onPinnedVideoError);
+            }
+        }
+
+        // onPinnedVoice
+        if (hasDeepProperty(content, "pinned_message.voice")) {
+            try {
+                self.onPinnedVoice(
+                    content.chat,
+                    content.message_id,
+                    content.pinned_message.from,
+                    content.from,
+                    content.pinned_message.voice
+                );
+            } catch (onPinnedVoiceError) {
+                self.onError("onPinnedVoice", onPinnedVoiceError);
             }
         }
 
@@ -632,6 +662,10 @@ module.exports = function (token, declareSettings) {
         return;
     };
 
+    this.onPinnedAudio = function () {
+        return;
+    };
+
     this.onPinnedContact = function () {
         return;
     };
@@ -653,6 +687,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onPinnedVideo = function () {
+        return;
+    };
+
+    this.onPinnedVoice = function () {
         return;
     };
 
