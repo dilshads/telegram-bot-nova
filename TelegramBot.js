@@ -490,7 +490,6 @@ module.exports = function (token, declareSettings) {
             Object.assign(urlQuery, settings);
         }
         web("POST", "/forwardMessage", urlQuery, function (data) {
-            console.log("FORWARD" + JSON.stringify(data));
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);

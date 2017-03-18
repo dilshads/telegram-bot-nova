@@ -1048,7 +1048,7 @@ bot.unbanChatMember(chat_id, user_id, function (isSuccess) {
 * Q: Missing methods?
     * A: I'm trying to add all the available methods. I can confirm these aren't available.
         * Events: onUnPinnedMessage
-        * Actions: deleteMessage
+        * Actions: deleteMessage, joinChat
 * Q: Why did you make this class when there's already others available?
     * A: Some lacked how-to documentation and examples. Also, setting up a certifcate and domain for webhook method seems too complex.
 * Q: Will my bot token get misused using this class?
