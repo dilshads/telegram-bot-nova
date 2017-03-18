@@ -31,7 +31,7 @@ Badges from [Shields.io](http://shields.io)
         * [getChatMembersCount](#getchatmemberscount)
         * [getLoopDelay](#getloopdelay)
         * [getMe](#getme)
-        * [getStartUpTime](#getstartuptime)
+        * [getStartupTime](#getstartuptime)
         * [getUsername](#getusername)
         * [getUserProfilePhotos](#getuserprofilephotos)
         * [kickChatMember](#kickchatmember)
@@ -564,15 +564,15 @@ E.g
 console.log(bot.getUsername());
 ```
 
-### getStartUpTime
-Use this to return a **{Number}** millisecond value. This is a saved `new Date().getTime()` value from when the bot was declared.
+### getStartupTime
+Use this to return a **{Number}** millisecond value. This is a saved `Date.now()` value from when the bot was declared.
 
 *No Perimeters*
 
 E.g
 
 ```javascript
-console.log(bot.getStartUpTime());
+console.log(bot.getStartupTime());
 ```
 
 ### getUserProfilePhotos

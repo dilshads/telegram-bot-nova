@@ -16,7 +16,7 @@ module.exports = function (token, declareSettings) {
     };
 
     var self = this,
-        startUpTime = Date.now(),
+        startupTime = Date.now(),
         updateId = 0,
         username = "";
 
@@ -388,8 +388,8 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.getStartUpTime = function () {
-        return startUpTime;
+    this.getStartupTime = function () {
+        return startupTime;
     };
 
     this.getUsername = function () {
