@@ -134,6 +134,15 @@ module.exports = function (token, declareSettings) {
             }
         }
 
+        // onContact
+        if (content.hasOwnProperty("contact")) {
+            try {
+                self.onContact(content.chat, content.from, content.contact);
+            } catch (onContactError) {
+                self.onError("onContact", onContactError);
+            }
+        }
+
         // onFile
         if (content.hasOwnProperty("document")) {
             try {
@@ -167,6 +176,15 @@ module.exports = function (token, declareSettings) {
                 self.onGroupLeft(content.chat, content.from, content.left_chat_member);
             } catch (onGroupLeftError) {
                 self.onError("onGroupLeft", onGroupLeftError);
+            }
+        }
+
+        // onPinnedContact
+        if (hasDeepProperty(content, "pinned_message.contact")) {
+            try {
+                self.onPinnedContact(content.chat, content.pinned_message.from, content.from, content.pinned_message.contact);
+            } catch (onPinnedContactError) {
+                self.onError("onPinnedContact", onPinnedContactError);
             }
         }
 
@@ -471,6 +489,10 @@ module.exports = function (token, declareSettings) {
         return;
     };
 
+    this.onContact = function () {
+        return;
+    };
+
     this.onError = function () {
         return;
     };
@@ -488,6 +510,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onPhoto = function () {
+        return;
+    };
+
+    this.onPinnedContact = function () {
         return;
     };
 

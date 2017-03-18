@@ -12,10 +12,12 @@ Badges from [Shields.io](http://shields.io)
     * [Events](#events)
         * [onAudio](#onaudio)
         * [onCommand](#oncommand)
+        * [onContact](#oncontact)
         * [onFile](#onfile)
         * [onGroupJoin](#ongroupjoin)
         * [onGroupLeft](#ongroupleft)
         * [onPhoto](#onphoto)
+        * [onPinnedContact](#onpinnedcontact)
         * [onPinnedFile](#onpinnedfile)
         * [onPinnedPhoto](#onpinnedphoto)
         * [onPinnedSticker](#onpinnedsticker)
@@ -169,6 +171,23 @@ bot.onCommand = function (chat, from, text, command, commandData) {
 
 Notice that the id from chat always returns the source were the command was triggered so the bot can reply to. Private message, group, supergroup or even a channel.
 
+### onContact
+Calls when a user sends a contact.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the file.
+* `contact` **{Contact Object}** Contact information.
+
+E.g
+
+```javascript
+bot.onContact = function (chat, from, file) {
+    console.log("Name: " + contact.first_name);
+    console.log("Number: " + contact.phone_number);
+}
+```
+
 ### onFile
 Calls when a user sends a file. Full quality non-thumbnail images are counted files.
 
@@ -248,6 +267,25 @@ bot.onPhoto = function (chat, from, photo) {
 ```
 
 This example shows how to effectively make your bot memorize photos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
+
+### onPinnedContact
+Calls when a user pins a contact. This excludes supergroups if the bot isn't an administrator.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `message_user` **{User Object}** User who wrote the pinned message.
+* `pinned_user` **{User Object}** User who pinned the message.
+* `contact` **{Contact Object}** Provides contact information.
+
+E.g
+
+```javascript
+bot.onPinnedContact = function (chat, message_user, pinned_user, contact) {
+    console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s contact.");
+    console.log("Name: " + contact.first_name);
+    console.log("Number: " + contact.phone_number);
+}
+```
 
 ### onPinnedFile
 Calls when a user pins a file. This excludes supergroups if the bot isn't an administrator.
