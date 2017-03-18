@@ -105,7 +105,13 @@ module.exports = function (token, declareSettings) {
         // onAudio
         if (content.hasOwnProperty("audio")) {
             try {
-                self.onAudio(content.audio, content.caption, content.chat, content.from);
+                self.onAudio(
+                    content.audio,
+                    content.caption,
+                    content.chat,
+                    content.from,
+                    content.message_id
+                );
             } catch (onAudioError) {
                 self.onError("onAudio", onAudioError);
             }
@@ -128,7 +134,14 @@ module.exports = function (token, declareSettings) {
                 }
             }
             try {
-                self.onCommand(content.chat, content.from, content.text, command, commandData);
+                self.onCommand(
+                    content.chat,
+                    content.from,
+                    content.message_id,
+                    content.text,
+                    command,
+                    commandData
+                );
             } catch (onCommandError) {
                 self.onError("onCommand", onCommandError);
             }
@@ -137,7 +150,12 @@ module.exports = function (token, declareSettings) {
         // onContact
         if (content.hasOwnProperty("contact")) {
             try {
-                self.onContact(content.chat, content.from, content.contact);
+                self.onContact(
+                    content.chat,
+                    content.from,
+                    content.contact,
+                    content.message_id
+                );
             } catch (onContactError) {
                 self.onError("onContact", onContactError);
             }
@@ -146,25 +164,27 @@ module.exports = function (token, declareSettings) {
         // onFile
         if (content.hasOwnProperty("document")) {
             try {
-                self.onFile(content.caption, content.chat, content.from, content.photo);
+                self.onFile(
+                    content.caption,
+                    content.chat,
+                    content.from,
+                    content.document,
+                    content.message_id
+                );
             } catch (onFileError) {
                 self.onError("onFile", onFileError);
-            }
-        }
-
-        // onPhoto
-        if (content.hasOwnProperty("photo")) {
-            try {
-                self.onPhoto(content.caption, content.chat, content.from, content.photo);
-            } catch (onPhotoError) {
-                self.onError("onPhoto", onPhotoError);
             }
         }
 
         // onGroupJoin
         if (content.hasOwnProperty("new_chat_member")) {
             try {
-                self.onGroupJoin(content.chat, content.from, content.new_chat_member);
+                self.onGroupJoin(
+                    content.chat,
+                    content.new_chat_member,
+                    content.message_id,
+                    content.from
+                );
             } catch (onGroupJoinError) {
                 self.onError("onJoinGroup", onGroupJoinError);
             }
@@ -173,16 +193,42 @@ module.exports = function (token, declareSettings) {
         // onGroupLeft
         if (content.hasOwnProperty("left_chat_member")) {
             try {
-                self.onGroupLeft(content.chat, content.from, content.left_chat_member);
+                self.onGroupLeft(
+                    content.chat,
+                    content.left_chat_member,
+                    content.message_id,
+                    content.from
+                );
             } catch (onGroupLeftError) {
                 self.onError("onGroupLeft", onGroupLeftError);
+            }
+        }
+
+        // onPhoto
+        if (content.hasOwnProperty("photo")) {
+            try {
+                self.onPhoto(
+                    content.caption,
+                    content.chat,
+                    content.from,
+                    content.message_id,
+                    content.photo
+                );
+            } catch (onPhotoError) {
+                self.onError("onPhoto", onPhotoError);
             }
         }
 
         // onPinnedContact
         if (hasDeepProperty(content, "pinned_message.contact")) {
             try {
-                self.onPinnedContact(content.chat, content.pinned_message.from, content.from, content.pinned_message.contact);
+                self.onPinnedContact(
+                    content.chat,
+                    content.message_id,
+                    content.pinned_message.from,
+                    content.from,
+                    content.pinned_message.contact
+                );
             } catch (onPinnedContactError) {
                 self.onError("onPinnedContact", onPinnedContactError);
             }
@@ -191,7 +237,13 @@ module.exports = function (token, declareSettings) {
         // onPinnedFile
         if (hasDeepProperty(content, "pinned_message.document")) {
             try {
-                self.onPinnedFile(content.chat, content.pinned_message.from, content.from, content.pinned_message.document);
+                self.onPinnedFile(
+                    content.chat,
+                    content.message_id,
+                    content.pinned_message.from,
+                    content.from,
+                    content.pinned_message.document
+                );
             } catch (onPinnedFileError) {
                 self.onError("onPinnedFile", onPinnedFileError);
             }
@@ -200,7 +252,13 @@ module.exports = function (token, declareSettings) {
         // onPinnedPhoto
         if (hasDeepProperty(content, "pinned_message.photo")) {
             try {
-                self.onPinnedPhoto(content.chat, content.pinned_message.from, content.from, content.pinned_message.photo);
+                self.onPinnedPhoto(
+                    content.chat,
+                    content.message_id,
+                    content.pinned_message.from,
+                    content.from,
+                    content.pinned_message.photo
+                );
             } catch (onPinnedPhotoError) {
                 self.onError("onPinnedPhoto", onPinnedPhotoError);
             }
@@ -209,7 +267,13 @@ module.exports = function (token, declareSettings) {
         // onPinnedSticker
         if (hasDeepProperty(content, "pinned_message.sticker")) {
             try {
-                self.onPinnedSticker(content.chat, content.pinned_message.from, content.from, content.pinned_message.sticker);
+                self.onPinnedSticker(
+                    content.chat,
+                    content.message_id,
+                    content.pinned_message.from,
+                    content.from,
+                    content.pinned_message.sticker
+                );
             } catch (onPinnedStickerError) {
                 self.onError("onPinnedSticker", onPinnedStickerError);
             }
@@ -218,7 +282,13 @@ module.exports = function (token, declareSettings) {
         // onPinnedText
         if (hasDeepProperty(content, "pinned_message.text")) {
             try {
-                self.onPinnedText(content.chat, content.pinned_message.from, content.from, content.pinned_message.text);
+                self.onPinnedText(
+                    content.chat,
+                    content.message_id,
+                    content.pinned_message.from,
+                    content.from,
+                    content.pinned_message.text
+                );
             } catch (onPinnedTextError) {
                 self.onError("onPinnedText", onPinnedTextError);
             }
@@ -227,34 +297,56 @@ module.exports = function (token, declareSettings) {
         // onPinnedVideo
         if (hasDeepProperty(content, "pinned_message.video")) {
             try {
-                self.onPinnedVideo(content.chat, content.pinned_message.from, content.from, content.pinned_message.video);
+                self.onPinnedVideo(
+                    content.chat,
+                    content.message_id,
+                    content.pinned_message.from,
+                    content.from,
+                    content.pinned_message.video
+                );
             } catch (onPinnedVideoError) {
                 self.onError("onPinnedVideo", onPinnedVideoError);
-            }
-        }
-
-        // onText
-        if (content.hasOwnProperty("text")) {
-            try {
-                self.onText(content.chat, content.from, content.text);
-            } catch (onTextError) {
-                self.onError("onText", onTextError);
             }
         }
 
         // onSticker
         if (content.hasOwnProperty("sticker")) {
             try {
-                self.onSticker(content.chat, content.from, content.sticker);
+                self.onSticker(
+                    content.chat,
+                    content.from,
+                    content.message_id,
+                    content.sticker
+                );
             } catch (onStickerError) {
                 self.onError("onSticker", onStickerError);
+            }
+        }
+
+        // onText
+        if (content.hasOwnProperty("text")) {
+            try {
+                self.onText(
+                    content.chat,
+                    content.from,
+                    content.message_id,
+                    content.text
+                );
+            } catch (onTextError) {
+                self.onError("onText", onTextError);
             }
         }
 
         // onVideo
         if (content.hasOwnProperty("video")) {
             try {
-                self.onVideo(content.caption, content.chat, content.from, content.video);
+                self.onVideo(
+                    content.caption,
+                    content.chat,
+                    content.from,
+                    content.message_id,
+                    content.video
+                );
             } catch (onVideoError) {
                 self.onError("onVideo", onVideoError);
             }
@@ -263,7 +355,13 @@ module.exports = function (token, declareSettings) {
         // onVoice
         if (content.hasOwnProperty("voice")) {
             try {
-                self.onVoice(content.caption, content.chat, content.from, content.voice);
+                self.onVoice(
+                    content.caption,
+                    content.chat,
+                    content.from,
+                    content.message_id,
+                    content.voice
+                );
             } catch (onVoiceError) {
                 self.onError("onAudio", onVoiceError);
             }
@@ -348,6 +446,27 @@ module.exports = function (token, declareSettings) {
         web("POST", "/editMessageText", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
+            }
+        });
+    };
+
+    this.forwardMessage = function (target_chat, source_chat, message_id, settings, callback) {
+        var urlQuery = {
+            "chat_id": target_chat,
+            "from_chat_id": source_chat,
+            "message_id": message_id
+        };
+        if (typeof settings === "object") {
+            Object.assign(urlQuery, settings);
+        }
+        web("POST", "/forwardMessage", urlQuery, function (data) {
+            console.log("FORWARD" + JSON.stringify(data));
+            if (typeof callback === "function") {
+                if (data.ok) {
+                    callback(data.ok, data.result.message_id);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };
@@ -567,7 +686,11 @@ module.exports = function (token, declareSettings) {
         }
         web("POST", "/sendAudio", urlQuery, function (data) {
             if (typeof callback === "function") {
-                callback(data.ok);
+                if (data.ok) {
+                    callback(data.ok, data.result.message_id);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };
@@ -595,7 +718,11 @@ module.exports = function (token, declareSettings) {
         }
         web("POST", "/sendContact", urlQuery, function (data) {
             if (typeof callback === "function") {
-                callback(data.ok);
+                if (data.ok) {
+                    callback(data.ok, data.result.message_id);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };
@@ -610,7 +737,11 @@ module.exports = function (token, declareSettings) {
         }
         web("POST", "/sendDocument", urlQuery, function (data) {
             if (typeof callback === "function") {
-                callback(data.ok);
+                if (data.ok) {
+                    callback(data.ok, data.result.message_id);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };
@@ -625,7 +756,11 @@ module.exports = function (token, declareSettings) {
         }
         web("POST", "/sendPhoto", urlQuery, function (data) {
             if (typeof callback === "function") {
-                callback(data.ok);
+                if (data.ok) {
+                    callback(data.ok, data.result.message_id);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };
@@ -699,7 +834,11 @@ module.exports = function (token, declareSettings) {
         }
         web("POST", "/sendVideo", urlQuery, function (data) {
             if (typeof callback === "function") {
-                callback(data.ok);
+                if (data.ok) {
+                    callback(data.ok, data.result.message_id);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };
@@ -714,7 +853,11 @@ module.exports = function (token, declareSettings) {
         }
         web("POST", "/sendVoice", urlQuery, function (data) {
             if (typeof callback === "function") {
-                callback(data.ok);
+                if (data.ok) {
+                    callback(data.ok, data.result.message_id);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };

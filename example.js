@@ -5,7 +5,7 @@ const TelegramBot = require("./TelegramBot");
 var bot = new TelegramBot("YOUR_BOT_TOKEN");
 
 // Setup catched events to make your bot responsive.
-bot.onCommand = function (chat, from, text, command, commandData) {
+bot.onCommand = function (chat, from, message_id, text, command, commandData) {
     "use strict";
 
     // start command example.
