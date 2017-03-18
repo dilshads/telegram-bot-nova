@@ -113,7 +113,7 @@ module.exports = function (token, declareSettings) {
 
         // onCommand
         if (hasDeepProperty(content, "entities.0.type") && content.entities[0].type === "bot_command") {
-            if (content.text.charAt(0) !== "\/") {
+            if (content.text.charAt(0) !== "/") {
                 return;
             }
             split = content.text.indexOf(" ");
@@ -170,6 +170,15 @@ module.exports = function (token, declareSettings) {
             }
         }
 
+        // onPinnedFile
+        if (hasDeepProperty(content, "pinned_message.document")) {
+            try {
+                self.onPinnedFile(content.chat, content.pinned_message.from, content.from, content.pinned_message.document);
+            } catch (onPinnedFileError) {
+                self.onError("onPinnedFile", onPinnedFileError);
+            }
+        }
+
         // onPinnedPhoto
         if (hasDeepProperty(content, "pinned_message.photo")) {
             try {
@@ -179,12 +188,30 @@ module.exports = function (token, declareSettings) {
             }
         }
 
+        // onPinnedSticker
+        if (hasDeepProperty(content, "pinned_message.sticker")) {
+            try {
+                self.onPinnedSticker(content.chat, content.pinned_message.from, content.from, content.pinned_message.sticker);
+            } catch (onPinnedStickerError) {
+                self.onError("onPinnedSticker", onPinnedStickerError);
+            }
+        }
+
         // onPinnedText
         if (hasDeepProperty(content, "pinned_message.text")) {
             try {
                 self.onPinnedText(content.chat, content.pinned_message.from, content.from, content.pinned_message.text);
             } catch (onPinnedTextError) {
                 self.onError("onPinnedText", onPinnedTextError);
+            }
+        }
+
+        // onPinnedVideo
+        if (hasDeepProperty(content, "pinned_message.video")) {
+            try {
+                self.onPinnedVideo(content.chat, content.pinned_message.from, content.from, content.pinned_message.video);
+            } catch (onPinnedVideoError) {
+                self.onError("onPinnedVideo", onPinnedVideoError);
             }
         }
 
@@ -464,11 +491,23 @@ module.exports = function (token, declareSettings) {
         return;
     };
 
+    this.onPinnedFile = function () {
+        return;
+    };
+
     this.onPinnedPhoto = function () {
         return;
     };
 
+    this.onPinnedSticker = function () {
+        return;
+    };
+
     this.onPinnedText = function () {
+        return;
+    };
+
+    this.onPinnedVideo = function () {
         return;
     };
 

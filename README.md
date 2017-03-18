@@ -16,8 +16,11 @@ Badges from [Shields.io](http://shields.io)
         * [onGroupJoin](#ongroupjoin)
         * [onGroupLeft](#ongroupleft)
         * [onPhoto](#onphoto)
+        * [onPinnedFile](#onpinnedfile)
         * [onPinnedPhoto](#onpinnedphoto)
+        * [onPinnedSticker](#onpinnedsticker)
         * [onPinnedText](#onpinnedtext)
+        * [onPinnedVideo](#onpinnedvideo)
         * [onStartup](#onstartup)
         * [onSticker](#onsticker)
         * [onText](#ontext)
@@ -246,6 +249,23 @@ bot.onPhoto = function (chat, from, photo) {
 
 This example shows how to effectively make your bot memorize photos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
 
+### onPinnedFile
+Calls when a user pins a file. This excludes supergroups if the bot isn't an administrator.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `message_user` **{User Object}** User who wrote the pinned message.
+* `pinned_user` **{User Object}** User who pinned the message.
+* `file` **{File Object}** Provides video information.
+
+E.g
+
+```javascript
+bot.onPinnedFile = function (chat, message_user, pinned_user, file) {
+    console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s video.");
+}
+```
+
 ### onPinnedPhoto
 Calls when a user pins a photo. This excludes supergroups if the bot isn't an administrator.
 
@@ -263,6 +283,23 @@ bot.onPinnedPhoto = function (chat, message_user, pinned_user, text) {
 }
 ```
 
+### onPinnedSticker
+Calls when a user pins a sticker. This excludes supergroups if the bot isn't an administrator.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `message_user` **{User Object}** User who wrote the pinned message.
+* `pinned_user` **{User Object}** User who pinned the message.
+* `sticker` **{Sticker Object}** Provides sticker information.
+
+E.g
+
+```javascript
+bot.onPinnedSticker = function (chat, message_user, pinned_user, sticker) {
+    console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s sticker.");
+}
+```
+
 ### onPinnedText
 Calls when a user pins text. This excludes supergroups if the bot isn't an administrator.
 
@@ -277,6 +314,23 @@ E.g
 ```javascript
 bot.onPinnedText = function (chat, message_user, pinned_user, text) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s message that says: " + text);
+}
+```
+
+### onPinnedVideo
+Calls when a user pins a video. This excludes supergroups if the bot isn't an administrator.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `message_user` **{User Object}** User who wrote the pinned message.
+* `pinned_user` **{User Object}** User who pinned the message.
+* `video` **{Video Object}** Provides video information.
+
+E.g
+
+```javascript
+bot.onPinnedVideo = function (chat, message_user, pinned_user, video) {
+    console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s video.");
 }
 ```
 
