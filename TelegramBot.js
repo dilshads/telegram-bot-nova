@@ -88,6 +88,28 @@ module.exports = function (token, declareSettings) {
 
         updateId = result.update_id + 1;
 
+        // onEditText
+        if (result.hasOwnProperty("edited_channel_post") || result.hasOwnProperty("edited_message")) {
+            if (result.hasOwnProperty("edited_channel_post")) {
+                content = result.edited_channel_post;
+            } else {
+                content = result.edited_message;
+            }
+            // Adds default values only for those that are missing.
+            content = defaultsDeep(content, EVENT_DEFAULTS);
+            try {
+                self.onEditText(
+                    content.chat,
+                    content.from,
+                    content.message_id,
+                    content.text
+                );
+            } catch (onEditTextError) {
+                self.onError("onEditText", onEditTextError);
+            }
+            return;
+        }
+
         // Since result.message and result.channel_post hold near the same content.
         // This simplfies the checking.
         if (result.hasOwnProperty("message")) {
@@ -95,7 +117,7 @@ module.exports = function (token, declareSettings) {
         } else if (result.hasOwnProperty("channel_post")) {
             content = result.channel_post;
         } else {
-            console.error("processEvent - Unknown result found. " + JSON.stringify(result));
+            console.error("processEvent - Unknown result found.\n" + JSON.stringify(result));
             return;
         }
 
@@ -638,6 +660,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onContact = function () {
+        return;
+    };
+
+    this.onEditText = function () {
         return;
     };
 

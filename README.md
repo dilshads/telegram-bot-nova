@@ -13,6 +13,7 @@ Badges from [Shields.io](http://shields.io)
         * [onAudio](#onaudio)
         * [onCommand](#oncommand)
         * [onContact](#oncontact)
+        * [onEditText](#onedittext)
         * [onFile](#onfile)
         * [onGroupJoin](#ongroupjoin)
         * [onGroupLeft](#ongroupleft)
@@ -191,6 +192,24 @@ E.g
 bot.onContact = function (chat, from, contact, message_id) {
     console.log("Name: " + contact.first_name);
     console.log("Number: " + contact.phone_number);
+}
+```
+
+### onEditText
+Calls when a message is edited. However, this excludes supergroups if the bot isn't an administrator. Note that this event does not return the orginal text before.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the message.
+* `message_id` **{Number}** Message reference.
+* `new_text` **{String}** Message text.
+
+E.g
+
+```javascript
+bot.onEditText = function (chat, from, message_id, new_text) {
+    console.log(from.first_name + " edited message " + message_id);
+    console.log("in " + chat.first_name + " with " + new_text);
 }
 ```
 
