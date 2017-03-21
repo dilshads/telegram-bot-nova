@@ -51,6 +51,7 @@ Badges from [Shields.io](http://shields.io)
         * [sendFile](#sendfile)
         * [sendPhoto](#sendphoto)
         * [sendHtml / sendMarkdown / sendText](#sendhtml--sendmarkdown--sendtext)
+        * [sendVenue](#sendvenue)
         * [sendVideo](#sendvideo)
         * [sendVoice](#sendvoice)
         * [toString](#tostring)
@@ -851,7 +852,7 @@ Use this to send a mp3 to a target chat. You'll need to collect the `audio.file_
     * `title` **{String}**
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
-    * `message_id` Id of the sent content.
+    * `message_id` **{Number}** Id of the sent content.
 
 E.g
 
@@ -892,7 +893,7 @@ Use this to send a made contact.
     * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
-    * `message_id` Id of the sent content.
+    * `message_id` **{Number}** Id of the sent content.
 
 E.g
 
@@ -916,7 +917,7 @@ Use this to send a file to a target chat. You'll need to collect the `file.file_
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
-    * `message_id` Id of the sent content.
+    * `message_id` **{Number}** Id of the sent content.
 
 E.g
 
@@ -978,7 +979,7 @@ Use this to send an image to a target chat. You'll need to collect the `photo[ph
     * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
-    * `message_id` Id of the sent content.
+    * `message_id` **{Number}** Id of the sent content.
 
 E.g
 
@@ -987,6 +988,34 @@ bot.sendPhoto(chat_id, video_file_id, {}, function (isSuccess) {
     console.log("Image sent successfully: " + isSuccess);
 });
 ```
+
+### sendVenue
+Use this to send a map location.
+
+*Required Perimeters*
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `latitude` **{Float Number}** The latitude point of the location.
+* `longitude` **{Float Number}** The longitude point of the location.
+* `title` **{String}** The title of the location. Doesn't have to be real.
+* `address` **{String}** The address of the location. Doesn't have to be real.
+
+*Optional Perimeters*
+* `settings` **{Object}** Use for providing extra perimeters.
+    * `foursquare_id` **{String}** Foursquare identifyer for the venue.
+    * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+    * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+    * `message_id` **{Number}** Id of the sent content.
+
+E.g
+
+```javascript
+bot.sendVenue(chat.id, 1.00, 1.00, "Some Place", "Somewhere");
+```
+
+Note the example is just random but it works.
 
 ### sendVideo
 Use this to send a video to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
@@ -1005,7 +1034,7 @@ Use this to send a video to a target chat. You'll need to collect the `video.fil
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
-    * `message_id` Id of the sent content.
+    * `message_id` **{Number}** Id of the sent content.
 
 E.g
 
@@ -1034,7 +1063,7 @@ Use this to send a ogg voice file to a target chat. You'll need to collect the `
     * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
-    * `message_id` Id of the sent content.
+    * `message_id` **{Number}** Id of the sent content.
 
 E.g
 
@@ -1079,7 +1108,7 @@ bot.unbanChatMember(chat_id, user_id, function (isSuccess) {
     * Visual Studio Code : `/*jslint es6: true, node: true, this: true */`
     * jslint.com : es6 true, node true, multiple vars true, this true
 * Spacing: 4 Spaces
-* Use-Strict: Allowed
+* Use-Strict: Used
 
 Make sure your editor is set for 4 spaces and not tabs. Notepad++ is set to tab with a spacing of 4 but not actual spaces.
 

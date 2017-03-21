@@ -887,6 +887,28 @@ module.exports = function (token, declareSettings) {
         });
     };
 
+    this.sendVenue = function (target_chat, latitude, longitude, title, address, settings, callback) {
+        var urlQuery = {
+            "chat_id": target_chat,
+            "latitude": latitude,
+            "longitude": longitude,
+            "title": title,
+            "address": address
+        };
+        if (typeof settings === "object") {
+            Object.assign(urlQuery, settings);
+        }
+        web("POST", "/sendVenue", urlQuery, function (data) {
+            if (typeof callback === "function") {
+                if (data.ok) {
+                    callback(data.ok, data.result.message_id);
+                } else {
+                    callback(data.ok);
+                }
+            }
+        });
+    };
+
     this.sendVideo = function (chatId, fileIdOrLink, settings, callback) {
         var urlQuery = {
             "chat_id": chatId,
