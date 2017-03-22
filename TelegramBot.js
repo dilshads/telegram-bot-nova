@@ -331,6 +331,21 @@ module.exports = function (token, declareSettings) {
             }
         }
 
+        // onPinnedVenue
+        if (hasDeepProperty(content, "pinned_message.venue")) {
+            try {
+                self.onPinnedVenue(
+                    content.chat,
+                    content.message_id,
+                    content.pinned_message.from,
+                    content.from,
+                    content.pinned_message.venue
+                );
+            } catch (onPinnedVenueError) {
+                self.onError("onPinnedVenue", onPinnedVenueError);
+            }
+        }
+
         // onPinnedVideo
         if (hasDeepProperty(content, "pinned_message.video")) {
             try {
@@ -386,6 +401,20 @@ module.exports = function (token, declareSettings) {
                 );
             } catch (onTextError) {
                 self.onError("onText", onTextError);
+            }
+        }
+
+        // onVenue
+        if (content.hasOwnProperty("venue")) {
+            try {
+                self.onVenue(
+                    content.chat,
+                    content.from,
+                    content.message_id,
+                    content.venue
+                );
+            } catch (onVenueError) {
+                self.onError("onVenue", onVenueError);
             }
         }
 
@@ -708,6 +737,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onPinnedText = function () {
+        return;
+    };
+
+    this.onPinnedVenue = function () {
         return;
     };
 

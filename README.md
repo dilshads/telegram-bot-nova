@@ -24,11 +24,13 @@ Badges from [Shields.io](http://shields.io)
         * [onPinnedPhoto](#onpinnedphoto)
         * [onPinnedSticker](#onpinnedsticker)
         * [onPinnedText](#onpinnedtext)
+        * [onPinnedVenue](#onpinnedvenue)
         * [onPinnedVideo](#onpinnedvideo)
         * [onPinnedVoice](#onpinnedvoice)
         * [onStartup](#onstartup)
         * [onSticker](#onsticker)
         * [onText](#ontext)
+        * [onVenue](#onvenue)
         * [onVideo](#onvideo)
         * [onVoice](#onvoice)
     * [Actions](#actions)
@@ -268,7 +270,7 @@ Gets called every time the bot sees someone leaving the group.
 E.g
 
 ```javascript
-bot.onGroupLeft = function (chat, leaving_user, triggering_user) {
+bot.onGroupLeft = function (chat, leaving_user, message_id, triggering_user) {
     bot.sendText(chat.id, leaving_user.first_name + " left the group.");
 }
 ```
@@ -289,7 +291,7 @@ E.g
 
 ```javascript
 var photos = [];
-bot.onPhoto = function (chat, from, photo) {
+bot.onPhoto = function (chat, from, message_id, photo) {
     if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
         photos.push(photo[photo.length - 1].file_id);
     }
@@ -311,7 +313,7 @@ Calls when a user pins an audio. This excludes supergroups if the bot isn't an a
 E.g
 
 ```javascript
-bot.onPinnedAudio = function (audio, chat, message_user, pinned_user) {
+bot.onPinnedAudio = function (audio, chat, message_id, message_user, pinned_user) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s audio.");
 }
 ```
@@ -329,7 +331,7 @@ Calls when a user pins a contact. This excludes supergroups if the bot isn't an 
 E.g
 
 ```javascript
-bot.onPinnedContact = function (chat, message_user, pinned_user, contact) {
+bot.onPinnedContact = function (chat, message_id, message_user, pinned_user, contact) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s contact.");
     console.log("Name: " + contact.first_name);
     console.log("Number: " + contact.phone_number);
@@ -349,7 +351,7 @@ Calls when a user pins a file. This excludes supergroups if the bot isn't an adm
 E.g
 
 ```javascript
-bot.onPinnedFile = function (chat, message_user, pinned_user, file) {
+bot.onPinnedFile = function (chat, message_id, message_user, pinned_user, file) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s video.");
 }
 ```
@@ -367,7 +369,7 @@ Calls when a user pins a photo. This excludes supergroups if the bot isn't an ad
 E.g
 
 ```javascript
-bot.onPinnedPhoto = function (chat, message_user, pinned_user, text) {
+bot.onPinnedPhoto = function (chat, message_id, message_user, pinned_user, text) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s photo.");
 }
 ```
@@ -385,7 +387,7 @@ Calls when a user pins a sticker. This excludes supergroups if the bot isn't an 
 E.g
 
 ```javascript
-bot.onPinnedSticker = function (chat, message_user, pinned_user, sticker) {
+bot.onPinnedSticker = function (chat, message_id, message_user, pinned_user, sticker) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s sticker.");
 }
 ```
@@ -403,8 +405,26 @@ Calls when a user pins text. This excludes supergroups if the bot isn't an admin
 E.g
 
 ```javascript
-bot.onPinnedText = function (chat, message_user, pinned_user, text) {
+bot.onPinnedText = function (chat, message_user, message_id, pinned_user, text) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s message that says: " + text);
+}
+```
+
+### onPinnedVenue
+Calls when a user pins a venue. This excludes supergroups if the bot isn't an administrator.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `message_id` **{Number}** The message reference that was pinned.
+* `message_user` **{User Object}** User who wrote the pinned message.
+* `pinned_user` **{User Object}** User who pinned the message.
+* `venue` **{Venue Object}** Provides venue information.
+
+E.g
+
+```javascript
+bot.onPinnedVenue = function (chat, message_user, message_id, pinned_user, venue) {
+    console.log(pinned_user.first_name + " pinned a venue: " + JSON.stringify(venue));
 }
 ```
 
@@ -421,7 +441,7 @@ Calls when a user pins a video. This excludes supergroups if the bot isn't an ad
 E.g
 
 ```javascript
-bot.onPinnedVideo = function (chat, message_user, pinned_user, video) {
+bot.onPinnedVideo = function (chat, message_user, message_id, pinned_user, video) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s video.");
 }
 ```
@@ -439,7 +459,7 @@ Calls when a user pins a voice. This excludes supergroups if the bot isn't an ad
 E.g
 
 ```javascript
-bot.onPinnedVoice = function (chat, message_user, pinned_user, voice) {
+bot.onPinnedVoice = function (chat, message_user, message_id, pinned_user, voice) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s video.");
 }
 ```
@@ -476,7 +496,7 @@ Gets called every time the bot sees a new message. However, this excludes superg
 E.g
 
 ```javascript
-bot.onSticker = function (chat, from, sticker) {
+bot.onSticker = function (chat, from, message_id, sticker) {
     console.log(from.first_name + " sent a sticker with " + sticker.width + "x" + sticker.height + " resolution.");
 }
 ```
@@ -493,7 +513,7 @@ Gets called every time the bot sees a new message. However, this excludes superg
 E.g
 
 ```javascript
-bot.onText = function (chat, from, text) {
+bot.onText = function (chat, from, message_id, text) {
     if (text.toLowerCase().indexOf("hello bot") > -1) {
         bot.sendText(chat.id, "Hello, " + from.first_name + ".");
     }
@@ -501,6 +521,23 @@ bot.onText = function (chat, from, text) {
 ```
 
 When someone says "hello bot" in any part of the message. This example will respond with a hello back.
+
+### onVenue
+Gets called every time the bot sees a new venue
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the video.
+* `message_id` **{Number}** Message reference.
+* `venue` **{Venue Object}** Venue information.
+
+E.g
+
+```javascript
+bot.onVenue = function (chat, from, message_id, venue) {
+    console.log(from.firstname + " sent this venue: " + JSON.stringify(venue));
+}
+```
 
 ### onVideo
 Gets called every time the bot sees a new video.
@@ -516,7 +553,7 @@ E.g
 
 ```javascript
 var videos = [];
-bot.onVideo = function (caption, chat, from, video) {
+bot.onVideo = function (caption, chat, from, message_id, video) {
     if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
         videos.push(video.file_id);
     }
@@ -539,7 +576,7 @@ E.g
 
 ```javascript
 var voices = [];
-bot.onVoice = function (caption, chat, from, voice) {
+bot.onVoice = function (caption, chat, from, message_id, voice) {
     if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
         voices.push(voice.file_id);
     }
