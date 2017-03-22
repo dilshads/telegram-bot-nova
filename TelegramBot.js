@@ -632,6 +632,10 @@ module.exports = function (token, declareSettings) {
         });
     };
 
+    this.getPort = function () {
+        return botSettings.port;
+    };
+
     this.getStartupTime = function () {
         return startupTime;
     };
@@ -978,6 +982,10 @@ module.exports = function (token, declareSettings) {
                 }
             }
         });
+    };
+
+    this.setPort = function (port) {
+        botSettings.port = port;
     };
 
     this.toString = function () {

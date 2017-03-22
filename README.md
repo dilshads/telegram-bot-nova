@@ -1,4 +1,4 @@
-[![completion](https://img.shields.io/badge/completion-85%25-orange.svg)]()
+[![completion](https://img.shields.io/badge/completion-87%25-orange.svg)]()
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![jslint_issues](https://img.shields.io/badge/jslint%20issues-none-brightgreen.svg)](http://jslint.com)
@@ -42,6 +42,7 @@ Badges from [Shields.io](http://shields.io)
         * [getChatMembersCount](#getchatmemberscount)
         * [getLoopDelay](#getloopdelay)
         * [getMe](#getme)
+        * [getPort](#getport)
         * [getStartupTime](#getstartuptime)
         * [getUsername](#getusername)
         * [getUserProfilePhotos](#getuserprofilephotos)
@@ -56,21 +57,14 @@ Badges from [Shields.io](http://shields.io)
         * [sendVenue](#sendvenue)
         * [sendVideo](#sendvideo)
         * [sendVoice](#sendvoice)
+        * [setPort](#setport)
         * [toString](#tostring)
         * [unbanChatMember](#unbanchatmember)
+    * [Object Dictionary](#object-dictionary)
 * [FAQ](#faq)
 * [Contributing](#contributing)
 
 All the returned objects objects can be found under this section on the [Telegram Bot API/Available Types](https://core.telegram.org/bots/api#available-types) page. The first 2 **{Chat Object}** and **{User Object}** will be the most common ones. Keep note of their values that are optional since you'll need to condition check if they are given or not.
-
-Important note. To avoid unnessary checking for the `from` **{User Object}** exists, if one isn't sent it will be auto declared but without any properties inside.
-
-No external dependencies required.
-
-Uses only 2 built-in node.js modules in order to be able to run.
-
-* https - to perform secure web communication with the Telegram Server. http isn't supported.
-* querystring - to convert objects into a url query string to be able to post information with the actions listed below.
 
 **Beware that this class and its documentation is not yet complete. The current functionality is stable and usable to run commands. More stuff and improvements are being added in time.**
 
@@ -782,6 +776,17 @@ bot.getMe(function (isSuccess, bot) {
 });
 ```
 
+### getPort
+Use this to return a **{Number}** of the current port being used. By default it's **443**.
+
+*No perimeters*
+
+E.g
+
+```javascript
+console.log(bot.getPort());
+```
+
 ### getUsername
 Use this to return a **{String}** of the bot username. Example "MyBot".
 
@@ -1110,6 +1115,18 @@ bot.sendVoice(chat_id, voice_file_id, {}, function (isSuccess) {
 });
 ```
 
+### setPort
+Changes the current port being used for the loop. Be aware that if the port isn't used. The bot won't be able to receive requests. Ports currently supported are: 80, 88, 443, 8443.
+
+*Required Perimeters*
+* `port` **{Number}** The port to change to.
+
+E.g
+
+```javascript
+bot.setPort(80);
+```
+
 ### unbanChatMember
 Unbans a user from a chat. The bot has to be present in the group and an administrator for this to work.
 
@@ -1128,6 +1145,24 @@ bot.unbanChatMember(chat_id, user_id, function (isSuccess) {
     console.log("User was unbanned: " + isSuccess);
 });
 ```
+
+## Object Dictionary
+This section shows and explains the Telegram objects that are returned during the events. I've excluded properties that are deprecated while still providing all the values excluding duplicates that break.
+
+* **{Chat Object}**
+    * `all_members_are_administrators` **{Boolean}** Are all users admins. This applies only for "group" type chats.
+    * `id` **{Number}** Unique chat id.
+    * `title` **{String}** Channel, Group or Supergroup name.
+    * `type` **{String}** Type of chat. Can be: "channel", "group", "private", "supergroup"
+    * `username` **{String}** The @ name tag of the chat. Example: "@GroupName"
+
+* **{User Object}**
+    * `first_name` **{String}** User's first name.
+    * `id` **{Number}** Unique user id.
+    * `last_name` **{String}** User's last name.
+    * `username` **{String}** The @ name tag of the user. Example: "@GroupName"
+
+More to come later...
 
 ## FAQ
 * Q: Missing methods?
