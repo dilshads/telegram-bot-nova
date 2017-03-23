@@ -57,6 +57,7 @@ Badges from [Shields.io](http://shields.io)
         * [sendVenue](#sendvenue)
         * [sendVideo](#sendvideo)
         * [sendVoice](#sendvoice)
+        * [setLoopDelay](#setloopdelay)
         * [setPort](#setport)
         * [toString](#tostring)
         * [unbanChatMember](#unbanchatmember)
@@ -1115,8 +1116,20 @@ bot.sendVoice(chat_id, voice_file_id, {}, function (isSuccess) {
 });
 ```
 
+### setLoopDelay
+Changes the current loop delay before the bot checks for new content and passes the new values to their respective events. Default is 3000.
+
+*Required Perimeters*
+* `delay` **{Number}** Milliseconds per call.
+
+E.g
+
+```javascript
+bot.setLoopDelay(3000);
+```
+
 ### setPort
-Changes the current port being used for the loop. Be aware that if the port isn't used. The bot won't be able to receive requests. Ports currently supported are: 80, 88, 443, 8443.
+Changes the current port being used for the loop. Be aware that if the port isn't used. The bot won't be able to receive requests. Ports currently supported are: 80, 88, 443, 8443. Default is 443.
 
 *Required Perimeters*
 * `port` **{Number}** The port to change to.
@@ -1147,20 +1160,22 @@ bot.unbanChatMember(chat_id, user_id, function (isSuccess) {
 ```
 
 ## Object Dictionary
-This section shows and explains the Telegram objects that are returned during the events. I've excluded properties that are deprecated while still providing all the values excluding duplicates that break.
+This section shows and explains the Telegram objects that are returned during the events. I've excluded properties that are deprecated while still providing all the values.
+
+Some properties won't always be provided. For example: chat or user without a `username` will return undefined. These will be marked with a *.
 
 * **{Chat Object}**
-    * `all_members_are_administrators` **{Boolean}** Are all users admins. This applies only for "group" type chats.
+    * *`all_members_are_administrators` **{Boolean}** Are all users admins. This applies only for "group" type chats.
     * `id` **{Number}** Unique chat id.
-    * `title` **{String}** Channel, Group or Supergroup name.
-    * `type` **{String}** Type of chat. Can be: "channel", "group", "private", "supergroup"
-    * `username` **{String}** The @ name tag of the chat. Example: "@GroupName"
+    * *`title` **{String}** Channel, Group or Supergroup name.
+    * `type` **{String}** Type of chat. Can be: "channel", "group", "private", "supergroup".
+    * *`username` **{String}** The @ name tag of the chat. Example: "@GroupName".
 
 * **{User Object}**
     * `first_name` **{String}** User's first name.
     * `id` **{Number}** Unique user id.
-    * `last_name` **{String}** User's last name.
-    * `username` **{String}** The @ name tag of the user. Example: "@GroupName"
+    * *`last_name` **{String}** User's last name.
+    * *`username` **{String}** The @ name tag of the user. Example: "@UserName".
 
 More to come later...
 

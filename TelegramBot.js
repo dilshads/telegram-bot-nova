@@ -481,9 +481,9 @@ module.exports = function (token, declareSettings) {
         request.end();
     };
 
-    this.editHtml = function (chatIdOrTag, messageId, html, settings, callback) {
+    this.editHtml = function (chatIdOrUsername, messageId, html, settings, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag,
+            "chat_id": chatIdOrUsername,
             "message_id": messageId,
             "text": html,
             "parse_mode": "HTML"
@@ -498,9 +498,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.editMarkdown = function (chatIdOrTag, messageId, md, settings, callback) {
+    this.editMarkdown = function (chatIdOrUsername, messageId, md, settings, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag,
+            "chat_id": chatIdOrUsername,
             "message_id": messageId,
             "text": md,
             "parse_mode": "Markdown"
@@ -515,9 +515,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.editText = function (chatIdOrTag, messageId, text, settings, callback) {
+    this.editText = function (chatIdOrUsername, messageId, text, settings, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag,
+            "chat_id": chatIdOrUsername,
             "message_id": messageId,
             "text": text
         };
@@ -531,9 +531,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.forwardMessage = function (target_chat, source_chat, message_id, settings, callback) {
+    this.forwardMessage = function (chatIdOrUsername, source_chat, message_id, settings, callback) {
         var urlQuery = {
-            "chat_id": target_chat,
+            "chat_id": chatIdOrUsername,
             "from_chat_id": source_chat,
             "message_id": message_id
         };
@@ -551,9 +551,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.getChat = function (chatIdOrTag, callback) {
+    this.getChat = function (chatIdOrUsername, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag
+            "chat_id": chatIdOrUsername
         };
         web("GET", "/getChat", urlQuery, function (data) {
             if (typeof callback === "function") {
@@ -562,9 +562,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.getChatAdministrators = function (chatIdOrTag, callback) {
+    this.getChatAdministrators = function (chatIdOrUsername, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag
+            "chat_id": chatIdOrUsername
         };
         web("GET", "/getChatAdministrators", urlQuery, function (data) {
             var admins = [], creator = [];
@@ -583,9 +583,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.getChatMember = function (chatIdOrTag, userId, callback) {
+    this.getChatMember = function (chatIdOrUsername, userId, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag,
+            "chat_id": chatIdOrUsername,
             "user_id": userId
         };
         web("GET", "/getChatMember", urlQuery, function (data) {
@@ -599,9 +599,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.getChatMembersCount = function (chatIdOrTag, callback) {
+    this.getChatMembersCount = function (chatIdOrUsername, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag
+            "chat_id": chatIdOrUsername
         };
         web("GET", "/getChatMembersCount", urlQuery, function (data) {
             if (typeof callback === "function") {
@@ -661,9 +661,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.kickChatMember = function (chatIdOrTag, userId, callback) {
+    this.kickChatMember = function (chatIdOrUsername, userId, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag,
+            "chat_id": chatIdOrUsername,
             "user_id": userId
         };
         web("POST", "/kickChatMember", urlQuery, function (data) {
@@ -673,9 +673,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.leaveChat = function (chatIdOrTag, callback) {
+    this.leaveChat = function (chatIdOrUsername, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag
+            "chat_id": chatIdOrUsername
         };
         web("POST", "/leaveChat", urlQuery, function (data) {
             if (typeof callback === "function") {
@@ -776,9 +776,9 @@ module.exports = function (token, declareSettings) {
         return;
     };
 
-    this.sendAudio = function (chatIdOrTag, fileIdOrLink, settings, callback) {
+    this.sendAudio = function (chatIdOrUsername, fileIdOrLink, settings, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag,
+            "chat_id": chatIdOrUsername,
             "audio": fileIdOrLink
         };
         if (typeof settings === "object") {
@@ -795,9 +795,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.sendChatAction = function (chatIdOrTag, action, callback) {
+    this.sendChatAction = function (chatIdOrUsername, action, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag,
+            "chat_id": chatIdOrUsername,
             "action": action
         };
         web("POST", "/sendChatAction", urlQuery, function (data) {
@@ -807,9 +807,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.sendContact = function (chatIdOrTag, phoneNumber, firstName, settings, callback) {
+    this.sendContact = function (chatIdOrUsername, phoneNumber, firstName, settings, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag,
+            "chat_id": chatIdOrUsername,
             "phone_number": phoneNumber,
             "first_name": firstName
         };
@@ -827,9 +827,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.sendDocument = function (chatId, fileIdOrLink, settings, callback) {
+    this.sendDocument = function (chatIdOrUsername, fileIdOrLink, settings, callback) {
         var urlQuery = {
-            "chat_id": chatId,
+            "chat_id": chatIdOrUsername,
             "document": fileIdOrLink
         };
         if (typeof settings === "object") {
@@ -846,9 +846,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.sendPhoto = function (chatId, fileIdOrLink, settings, callback) {
+    this.sendPhoto = function (chatIdOrUsername, fileIdOrLink, settings, callback) {
         var urlQuery = {
-            "chat_id": chatId,
+            "chat_id": chatIdOrUsername,
             "photo": fileIdOrLink
         };
         if (typeof settings === "object") {
@@ -865,9 +865,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.sendHtml = function (chatId, html, settings, callback) {
+    this.sendHtml = function (chatIdOrUsername, html, settings, callback) {
         var urlQuery = {
-            "chat_id": chatId,
+            "chat_id": chatIdOrUsername,
             "text": html,
             "parse_mode": "HTML"
         };
@@ -885,9 +885,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.sendMarkdown = function (chatId, md, settings, callback) {
+    this.sendMarkdown = function (chatIdOrUsername, md, settings, callback) {
         var urlQuery = {
-            "chat_id": chatId,
+            "chat_id": chatIdOrUsername,
             "text": md,
             "parse_mode": "Markdown"
         };
@@ -905,9 +905,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.sendText = function (chatId, text, settings, callback) {
+    this.sendText = function (chatIdOrUsername, text, settings, callback) {
         var urlQuery = {
-            "chat_id": chatId,
+            "chat_id": chatIdOrUsername,
             "text": text
         };
         if (typeof settings === "object") {
@@ -924,9 +924,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.sendVenue = function (target_chat, latitude, longitude, title, address, settings, callback) {
+    this.sendVenue = function (chatIdOrUsername, latitude, longitude, title, address, settings, callback) {
         var urlQuery = {
-            "chat_id": target_chat,
+            "chat_id": chatIdOrUsername,
             "latitude": latitude,
             "longitude": longitude,
             "title": title,
@@ -946,9 +946,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.sendVideo = function (chatId, fileIdOrLink, settings, callback) {
+    this.sendVideo = function (chatIdOrUsername, fileIdOrLink, settings, callback) {
         var urlQuery = {
-            "chat_id": chatId,
+            "chat_id": chatIdOrUsername,
             "video": fileIdOrLink
         };
         if (typeof settings === "object") {
@@ -965,9 +965,9 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.sendVoice = function (chatIdOrTag, fileIdOrLink, settings, callback) {
+    this.sendVoice = function (chatIdOrUsername, fileIdOrLink, settings, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag,
+            "chat_id": chatIdOrUsername,
             "voice": fileIdOrLink
         };
         if (typeof settings === "object") {
@@ -984,6 +984,10 @@ module.exports = function (token, declareSettings) {
         });
     };
 
+    this.setLoopDelay = function (milliseconds) {
+        botSettings.loopDelay = milliseconds;
+    };
+
     this.setPort = function (port) {
         botSettings.port = port;
     };
@@ -992,9 +996,9 @@ module.exports = function (token, declareSettings) {
         return "[object TelegramBot]";
     };
 
-    this.unbanChatMember = function (chatIdOrTag, userId, callback) {
+    this.unbanChatMember = function (chatIdOrUsername, userId, callback) {
         var urlQuery = {
-            "chat_id": chatIdOrTag,
+            "chat_id": chatIdOrUsername,
             "user_id": userId
         };
         web("GET", "/unbanChatMember", urlQuery, function (data) {
