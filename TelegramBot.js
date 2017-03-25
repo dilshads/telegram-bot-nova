@@ -198,6 +198,21 @@ module.exports = function (token, declareSettings) {
             }
         }
 
+        // onForwardText
+        if (content.hasOwnProperty("forward_from") && content.hasOwnProperty("text")) {
+            try {
+                self.onForwardText(
+                    content.chat,
+                    content.from,
+                    content.message_id,
+                    content.forward_from,
+                    content.text
+                );
+            } catch (onForwardTextError) {
+                self.onError("onForwardText", onForwardTextError);
+            }
+        }
+
         // onGroupJoin
         if (content.hasOwnProperty("new_chat_member")) {
             try {
@@ -705,6 +720,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onFile = function () {
+        return;
+    };
+
+    this.onForwardText = function () {
         return;
     };
 

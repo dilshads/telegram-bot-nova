@@ -15,6 +15,7 @@ Badges from [Shields.io](http://shields.io)
         * [onContact](#oncontact)
         * [onEditText](#onedittext)
         * [onFile](#onfile)
+        * [onForwardText](#onforwardtext)
         * [onGroupJoin](#ongroupjoin)
         * [onGroupLeft](#ongroupleft)
         * [onPhoto](#onphoto)
@@ -233,6 +234,24 @@ bot.onFile = function (caption, chat, from, message_id, file) {
 ```
 
 This example shows how to effectively make your bot memorize files. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
+
+### onForwardText
+Gets called every time the bot sees a new message. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who forwarded the message.
+* `message_id` **{Number}** Message reference.
+* `user` **{User Object}** The owner of the content that was forwarded.
+* `text` **{String}** Message text.
+
+E.g
+
+```javascript
+bot.onForwardText = function (chat, from, message_id, user, text) {
+    console.log(from.first_name + " forwarded " + user.firstname + "'s message.");
+}
+```
 
 ### onGroupJoin
 Gets called every time the bot sees someone joining the group.
