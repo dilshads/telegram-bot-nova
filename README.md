@@ -37,6 +37,7 @@ Badges from [Shields.io](http://shields.io)
     * [Actions](#actions)
         * [editHtml / editMarkdown / editText](#edithtml--editmarkdown--edittext)
         * [forwardMessage](#forwardmessage)
+        * [getBotUsername](#getbotusername)
         * [getChat](#getchat)
         * [getChatAdministrators](#getchatadministrators)
         * [getChatMember](#getchatmember)
@@ -45,7 +46,6 @@ Badges from [Shields.io](http://shields.io)
         * [getMe](#getme)
         * [getPort](#getport)
         * [getStartupTime](#getstartuptime)
-        * [getUsername](#getusername)
         * [getUserProfilePhotos](#getuserprofilephotos)
         * [kickChatMember](#kickchatmember)
         * [leaveChat](#leavechat)
@@ -661,6 +661,17 @@ bot.onVoice = function (caption, chat, from, message_id, voice) {
 };
 ```
 
+### getBotUsername
+Use this to return a **{String}** of the bot username. Example "MyBot".
+
+*No Perimeters*
+
+E.g
+
+```javascript
+console.log(bot.getUsername());
+```
+
 ### getChat
 Use this to return information about the target chat.
 
@@ -805,17 +816,6 @@ E.g
 
 ```javascript
 console.log(bot.getPort());
-```
-
-### getUsername
-Use this to return a **{String}** of the bot username. Example "MyBot".
-
-*No Perimeters*
-
-E.g
-
-```javascript
-console.log(bot.getUsername());
 ```
 
 ### getStartupTime

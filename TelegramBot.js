@@ -566,6 +566,10 @@ module.exports = function (token, declareSettings) {
         });
     };
 
+    this.getBotUsername = function () {
+        return username;
+    };
+
     this.getChat = function (chatIdOrUsername, callback) {
         var urlQuery = {
             "chat_id": chatIdOrUsername
@@ -653,10 +657,6 @@ module.exports = function (token, declareSettings) {
 
     this.getStartupTime = function () {
         return startupTime;
-    };
-
-    this.getUsername = function () {
-        return username;
     };
 
     this.getUserProfilePhotos = function (userId, offset, limit, callback) {
