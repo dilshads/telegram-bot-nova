@@ -134,24 +134,23 @@ To setup up an event. You'll need to had required the bot class and declared a b
 Gets called every time the bot sees a `.mp3` sound file.
 
 *Arguments*
-* `audio` **{Audio Object}** Audio information. Use `audio.file_id` to keep track of the audios seen.
-* `caption` **{String}** Caption text. No caption is "".
 * `chat` **{Chat Object}** Chat were event occured.
 * `from` **{User Object}** User who send the audio.
 * `message_id` **{Number}** The message reference.
+* `caption` **{String}** Caption text. No caption is "".
+* `audio` **{Audio Object}** Audio information. Use `audio.file_id` to keep track of the audios seen.
 
 E.g
 
 ```javascript
 var audios = [];
-bot.onAudio = function (audio, caption, chat, from, message_id) {
-    if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+bot.onAudio = function (chat, from, message_id, caption, audio) {
+    if (chat.username === "ExampleGroup") {
         audios.push(audio.file_id);
     }
 }
+// This example shows how to effectively make your bot memorize audios.
 ```
-
-This example shows how to effectively make your bot memorize audios. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
 
 ### onCommand
 Gets called every time the bot sees a command.
@@ -182,8 +181,8 @@ Calls when a user sends a contact.
 *Arguments*
 * `chat` **{Chat Object}** Chat were event occured.
 * `from` **{User Object}** User who sent the file.
-* `contact` **{Contact Object}** Contact information.
 * `message_id` **{Number}** The message reference.
+* `contact` **{Contact Object}** Contact information.
 
 E.g
 
@@ -216,24 +215,23 @@ bot.onEditText = function (chat, from, message_id, new_text) {
 Calls when a user sends a file. Full quality non-thumbnail images are counted files.
 
 *Arguments*
-* `caption` **{String}** File caption text. No caption is "".
 * `chat` **{Chat Object}** Chat were event occured.
 * `from` **{User Object}** User who sent the file.
-* `file` **{Document Object}** File information. Use `file.file_id` to keep track of the files seen.
 * `message_id` **{Number}** The message reference.
+* `caption` **{String}** File caption text. Is `undefined` if one isn't included.
+* `file` **{Document Object}** File information. Use `file.file_id` to keep track of the files seen.
 
 E.g
 
 ```javascript
 var files = [];
-bot.onFile = function (caption, chat, from, message_id, file) {
-    if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+bot.onFile = function (chat, from, message_id, caption, file) {
+    if (chat.username === "ExampleChannel") {
         files.push(file.file_id);
     }
 }
+// This example shows how to effectively make your bot memorize files.
 ```
-
-This example shows how to effectively make your bot memorize files. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
 
 ### onForwardText
 Gets called every time the bot sees a new message. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots.
@@ -295,39 +293,39 @@ If you're wondering what is a good use of `leaving_user` and `triggering_user` u
 Gets called every time the bot sees a new photo.
 
 *Arguments*
-* `caption` **{String}** File caption text. No caption is "".
 * `chat` **{Chat Object}** Chat were event occured.
 * `from` **{User Object}** User who sent the photo.
 * `message_id` **{Number}** The message reference.
+* `caption` **{String}** File caption text. Is `undefined` if one isn't included.
 * `photo` **{Array} of {PhotoSize Object}** Provides photo information.
 
 E.g
 
 ```javascript
 var photos = [];
-bot.onPhoto = function (chat, from, message_id, photo) {
-    if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+bot.onPhoto = function (chat, from, message_id, caption, photo) {
+    if (chat.username === "@ExampleChannel") {
         photos.push(photo[photo.length - 1].file_id);
     }
 }
 ```
 
-This example shows how to effectively make your bot memorize photos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
+This example shows how to effectively make your bot memorize photos. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
 
 ### onPinnedAudio
 Calls when a user pins an audio. This excludes supergroups if the bot isn't an administrator.
 
 *Arguments*
-* `audio` **{Audio Object}** Provides audio information.
 * `chat` **{Chat Object}** Chat were event occured.
 * `message_id` **{Number}** The message reference that was pinned.
 * `message_user` **{User Object}** User who wrote the pinned message.
 * `pinned_user` **{User Object}** User who pinned the message.
+* `audio` **{Audio Object}** Provides audio information.
 
 E.g
 
 ```javascript
-bot.onPinnedAudio = function (audio, chat, message_id, message_user, pinned_user) {
+bot.onPinnedAudio = function (chat, message_id, message_user, pinned_user, audio) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s audio.");
 }
 ```
@@ -557,18 +555,18 @@ bot.onVenue = function (chat, from, message_id, venue) {
 Gets called every time the bot sees a new video.
 
 *Arguments*
-* `caption` **{String}** File caption text. No caption is "".
 * `chat` **{Chat Object}** Chat were event occured.
 * `from` **{User Object}** User who sent the video.
 * `message_id` **{Number}** Message reference.
+* `caption` **{String}** File caption text. Is `undefined` if one isn't included.
 * `video` **{Video Object}** Video information. Use `video.file_id` to keep track of the videos seen.
 
 E.g
 
 ```javascript
 var videos = [];
-bot.onVideo = function (caption, chat, from, message_id, video) {
-    if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+bot.onVideo = function (chat, from, message_id, caption, video) {
+    if (chat.username === "ExampleChannel") {
         videos.push(video.file_id);
     }
 }
@@ -580,18 +578,18 @@ This example shows how to effectively make your bot memorize videos. Note that P
 Gets called every time the bot sees a `.ogg` voice message.
 
 *Arguments*
-* `caption` **{String}** File caption text. No caption is "".
 * `chat` **{Chat Object}** Chat were event occured.
 * `from` **{User Object}** User who sent the voice message.
 * `message_id` **{Number}** Content reference id.
+* `caption` **{String}** File caption text. Is `undefined` if one isn't included.
 * `voice` **{Voice Object}** Voice information. Use `voice.file_id` to keep track of the voice messages seen.
 
 E.g
 
 ```javascript
 var voices = [];
-bot.onVoice = function (caption, chat, from, message_id, voice) {
-    if (chat.hasProperty("username") && chat.username === "YourChannelUsername") {
+bot.onVoice = function (chat, from, message_id, caption, voice) {
+    if (chat.username === "ExampleChannel") {
         voices.push(voice.file_id);
     }
 }

@@ -5,7 +5,6 @@ const querystring = require("querystring");
 module.exports = function (token, declareSettings) {
     "use strict";
     const EVENT_DEFAULTS = {
-        "caption": "",
         "from": {}
     };
 
@@ -128,11 +127,11 @@ module.exports = function (token, declareSettings) {
         if (content.hasOwnProperty("audio")) {
             try {
                 self.onAudio(
-                    content.audio,
-                    content.caption,
                     content.chat,
                     content.from,
-                    content.message_id
+                    content.message_id,
+                    content.caption,
+                    content.audio
                 );
             } catch (onAudioError) {
                 self.onError("onAudio", onAudioError);
@@ -175,8 +174,8 @@ module.exports = function (token, declareSettings) {
                 self.onContact(
                     content.chat,
                     content.from,
-                    content.contact,
-                    content.message_id
+                    content.message_id,
+                    content.contact
                 );
             } catch (onContactError) {
                 self.onError("onContact", onContactError);
@@ -187,11 +186,11 @@ module.exports = function (token, declareSettings) {
         if (content.hasOwnProperty("document")) {
             try {
                 self.onFile(
-                    content.caption,
                     content.chat,
                     content.from,
-                    content.document,
-                    content.message_id
+                    content.message_id,
+                    content.caption,
+                    content.document
                 );
             } catch (onFileError) {
                 self.onError("onFile", onFileError);
@@ -245,10 +244,10 @@ module.exports = function (token, declareSettings) {
         if (content.hasOwnProperty("photo")) {
             try {
                 self.onPhoto(
-                    content.caption,
                     content.chat,
                     content.from,
                     content.message_id,
+                    content.caption,
                     content.photo
                 );
             } catch (onPhotoError) {
@@ -260,11 +259,11 @@ module.exports = function (token, declareSettings) {
         if (hasDeepProperty(content, "pinned_message.audio")) {
             try {
                 self.onPinnedAudio(
-                    content.pinned_message.audio,
                     content.chat,
                     content.message_id,
                     content.pinned_message.from,
-                    content.from
+                    content.from,
+                    content.pinned_message.audio
                 );
             } catch (onPinnedAudioError) {
                 self.onError("onPinnedAudio", onPinnedAudioError);
@@ -437,10 +436,10 @@ module.exports = function (token, declareSettings) {
         if (content.hasOwnProperty("video")) {
             try {
                 self.onVideo(
-                    content.caption,
                     content.chat,
                     content.from,
                     content.message_id,
+                    content.caption,
                     content.video
                 );
             } catch (onVideoError) {
@@ -452,10 +451,10 @@ module.exports = function (token, declareSettings) {
         if (content.hasOwnProperty("voice")) {
             try {
                 self.onVoice(
-                    content.caption,
                     content.chat,
                     content.from,
                     content.message_id,
+                    content.caption,
                     content.voice
                 );
             } catch (onVoiceError) {
