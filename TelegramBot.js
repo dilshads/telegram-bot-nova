@@ -109,6 +109,24 @@ module.exports = function (token, declareSettings) {
             return;
         }
 
+        // onKeyboardCallbackData
+        if (result.hasOwnProperty("callback_query")) {
+            content = result.callback_query;
+            // Adds default values only for those that are missing.
+            content = defaultsDeep(content, EVENT_DEFAULTS);
+            try {
+                self.onKeyboardCallbackData(
+                    content.message.chat,
+                    content.from,
+                    content.message.message_id,
+                    content.data
+                );
+            } catch (onKeyboardCallbackDataError) {
+                self.onError("onKeyboardCallbackData", onKeyboardCallbackDataError);
+            }
+            return;
+        }
+
         // Since result.message and result.channel_post hold near the same content.
         // This simplfies the checking.
         if (result.hasOwnProperty("message")) {
@@ -731,6 +749,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onGroupLeft = function () {
+        return;
+    };
+
+    this.onKeyboardCallbackData = function () {
         return;
     };
 

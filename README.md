@@ -18,6 +18,7 @@ Badges from [Shields.io](http://shields.io)
         * [onForwardText](#onforwardtext)
         * [onGroupJoin](#ongroupjoin)
         * [onGroupLeft](#ongroupleft)
+        * [onKeyboardCallbackData](#onkeyboardcallbackdata)
         * [onPhoto](#onphoto)
         * [onPinnedAudio](#onpinnedaudio)
         * [onPinnedContact](#onpinnedcontact)
@@ -288,6 +289,24 @@ bot.onGroupLeft = function (chat, leaving_user, message_id, triggering_user) {
 ```
 
 If you're wondering what is a good use of `leaving_user` and `triggering_user` user objects. You could compare `leaving_user.id === triggering_user.id` to check if that user left themselves or `leaving_user.id !== triggering_user.id` that someone else removed them.
+
+### onKeyboardCallbackData
+Gets called every time the bot sees a `callback_data` from a user pressing a button from InlineKeyboardButton.
+
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who pressed the button.
+* `message_id` **{Number}** The message reference.
+* `data` **{String}** The `callback_data` that was returned from the **{InlineKeyboardButton}** object.
+
+E.g
+
+```javascript
+bot.onKeyboardCallbackData = function (chat, from, message_id, data) {
+    console.log(from.first_name " pressed a button with this callback data: " + data);
+};
+```
+
+Don't forget you can use this call back to change the content of the reference message_id without sending a new message.
 
 ### onPhoto
 Gets called every time the bot sees a new photo.
@@ -601,7 +620,7 @@ This example shows how to effectively make your bot memorize voices. Note that P
 To setup up an action. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
 
 ### editHtml / editMarkdown / editText
-Use this to replace a target message. Be aware bots can only replace their own messages.
+Use this to replace a target message. Be aware bots can only replace their own messages that were sent in the last 3 days.
 
 *Required Perimeters*
 * `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
