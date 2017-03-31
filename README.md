@@ -15,6 +15,7 @@ Badges from [Shields.io](http://shields.io)
         * [onContact](#oncontact)
         * [onEditText](#onedittext)
         * [onFile](#onfile)
+        * [onForwardAny](#onforwardany)
         * [onForwardText](#onforwardtext)
         * [onGroupJoin](#ongroupjoin)
         * [onGroupLeft](#ongroupleft)
@@ -232,6 +233,23 @@ bot.onFile = function (chat, from, message_id, caption, file) {
     }
 }
 // This example shows how to effectively make your bot memorize files.
+```
+
+### onForwardAny
+Gets called every time the bot sees any forward content. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. This gets called first before any other onForward events.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who forwarded the message.
+* `message_id` **{Number}** Message reference.
+* `user` **{User Object}** The owner of the content that was forwarded.
+
+E.g
+
+```javascript
+bot.onForwardAny = function (chat, from, message_id, user) {
+    console.log(from.first_name + " forwarded " + user.firstname + "'s content.");
+}
 ```
 
 ### onForwardText
@@ -1205,13 +1223,13 @@ Some properties won't always be provided. For example: chat or user without a `u
     * `id` **{Number}** Unique chat id.
     * *`title` **{String}** Channel, Group or Supergroup name.
     * `type` **{String}** Type of chat. Can be: "channel", "group", "private", "supergroup".
-    * *`username` **{String}** The @ name tag of the chat. Example: "@GroupName".
+    * *`username` **{String}** The @ name tag of the chat. Example: "GroupName".
 
 * **{User Object}**
     * `first_name` **{String}** User's first name.
     * `id` **{Number}** Unique user id.
     * *`last_name` **{String}** User's last name.
-    * *`username` **{String}** The @ name tag of the user. Example: "@UserName".
+    * *`username` **{String}** The @ name tag of the user. Example: "UserName".
 
 More to come later...
 
@@ -1219,7 +1237,7 @@ More to come later...
 * Q: Missing methods?
     * A: I'm trying to add all the available methods. I can confirm these aren't available.
         * Events: onUnPinnedMessage
-        * Actions: deleteMessage, joinChat
+        * Actions: deleteMessage, joinChat, pinMessage
 * Q: Why did you make this class when there's already others available?
     * A: Some lacked how-to documentation and examples. Also, setting up a certifcate and domain for webhook method seems too complex.
 * Q: Will my bot token get misused using this class?
