@@ -1,4 +1,6 @@
-[![completion](https://img.shields.io/badge/completion-87%25-orange.svg)]()
+# TelegramBot Node.js getUpdates Method
+
+[![completion](https://img.shields.io/badge/completion-88%25-orange.svg)]()
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![jslint_issues](https://img.shields.io/badge/jslint%20issues-none-brightgreen.svg)](http://jslint.com)
@@ -6,7 +8,6 @@
 
 Badges from [Shields.io](http://shields.io)
 
-# TelegramBot Node.js getUpdates Method
 * [Setting Up](#setting-up)
 * [Declaring](#declaring)
     * [Events](#events)
@@ -1242,6 +1243,12 @@ More to come later...
     * A: Some lacked how-to documentation and examples. Also, setting up a certifcate and domain for webhook method seems too complex.
 * Q: Will my bot token get misused using this class?
     * A: No. If you don't believe me. Feel free to look through the source code.
+* Q: It's taking a while to complete and release the project?
+    * A: I am the only person who's working on it. Also I hadn't hardly received much traffic at all. I usually try add a bit more content now and then. If there's a feature you want adding. Post an issue request. Keep in mind that I only add things that are easy to use.
+* Q: There's typo and a bug.
+    * A: You're more than free to fix document errors and help fill in the content here. Bugs can be reported under issues unless you know how to fix it and post a request fix with the changes.
+* Q: I don't know how to do something.
+    * A: I've written this project to hopefully be as easy as possible. You'll need to know some basic of JavaScript and have Node.js installed. If something not detailed enough post and issue and I see if I can explain something better.
 
 ## Contributing
 * Casing: CONSTANT_NAMING, ClassNaming, functionNaming, variableNaming
