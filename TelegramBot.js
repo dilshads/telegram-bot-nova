@@ -671,6 +671,10 @@ module.exports = function (token, declareSettings) {
         });
     };
 
+    this.getIsDebug = function () {
+        return botSettings.isDebug;
+    };
+
     this.getLoopDelay = function () {
         return botSettings.loopDelay;
     };
@@ -1040,6 +1044,10 @@ module.exports = function (token, declareSettings) {
                 }
             }
         });
+    };
+
+    this.setIsDebug = function (isDebug) {
+        botSettings.isDebug = isDebug;
     };
 
     this.setLoopDelay = function (milliseconds) {

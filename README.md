@@ -45,6 +45,7 @@ Badges from [Shields.io](http://shields.io)
         * [getChatAdministrators](#getchatadministrators)
         * [getChatMember](#getchatmember)
         * [getChatMembersCount](#getchatmemberscount)
+        * [getIsDebug](#getisdebug)
         * [getLoopDelay](#getloopdelay)
         * [getMe](#getme)
         * [getPort](#getport)
@@ -61,6 +62,7 @@ Badges from [Shields.io](http://shields.io)
         * [sendVenue](#sendvenue)
         * [sendVideo](#sendvideo)
         * [sendVoice](#sendvoice)
+        * [setIsDebug](#setisdebug)
         * [setLoopDelay](#setloopdelay)
         * [setPort](#setport)
         * [toString](#tostring)
@@ -814,6 +816,17 @@ bot.getFile(file_id, function (isSuccess, file) {
 });
 ```
 
+### getIsDebug
+Use this to return a **{Boolean}** if the debug messages are enabled or not.
+
+*No Perimeters*
+
+E.g
+
+```javascript
+console.log(bot.getIsDebug());
+```
+
 ### getLoopDelay
 Use this to return a **{Number}** of the bot loop delay in milliseconds.
 
@@ -1169,6 +1182,18 @@ E.g
 bot.sendVoice(chat_id, voice_file_id, {}, function (isSuccess) {
     console.log("Voice sent successfully: " + isSuccess);
 });
+```
+
+### setIsDebug
+Used for enabling or disabling console.log  debug messages of the getUpdates events. Default is false.
+
+*Required Perimeters*
+* `isDebug` **{Boolean}** Enabled or disabled.
+
+E.g
+
+```javascript
+bot.setIsDebug(false);
 ```
 
 ### setLoopDelay
