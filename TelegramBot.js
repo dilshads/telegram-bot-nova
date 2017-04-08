@@ -4,13 +4,12 @@ const querystring = require("querystring");
 
 module.exports = function (token, declareSettings) {
     "use strict";
-    const EVENT_DEFAULTS = {
-        "from": {}
-    };
+    const TOKEN = token;
 
     var botSettings = {
         "isDebug": false,
         "loopDelay": 3000,
+        "method": "POST",
         "port": 443
     };
 
@@ -23,31 +22,13 @@ module.exports = function (token, declareSettings) {
         Object.assign(botSettings, declareSettings);
     }
 
-    var defaultsDeep, getUpdates, hasDeepProperty, loop, processEvent, web;
-
-    defaultsDeep = function (target, defaults) {
-        var clone = JSON.parse(JSON.stringify(target));
-        function run(clone, defaults) {
-            Object.getOwnPropertyNames(defaults).forEach(function (property) {
-                if (Object.prototype.toString.call(defaults[property]) === "[object Object]") {
-                    if (!clone.hasOwnProperty(property)) {
-                        clone[property] = {};
-                    }
-                    run(clone[property], defaults[property]);
-                } else if (!clone.hasOwnProperty(property)) {
-                    clone[property] = defaults[property];
-                }
-            });
-        }
-        run(clone, defaults);
-        return clone;
-    };
+    var getUpdates, hasDeepProperty, loop, processEvent, web;
 
     getUpdates = function () {
         var urlQuery = {
             "offset": updateId
         };
-        web("GET", "/getUpdates", urlQuery, function (data) {
+        web("getUpdates", urlQuery, function (data) {
             if (!data.ok) {
                 console.error("getUpdates: Warning data returned false. " + JSON.stringify(data));
                 return;
@@ -95,7 +76,9 @@ module.exports = function (token, declareSettings) {
                 content = result.edited_message;
             }
             // Adds default values only for those that are missing.
-            content = defaultsDeep(content, EVENT_DEFAULTS);
+            if (!content.from) {
+                content.from = {};
+            }
             try {
                 self.onEditText(
                     content.chat,
@@ -113,7 +96,9 @@ module.exports = function (token, declareSettings) {
         if (result.hasOwnProperty("callback_query")) {
             content = result.callback_query;
             // Adds default values only for those that are missing.
-            content = defaultsDeep(content, EVENT_DEFAULTS);
+            if (!content.from) {
+                content.from = {};
+            }
             try {
                 self.onKeyboardCallbackData(
                     content.message.chat,
@@ -139,7 +124,9 @@ module.exports = function (token, declareSettings) {
         }
 
         // Adds default values only for those that are missing.
-        content = defaultsDeep(content, EVENT_DEFAULTS);
+        if (!content.from) {
+            content.from = {};
+        }
 
         // onAudio
         if (content.hasOwnProperty("audio")) {
@@ -495,13 +482,13 @@ module.exports = function (token, declareSettings) {
         }
     };
 
-    web = function (method, command, urlData, callback) {
+    web = function (command, urlData, callback) {
         var postData = querystring.stringify(urlData);
         var options = {
             "hostname": "api.telegram.org",
             "port": botSettings.port,
-            "path": "/bot" + token + command,
-            "method": method,
+            "path": "/bot" + TOKEN + "/" + command,
+            "method": botSettings.method,
             "headers": {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Content-Length": postData.length
@@ -510,13 +497,13 @@ module.exports = function (token, declareSettings) {
         var request = https.request(options, function (result) {
             // console.log("statusCode:", result.statusCode);
             // console.log('headers:', result.headers);
-            var queueData = "";
-            result.on("data", function (data) {
-                queueData += data;
+            var data = "";
+            result.on("data", function (buffer) {
+                data += buffer;
             });
             result.on("end", function () {
                 if (typeof callback === "function") {
-                    callback(JSON.parse(queueData));
+                    callback(JSON.parse(data));
                 }
             });
         });
@@ -537,7 +524,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/editMessageText", urlQuery, function (data) {
+        web("editMessageText", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }
@@ -554,7 +541,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/editMessageText", urlQuery, function (data) {
+        web("editMessageText", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }
@@ -570,7 +557,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/editMessageText", urlQuery, function (data) {
+        web("editMessageText", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }
@@ -586,7 +573,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/forwardMessage", urlQuery, function (data) {
+        web("forwardMessage", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);
@@ -605,7 +592,7 @@ module.exports = function (token, declareSettings) {
         var urlQuery = {
             "chat_id": chatIdOrUsername
         };
-        web("GET", "/getChat", urlQuery, function (data) {
+        web("getChat", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok, data.result);
             }
@@ -616,7 +603,7 @@ module.exports = function (token, declareSettings) {
         var urlQuery = {
             "chat_id": chatIdOrUsername
         };
-        web("GET", "/getChatAdministrators", urlQuery, function (data) {
+        web("getChatAdministrators", urlQuery, function (data) {
             var admins = [], creator = [];
             if (data.ok) {
                 data.result.forEach(function (value) {
@@ -638,7 +625,7 @@ module.exports = function (token, declareSettings) {
             "chat_id": chatIdOrUsername,
             "user_id": userId
         };
-        web("GET", "/getChatMember", urlQuery, function (data) {
+        web("getChatMember", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.user, data.result.status);
@@ -653,7 +640,7 @@ module.exports = function (token, declareSettings) {
         var urlQuery = {
             "chat_id": chatIdOrUsername
         };
-        web("GET", "/getChatMembersCount", urlQuery, function (data) {
+        web("getChatMembersCount", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok, data.result);
             }
@@ -664,7 +651,7 @@ module.exports = function (token, declareSettings) {
         var urlQuery = {
             "file_id": telegramFileUrl
         };
-        web("GET", "/getFile", urlQuery, function (data) {
+        web("getFile", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok, data.result);
             }
@@ -681,7 +668,7 @@ module.exports = function (token, declareSettings) {
 
     this.getMe = function (callback) {
         var urlQuery = {};
-        web("GET", "/getMe", urlQuery, function (data) {
+        web("getMe", urlQuery, function (data) {
             callback(data.ok, data.result);
         });
     };
@@ -700,7 +687,7 @@ module.exports = function (token, declareSettings) {
             "offset": offset,
             "limit": limit
         };
-        web("GET", "/getUserProfilePhotos", urlQuery, function (data) {
+        web("getUserProfilePhotos", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result);
@@ -716,7 +703,7 @@ module.exports = function (token, declareSettings) {
             "chat_id": chatIdOrUsername,
             "user_id": userId
         };
-        web("POST", "/kickChatMember", urlQuery, function (data) {
+        web("kickChatMember", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }
@@ -727,7 +714,7 @@ module.exports = function (token, declareSettings) {
         var urlQuery = {
             "chat_id": chatIdOrUsername
         };
-        web("POST", "/leaveChat", urlQuery, function (data) {
+        web("leaveChat", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }
@@ -846,7 +833,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/sendAudio", urlQuery, function (data) {
+        web("sendAudio", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);
@@ -862,7 +849,7 @@ module.exports = function (token, declareSettings) {
             "chat_id": chatIdOrUsername,
             "action": action
         };
-        web("POST", "/sendChatAction", urlQuery, function (data) {
+        web("sendChatAction", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }
@@ -878,7 +865,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/sendContact", urlQuery, function (data) {
+        web("sendContact", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);
@@ -897,7 +884,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/sendDocument", urlQuery, function (data) {
+        web("sendDocument", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);
@@ -916,7 +903,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/sendPhoto", urlQuery, function (data) {
+        web("sendPhoto", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);
@@ -936,7 +923,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/sendMessage", urlQuery, function (data) {
+        web("sendMessage", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);
@@ -956,7 +943,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/sendMessage", urlQuery, function (data) {
+        web("sendMessage", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);
@@ -975,7 +962,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/sendMessage", urlQuery, function (data) {
+        web("sendMessage", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);
@@ -997,7 +984,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/sendVenue", urlQuery, function (data) {
+        web("sendVenue", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);
@@ -1016,7 +1003,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/sendVideo", urlQuery, function (data) {
+        web("sendVideo", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);
@@ -1035,7 +1022,7 @@ module.exports = function (token, declareSettings) {
         if (typeof settings === "object") {
             Object.assign(urlQuery, settings);
         }
-        web("POST", "/sendVoice", urlQuery, function (data) {
+        web("sendVoice", urlQuery, function (data) {
             if (typeof callback === "function") {
                 if (data.ok) {
                     callback(data.ok, data.result.message_id);
@@ -1067,7 +1054,7 @@ module.exports = function (token, declareSettings) {
             "chat_id": chatIdOrUsername,
             "user_id": userId
         };
-        web("GET", "/unbanChatMember", urlQuery, function (data) {
+        web("unbanChatMember", urlQuery, function (data) {
             if (typeof callback === "function") {
                 callback(data.ok);
             }

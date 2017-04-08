@@ -122,12 +122,14 @@ const TelegramBot = require("./TelegramBot");
 var bot = new TelegramBot("YOUR_BOT_TOKEN", {
     "isDebug": false,
     "loopDelay": 3000,
+    "method": "POST",
     "port": 443
 });
 ```
 
 * `isDebug` **{Boolean}** Prints full JSON of the getUpdates obtained on the console screen. This is what I use for coding more events.
 * `loopDelay` **{Number}** The number of milliseconds per getUpdates request and events of processed and triggered.
+* `method` **{String}** The http request method to use. Can either use "GET" or "POST". POST is default and recommended since it can send larger queries and is more secure. Although a downside there chance it can send a double request.
 * `port` **{Number}** The port number to use.
 
 The default declare values are listed in the example above.
