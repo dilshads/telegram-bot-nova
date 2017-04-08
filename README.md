@@ -10,64 +10,64 @@ Badges from [Shields.io](http://shields.io)
 
 * [Setting Up](#setting-up)
 * [Declaring](#declaring)
-    * [Events](#events)
-        * [onAudio](#onaudio)
-        * [onCommand](#oncommand)
-        * [onContact](#oncontact)
-        * [onEditText](#onedittext)
-        * [onFile](#onfile)
-        * [onForwardAny](#onforwardany)
-        * [onForwardText](#onforwardtext)
-        * [onGroupJoin](#ongroupjoin)
-        * [onGroupLeft](#ongroupleft)
-        * [onKeyboardCallbackData](#onkeyboardcallbackdata)
-        * [onPhoto](#onphoto)
-        * [onPinnedAudio](#onpinnedaudio)
-        * [onPinnedContact](#onpinnedcontact)
-        * [onPinnedFile](#onpinnedfile)
-        * [onPinnedPhoto](#onpinnedphoto)
-        * [onPinnedSticker](#onpinnedsticker)
-        * [onPinnedText](#onpinnedtext)
-        * [onPinnedVenue](#onpinnedvenue)
-        * [onPinnedVideo](#onpinnedvideo)
-        * [onPinnedVoice](#onpinnedvoice)
-        * [onStartup](#onstartup)
-        * [onSticker](#onsticker)
-        * [onText](#ontext)
-        * [onVenue](#onvenue)
-        * [onVideo](#onvideo)
-        * [onVoice](#onvoice)
-    * [Actions](#actions)
-        * [editHtml / editMarkdown / editText](#edithtml--editmarkdown--edittext)
-        * [forwardMessage](#forwardmessage)
-        * [getBotUsername](#getbotusername)
-        * [getChat](#getchat)
-        * [getChatAdministrators](#getchatadministrators)
-        * [getChatMember](#getchatmember)
-        * [getChatMembersCount](#getchatmemberscount)
-        * [getIsDebug](#getisdebug)
-        * [getLoopDelay](#getloopdelay)
-        * [getMe](#getme)
-        * [getPort](#getport)
-        * [getStartupTime](#getstartuptime)
-        * [getUserProfilePhotos](#getuserprofilephotos)
-        * [kickChatMember](#kickchatmember)
-        * [leaveChat](#leavechat)
-        * [sendAudio](#sendaudio)
-        * [sendChatAction](#sendchataction)
-        * [sendContact](#sendcontact)
-        * [sendFile](#sendfile)
-        * [sendPhoto](#sendphoto)
-        * [sendHtml / sendMarkdown / sendText](#sendhtml--sendmarkdown--sendtext)
-        * [sendVenue](#sendvenue)
-        * [sendVideo](#sendvideo)
-        * [sendVoice](#sendvoice)
-        * [setIsDebug](#setisdebug)
-        * [setLoopDelay](#setloopdelay)
-        * [setPort](#setport)
-        * [toString](#tostring)
-        * [unbanChatMember](#unbanchatmember)
-    * [Object Dictionary](#object-dictionary)
+* [Events](#events)
+    * [onAudio](#onaudio)
+    * [onCommand](#oncommand)
+    * [onContact](#oncontact)
+    * [onEditText](#onedittext)
+    * [onFile](#onfile)
+    * [onForwardAny](#onforwardany)
+    * [onForwardText](#onforwardtext)
+    * [onGroupJoin](#ongroupjoin)
+    * [onGroupLeft](#ongroupleft)
+    * [onKeyboardCallbackData](#onkeyboardcallbackdata)
+    * [onPhoto](#onphoto)
+    * [onPinnedAudio](#onpinnedaudio)
+    * [onPinnedContact](#onpinnedcontact)
+    * [onPinnedFile](#onpinnedfile)
+    * [onPinnedPhoto](#onpinnedphoto)
+    * [onPinnedSticker](#onpinnedsticker)
+    * [onPinnedText](#onpinnedtext)
+    * [onPinnedVenue](#onpinnedvenue)
+    * [onPinnedVideo](#onpinnedvideo)
+    * [onPinnedVoice](#onpinnedvoice)
+    * [onStartup](#onstartup)
+    * [onSticker](#onsticker)
+    * [onText](#ontext)
+    * [onVenue](#onvenue)
+    * [onVideo](#onvideo)
+    * [onVoice](#onvoice)
+* [Actions](#actions)
+    * [editHtml / editMarkdown / editText](#edithtml--editmarkdown--edittext)
+    * [forwardMessage](#forwardmessage)
+    * [getBotUsername](#getbotusername)
+    * [getChat](#getchat)
+    * [getChatAdministrators](#getchatadministrators)
+    * [getChatMember](#getchatmember)
+    * [getChatMembersCount](#getchatmemberscount)
+    * [getIsDebug](#getisdebug)
+    * [getLoopDelay](#getloopdelay)
+    * [getMe](#getme)
+    * [getPort](#getport)
+    * [getStartupTime](#getstartuptime)
+    * [getUserProfilePhotos](#getuserprofilephotos)
+    * [kickChatMember](#kickchatmember)
+    * [leaveChat](#leavechat)
+    * [sendAudio](#sendaudio)
+    * [sendChatAction](#sendchataction)
+    * [sendContact](#sendcontact)
+    * [sendFile](#sendfile)
+    * [sendPhoto](#sendphoto)
+    * [sendHtml / sendMarkdown / sendText](#sendhtml--sendmarkdown--sendtext)
+    * [sendVenue](#sendvenue)
+    * [sendVideo](#sendvideo)
+    * [sendVoice](#sendvoice)
+    * [setIsDebug](#setisdebug)
+    * [setLoopDelay](#setloopdelay)
+    * [setPort](#setport)
+    * [toString](#tostring)
+    * [unbanChatMember](#unbanchatmember)
+* [Object Dictionary](#object-dictionary)
 * [FAQ](#faq)
 * [Contributing](#contributing)
 
@@ -102,6 +102,8 @@ If success. Simple have your command terminal open and enter: `node "location/of
 ## Declaring
 In order to use this class. You'll need to require the TelegramBot.js class into your script and declare an instance.
 
+### Simple Method
+
 ```javascript
 // Require the TelegramBot class.
 const TelegramBot = require("./TelegramBot");
@@ -112,7 +114,8 @@ var bot = new TelegramBot("YOUR_BOT_TOKEN");
 // From here. Just attach events and actions to "bot" directly.
 // See the examples under events and actions here or example.js file.
 ```
-You can adjust the default settings during declaration under this example. Missing properties will be set as default.
+
+### Advanced Method
 
 ```javascript
 // Require the TelegramBot class.
@@ -127,12 +130,12 @@ var bot = new TelegramBot("YOUR_BOT_TOKEN", {
 });
 ```
 
+You can adjust these default settings during declaration under this example. Missing properties will be set as these defaults.
+
 * `isDebug` **{Boolean}** Prints full JSON of the getUpdates obtained on the console screen. This is what I use for coding more events.
 * `loopDelay` **{Number}** The number of milliseconds per getUpdates request and events of processed and triggered.
 * `method` **{String}** The http request method to use. Can either use "GET" or "POST". POST is default and recommended since it can send larger queries and is more secure. Although a downside there chance it can send a double request.
 * `port` **{Number}** The port number to use.
-
-The default declare values are listed in the example above.
 
 ## Events
 To setup up an event. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
