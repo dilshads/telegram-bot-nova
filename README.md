@@ -10,7 +10,7 @@ Badges from [Shields.io](http://shields.io)
 
 * [Setting Up](#setting-up)
 * [Declaring](#declaring)
-    * [Simple Method](#advanced-method)
+    * [Simple Method](#simple-method)
     * [Advanced Method](#advanced-method)
 * [Events](#events)
     * [onAudio](#onaudio)
