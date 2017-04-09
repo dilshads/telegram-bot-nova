@@ -10,6 +10,8 @@ Badges from [Shields.io](http://shields.io)
 
 * [Setting Up](#setting-up)
 * [Declaring](#declaring)
+    * [Simple Method](#advanced-method)
+    * [Advanced Method](#advanced-method)
 * [Events](#events)
     * [onAudio](#onaudio)
     * [onCommand](#oncommand)
@@ -134,7 +136,7 @@ You can adjust these default settings during declaration under this example. Mis
 
 * `isDebug` **{Boolean}** Prints full JSON of the getUpdates obtained on the console screen. This is what I use for coding more events.
 * `loopDelay` **{Number}** The number of milliseconds per getUpdates request and events of processed and triggered.
-* `method` **{String}** The http request method to use. Can either use "GET" or "POST". POST is default and recommended since it can send larger queries and is more secure. Although a downside there chance it can send a double request.
+* `method` **{String}** The http request method to use. Can either use "GET" or "POST". POST is default and recommended since it can send larger queries and is more secure. Although a downside there's a chance it can send a double request.
 * `port` **{Number}** The port number to use.
 
 ## Events
@@ -1267,8 +1269,8 @@ More to come later...
 ## FAQ
 * Q: Missing methods?
     * A: I'm trying to add all the available methods. I can confirm these aren't available.
-        * Events: onUnPinnedMessage
-        * Actions: deleteMessage, joinChat, pinMessage
+        * Events: onDeletedMessage, onUnPinnedMessage
+        * Actions: addMember, deleteMessage, joinChat, pinMessage
 * Q: Why did you make this class when there's already others available?
     * A: Some lacked how-to documentation and examples. Also, setting up a certifcate and domain for webhook method seems too complex.
 * Q: Will my bot token get misused using this class?
