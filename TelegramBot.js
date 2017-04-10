@@ -89,6 +89,7 @@ module.exports = function (token, declareSettings) {
             } catch (onEditTextError) {
                 self.onError("onEditText", onEditTextError);
             }
+            // End of onEdit content.
             return;
         }
 
@@ -109,6 +110,7 @@ module.exports = function (token, declareSettings) {
             } catch (onKeyboardCallbackDataError) {
                 self.onError("onKeyboardCallbackData", onKeyboardCallbackDataError);
             }
+            // End of onKeyboard content.
             return;
         }
 
@@ -126,6 +128,180 @@ module.exports = function (token, declareSettings) {
         // Adds default values only for those that are missing.
         if (!content.from) {
             content.from = {};
+        }
+
+        // onForward content.
+        if (content.hasOwnProperty("forward_from")) {
+            // onForwardAny
+            if (content.hasOwnProperty("forward_from")) {
+                try {
+                    self.onForwardAny(
+                        content.chat,
+                        content.from,
+                        content.message_id,
+                        content.forward_from
+                    );
+                } catch (onForwardAnyError) {
+                    self.onError("onForwardAny", onForwardAnyError);
+                }
+            }
+
+            // onForwardText
+            if (content.hasOwnProperty("forward_from") && content.hasOwnProperty("text")) {
+                try {
+                    self.onForwardText(
+                        content.chat,
+                        content.from,
+                        content.message_id,
+                        content.forward_from,
+                        content.text
+                    );
+                } catch (onForwardTextError) {
+                    self.onError("onForwardText", onForwardTextError);
+                }
+            }
+            // End of onForward content.
+            return;
+        }
+
+        // onPinned content.
+        if (content.hasOwnProperty("pinned_message")) {
+            // onPinnedAudio
+            if (content.pinned_message.hasOwnProperty("audio")) {
+                try {
+                    self.onPinnedAudio(
+                        content.chat,
+                        content.message_id,
+                        content.pinned_message.from,
+                        content.from,
+                        content.pinned_message.audio
+                    );
+                } catch (onPinnedAudioError) {
+                    self.onError("onPinnedAudio", onPinnedAudioError);
+                }
+            }
+
+            // onPinnedContact
+            if (content.pinned_message.hasOwnProperty("contact")) {
+                try {
+                    self.onPinnedContact(
+                        content.chat,
+                        content.message_id,
+                        content.pinned_message.from,
+                        content.from,
+                        content.pinned_message.contact
+                    );
+                } catch (onPinnedContactError) {
+                    self.onError("onPinnedContact", onPinnedContactError);
+                }
+            }
+
+            // onPinnedFile
+            if (content.pinned_message.hasOwnProperty("document")) {
+                try {
+                    self.onPinnedFile(
+                        content.chat,
+                        content.message_id,
+                        content.pinned_message.from,
+                        content.from,
+                        content.pinned_message.document
+                    );
+                } catch (onPinnedFileError) {
+                    self.onError("onPinnedFile", onPinnedFileError);
+                }
+            }
+
+            // onPinnedPhoto
+            if (content.pinned_message.hasOwnProperty("photo")) {
+                try {
+                    self.onPinnedPhoto(
+                        content.chat,
+                        content.message_id,
+                        content.pinned_message.from,
+                        content.from,
+                        content.pinned_message.photo
+                    );
+                } catch (onPinnedPhotoError) {
+                    self.onError("onPinnedPhoto", onPinnedPhotoError);
+                }
+            }
+
+            // onPinnedSticker
+            if (content.pinned_message.hasOwnProperty("sticker")) {
+                try {
+                    self.onPinnedSticker(
+                        content.chat,
+                        content.message_id,
+                        content.pinned_message.from,
+                        content.from,
+                        content.pinned_message.sticker
+                    );
+                } catch (onPinnedStickerError) {
+                    self.onError("onPinnedSticker", onPinnedStickerError);
+                }
+            }
+
+            // onPinnedText
+            if (content.pinned_message.hasOwnProperty("text")) {
+                try {
+                    self.onPinnedText(
+                        content.chat,
+                        content.message_id,
+                        content.pinned_message.from,
+                        content.from,
+                        content.pinned_message.text
+                    );
+                } catch (onPinnedTextError) {
+                    self.onError("onPinnedText", onPinnedTextError);
+                }
+            }
+
+            // onPinnedVenue
+            if (content.pinned_message.hasOwnProperty("venue")) {
+                try {
+                    self.onPinnedVenue(
+                        content.chat,
+                        content.message_id,
+                        content.pinned_message.from,
+                        content.from,
+                        content.pinned_message.venue
+                    );
+                } catch (onPinnedVenueError) {
+                    self.onError("onPinnedVenue", onPinnedVenueError);
+                }
+            }
+
+            // onPinnedVideo
+            if (content.pinned_message.hasOwnProperty("video")) {
+                try {
+                    self.onPinnedVideo(
+                        content.chat,
+                        content.message_id,
+                        content.pinned_message.from,
+                        content.from,
+                        content.pinned_message.video
+                    );
+                } catch (onPinnedVideoError) {
+                    self.onError("onPinnedVideo", onPinnedVideoError);
+                }
+            }
+
+            // onPinnedVoice
+            if (content.pinned_message.hasOwnProperty("voice")) {
+                try {
+                    self.onPinnedVoice(
+                        content.chat,
+                        content.message_id,
+                        content.pinned_message.from,
+                        content.from,
+                        content.pinned_message.voice
+                    );
+                } catch (onPinnedVoiceError) {
+                    self.onError("onPinnedVoice", onPinnedVoiceError);
+                }
+            }
+            // End of pinned content.
+            return;
         }
 
         // onAudio
@@ -202,35 +378,6 @@ module.exports = function (token, declareSettings) {
             }
         }
 
-        // onForwardAny
-        if (content.hasOwnProperty("forward_from")) {
-            try {
-                self.onForwardAny(
-                    content.chat,
-                    content.from,
-                    content.message_id,
-                    content.forward_from
-                );
-            } catch (onForwardAnyError) {
-                self.onError("onForwardAny", onForwardAnyError);
-            }
-        }
-
-        // onForwardText
-        if (content.hasOwnProperty("forward_from") && content.hasOwnProperty("text")) {
-            try {
-                self.onForwardText(
-                    content.chat,
-                    content.from,
-                    content.message_id,
-                    content.forward_from,
-                    content.text
-                );
-            } catch (onForwardTextError) {
-                self.onError("onForwardText", onForwardTextError);
-            }
-        }
-
         // onGroupJoin
         if (content.hasOwnProperty("new_chat_member")) {
             try {
@@ -271,141 +418,6 @@ module.exports = function (token, declareSettings) {
                 );
             } catch (onPhotoError) {
                 self.onError("onPhoto", onPhotoError);
-            }
-        }
-
-        // onPinnedAudio
-        if (hasDeepProperty(content, "pinned_message.audio")) {
-            try {
-                self.onPinnedAudio(
-                    content.chat,
-                    content.message_id,
-                    content.pinned_message.from,
-                    content.from,
-                    content.pinned_message.audio
-                );
-            } catch (onPinnedAudioError) {
-                self.onError("onPinnedAudio", onPinnedAudioError);
-            }
-        }
-
-        // onPinnedContact
-        if (hasDeepProperty(content, "pinned_message.contact")) {
-            try {
-                self.onPinnedContact(
-                    content.chat,
-                    content.message_id,
-                    content.pinned_message.from,
-                    content.from,
-                    content.pinned_message.contact
-                );
-            } catch (onPinnedContactError) {
-                self.onError("onPinnedContact", onPinnedContactError);
-            }
-        }
-
-        // onPinnedFile
-        if (hasDeepProperty(content, "pinned_message.document")) {
-            try {
-                self.onPinnedFile(
-                    content.chat,
-                    content.message_id,
-                    content.pinned_message.from,
-                    content.from,
-                    content.pinned_message.document
-                );
-            } catch (onPinnedFileError) {
-                self.onError("onPinnedFile", onPinnedFileError);
-            }
-        }
-
-        // onPinnedPhoto
-        if (hasDeepProperty(content, "pinned_message.photo")) {
-            try {
-                self.onPinnedPhoto(
-                    content.chat,
-                    content.message_id,
-                    content.pinned_message.from,
-                    content.from,
-                    content.pinned_message.photo
-                );
-            } catch (onPinnedPhotoError) {
-                self.onError("onPinnedPhoto", onPinnedPhotoError);
-            }
-        }
-
-        // onPinnedSticker
-        if (hasDeepProperty(content, "pinned_message.sticker")) {
-            try {
-                self.onPinnedSticker(
-                    content.chat,
-                    content.message_id,
-                    content.pinned_message.from,
-                    content.from,
-                    content.pinned_message.sticker
-                );
-            } catch (onPinnedStickerError) {
-                self.onError("onPinnedSticker", onPinnedStickerError);
-            }
-        }
-
-        // onPinnedText
-        if (hasDeepProperty(content, "pinned_message.text")) {
-            try {
-                self.onPinnedText(
-                    content.chat,
-                    content.message_id,
-                    content.pinned_message.from,
-                    content.from,
-                    content.pinned_message.text
-                );
-            } catch (onPinnedTextError) {
-                self.onError("onPinnedText", onPinnedTextError);
-            }
-        }
-
-        // onPinnedVenue
-        if (hasDeepProperty(content, "pinned_message.venue")) {
-            try {
-                self.onPinnedVenue(
-                    content.chat,
-                    content.message_id,
-                    content.pinned_message.from,
-                    content.from,
-                    content.pinned_message.venue
-                );
-            } catch (onPinnedVenueError) {
-                self.onError("onPinnedVenue", onPinnedVenueError);
-            }
-        }
-
-        // onPinnedVideo
-        if (hasDeepProperty(content, "pinned_message.video")) {
-            try {
-                self.onPinnedVideo(
-                    content.chat,
-                    content.message_id,
-                    content.pinned_message.from,
-                    content.from,
-                    content.pinned_message.video
-                );
-            } catch (onPinnedVideoError) {
-                self.onError("onPinnedVideo", onPinnedVideoError);
-            }
-        }
-
-        // onPinnedVoice
-        if (hasDeepProperty(content, "pinned_message.voice")) {
-            try {
-                self.onPinnedVoice(
-                    content.chat,
-                    content.message_id,
-                    content.pinned_message.from,
-                    content.from,
-                    content.pinned_message.voice
-                );
-            } catch (onPinnedVoiceError) {
-                self.onError("onPinnedVoice", onPinnedVoiceError);
             }
         }
 
