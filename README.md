@@ -73,27 +73,20 @@ Badges from [Shields.io](http://shields.io)
 * [FAQ](#faq)
 * [Contributing](#contributing)
 
-All the returned objects objects can be found under this section on the [Telegram Bot API/Available Types](https://core.telegram.org/bots/api#available-types) page. The first 2 **{Chat Object}** and **{User Object}** will be the most common ones. Keep note of their values that are optional since you'll need to condition check if they are given or not.
+All the returned objects can be found under this section on the [Telegram Bot API/Available Types](https://core.telegram.org/bots/api#available-types) page. The first 2 **{Chat Object}** and **{User Object}** will be the most common ones. Keep note of their values that are optional since you'll need to condition check if they are given or not.
 
-**Beware that this class and its documentation is not yet complete. The current functionality is stable and usable to run commands. More stuff and improvements are being added in time.**
+**Note: This documentation and class aren't yet complete.**
 
 ## Setting Up
 In order to setup your bot. You'll need to download the .zip and extract the contents on your drive. Your Desktop will be fine.
 
 Next you'll need to open **example.js** in your preferred code editor. Some example software are:
 
-**Linux**
-* [Bluefish](http://bluefish.openoffice.nl)
-* [Visual Studio Code](https://code.visualstudio.com)
+* **Linux**: [Bluefish](http://bluefish.openoffice.nl), [Visual Studio Code](https://code.visualstudio.com)
+* **Mac**: Sorry I don't know what to suggest for Mac.
+* **Windows**: [Notepad++](https://notepad-plus-plus.org), [Visual Studio Code](https://code.visualstudio.com)
 
-**Mac**
-* ... Sorry I don't know what to suggest for Mac.
-
-**Windows**
-* [Notepad++](https://notepad-plus-plus.org)
-* [Visual Studio Code](https://code.visualstudio.com)
-
-Inside, replace `YOUR_BOT_TOKEN` with your bot token you obtained from BotFather. If you do not have a bot token. Open your Telegram app and search for @BotFather and PM him. This is used for setting up a bot account and being given an access code address for it.
+Inside, replace `YOUR_BOT_TOKEN` with your bot token you obtained from BotFather. If you do not have a bot token. Open your Telegram app and search for [@BotFather](https://t.me/BotFather) and PM him. This is used for setting up a bot account and being given an URL code for it.
 
 Now you're ready to run and test the example. You should already have Node.js installed on your operating system. For Windows it's just a simple install, for other OS you may have issues.
 
