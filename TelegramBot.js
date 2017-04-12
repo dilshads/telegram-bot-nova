@@ -616,7 +616,7 @@ module.exports = function (token, declareSettings) {
             "chat_id": chatIdOrUsername
         };
         web("getChatAdministrators", urlQuery, function (data) {
-            var admins = [], creator = [];
+            var admins = [], creator = [], ids;
             if (data.ok) {
                 data.result.forEach(function (value) {
                     if (value.status === "creator") {
@@ -625,9 +625,16 @@ module.exports = function (token, declareSettings) {
                         admins.push(value.user);
                     }
                 });
+                ids = creator.concat(admins).map(function (user) {
+                    return user.id;
+                });
             }
             if (typeof callback === "function") {
-                callback(data.ok, creator.concat(admins));
+                if (data.ok) {
+                    callback(data.ok, creator.concat(admins), ids);
+                } else {
+                    callback(data.ok);
+                }
             }
         });
     };

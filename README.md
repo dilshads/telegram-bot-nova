@@ -730,18 +730,19 @@ bot.getChat("@MyGroup", function (isSuccess, obtainedChat) {
 You'll notice I've named it `obtainedChat` just to avoid name collision with `chat`.
 
 ### getChatAdministrators
-Returns an array containing all the users that are "administrator" status of the group. The "creator" will be the first index 0 while administrators are 1 and higher, if they exist.
+Returns an array containing all the users that are "administrator" status of the group. The "creator" will be the first index 0 while administrators are 1 and higher. If the bot itself is an administrator, it will also be included. However, other bots will not be included even if administrator.
 
 *Required*
 * `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
     * `users` **{Array}** containing a **{User Object}** per chat authority.
+    * `user_ids` **{Array}** containing a **{Number}** of the user's id.
 
 E.g
 
 ```javascript
-bot.getChatAdministrators(chat_id, function (isSuccess, users) {
+bot.getChatAdministrators(chat_id, function (isSuccess, users, user_ids) {
     if (isSuccess) {
         var i, length = users.length;
         while (i < length) {
