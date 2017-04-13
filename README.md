@@ -153,7 +153,7 @@ bot.onAudio = function (chat, from, message_id, caption, audio) {
     if (chat.username === "ExampleGroup") {
         audios.push(audio.file_id);
     }
-}
+};
 // This example shows how to effectively make your bot memorize audios.
 ```
 
@@ -175,7 +175,7 @@ bot.onCommand = function (chat, from, message_id, text, command, commandData) {
     if (command === "start") {
         bot.sendText(chat.id, "Hello world.");
     }
-}
+};
 ```
 
 Notice that the id from chat always returns the source were the command was triggered so the bot can reply to. Private message, group, supergroup or even a channel.
@@ -195,7 +195,7 @@ E.g
 bot.onContact = function (chat, from, contact, message_id) {
     console.log("Name: " + contact.first_name);
     console.log("Number: " + contact.phone_number);
-}
+};
 ```
 
 ### onEditText
@@ -213,7 +213,7 @@ E.g
 bot.onEditText = function (chat, from, message_id, new_text) {
     console.log(from.first_name + " edited message " + message_id);
     console.log("in " + chat.first_name + " with " + new_text);
-}
+};
 ```
 
 ### onFile
@@ -234,7 +234,7 @@ bot.onFile = function (chat, from, message_id, caption, file) {
     if (chat.username === "ExampleChannel") {
         files.push(file.file_id);
     }
-}
+};
 // This example shows how to effectively make your bot memorize files.
 ```
 
@@ -252,7 +252,7 @@ E.g
 ```javascript
 bot.onForwardAny = function (chat, from, message_id, user) {
     console.log(from.first_name + " forwarded " + user.firstname + "'s content.");
-}
+};
 ```
 
 ### onForwardText
@@ -270,7 +270,7 @@ E.g
 ```javascript
 bot.onForwardText = function (chat, from, message_id, user, text) {
     console.log(from.first_name + " forwarded " + user.firstname + "'s message.");
-}
+};
 ```
 
 ### onGroupJoin
@@ -287,7 +287,7 @@ E.g
 ```javascript
 bot.onGroupJoin = function (chat, joining_user, message_id, triggering_user) {
     bot.sendText(chat.id, "Welcome to our group, " + joining_user.first_name + ".");
-}
+};
 ```
 
 If you're wondering what is a good use of `joining_user` and `triggering_user` user objects. You could compare `joining_user.id === triggering_user.id` to check if that user invited themselves or `joining_user.id !== triggering_user.id` that someone else invited them.
@@ -306,7 +306,7 @@ E.g
 ```javascript
 bot.onGroupLeft = function (chat, leaving_user, message_id, triggering_user) {
     bot.sendText(chat.id, leaving_user.first_name + " left the group.");
-}
+};
 ```
 
 If you're wondering what is a good use of `leaving_user` and `triggering_user` user objects. You could compare `leaving_user.id === triggering_user.id` to check if that user left themselves or `leaving_user.id !== triggering_user.id` that someone else removed them.
@@ -347,7 +347,7 @@ bot.onPhoto = function (chat, from, message_id, caption, photo) {
     if (chat.username === "@ExampleChannel") {
         photos.push(photo[photo.length - 1].file_id);
     }
-}
+};
 ```
 
 This example shows how to effectively make your bot memorize photos. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
@@ -367,7 +367,7 @@ E.g
 ```javascript
 bot.onPinnedAudio = function (chat, message_id, message_user, pinned_user, audio) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s audio.");
-}
+};
 ```
 
 ### onPinnedContact
@@ -387,7 +387,7 @@ bot.onPinnedContact = function (chat, message_id, message_user, pinned_user, con
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s contact.");
     console.log("Name: " + contact.first_name);
     console.log("Number: " + contact.phone_number);
-}
+};
 ```
 
 ### onPinnedFile
@@ -405,7 +405,7 @@ E.g
 ```javascript
 bot.onPinnedFile = function (chat, message_id, message_user, pinned_user, file) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s video.");
-}
+};
 ```
 
 ### onPinnedPhoto
@@ -423,7 +423,7 @@ E.g
 ```javascript
 bot.onPinnedPhoto = function (chat, message_id, message_user, pinned_user, text) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s photo.");
-}
+};
 ```
 
 ### onPinnedSticker
@@ -441,7 +441,7 @@ E.g
 ```javascript
 bot.onPinnedSticker = function (chat, message_id, message_user, pinned_user, sticker) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s sticker.");
-}
+};
 ```
 
 ### onPinnedText
@@ -459,7 +459,7 @@ E.g
 ```javascript
 bot.onPinnedText = function (chat, message_user, message_id, pinned_user, text) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s message that says: " + text);
-}
+};
 ```
 
 ### onPinnedVenue
@@ -477,7 +477,7 @@ E.g
 ```javascript
 bot.onPinnedVenue = function (chat, message_user, message_id, pinned_user, venue) {
     console.log(pinned_user.first_name + " pinned a venue: " + JSON.stringify(venue));
-}
+};
 ```
 
 ### onPinnedVideo
@@ -495,7 +495,7 @@ E.g
 ```javascript
 bot.onPinnedVideo = function (chat, message_user, message_id, pinned_user, video) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s video.");
-}
+};
 ```
 
 ### onPinnedVoice
@@ -513,7 +513,7 @@ E.g
 ```javascript
 bot.onPinnedVoice = function (chat, message_user, message_id, pinned_user, voice) {
     console.log(pinned_user.first_name + " pinned " + message_user.first_name + "'s video.");
-}
+};
 ```
 
 ### onStartup
@@ -550,7 +550,7 @@ E.g
 ```javascript
 bot.onSticker = function (chat, from, message_id, sticker) {
     console.log(from.first_name + " sent a sticker with " + sticker.width + "x" + sticker.height + " resolution.");
-}
+};
 ```
 
 ### onText
@@ -569,7 +569,7 @@ bot.onText = function (chat, from, message_id, text) {
     if (text.toLowerCase().indexOf("hello bot") > -1) {
         bot.sendText(chat.id, "Hello, " + from.first_name + ".");
     }
-}
+};
 ```
 
 When someone says "hello bot" in any part of the message. This example will respond with a hello back.
@@ -588,7 +588,7 @@ E.g
 ```javascript
 bot.onVenue = function (chat, from, message_id, venue) {
     console.log(from.firstname + " sent this venue: " + JSON.stringify(venue));
-}
+};
 ```
 
 ### onVideo
@@ -609,7 +609,7 @@ bot.onVideo = function (chat, from, message_id, caption, video) {
     if (chat.username === "ExampleChannel") {
         videos.push(video.file_id);
     }
-}
+};
 ```
 
 This example shows how to effectively make your bot memorize videos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
@@ -632,7 +632,7 @@ bot.onVoice = function (chat, from, message_id, caption, voice) {
     if (chat.username === "ExampleChannel") {
         voices.push(voice.file_id);
     }
-}
+};
 ```
 
 This example shows how to effectively make your bot memorize voices. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
@@ -1153,7 +1153,7 @@ E.g
 ```javascript
 var settings = {
     "caption": "Video from @MyChannel"
-}
+};
 bot.sendVideo(chat_id, video_file_id, settings, function (isSuccess) {
     console.log("Video sent successfully: " + isSuccess);
 });
@@ -1206,7 +1206,7 @@ Changes the current loop delay before the bot checks for new content and passes 
 E.g
 
 ```javascript
-bot.setLoopDelay(3000);
+bot.setLoopDelay(delay);
 ```
 
 ### setPort
@@ -1218,7 +1218,7 @@ Changes the current port being used for the loop. Be aware that if the port isn'
 E.g
 
 ```javascript
-bot.setPort(80);
+bot.setPort(port);
 ```
 
 ### unbanChatMember
