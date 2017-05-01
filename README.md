@@ -17,6 +17,7 @@ Badges from [Shields.io](http://shields.io)
     * [onCommand](#oncommand)
     * [onContact](#oncontact)
     * [onEditText](#onedittext)
+    * [onError](#onerror)
     * [onFile](#onfile)
     * [onForwardAny](#onforwardany)
     * [onForwardText](#onforwardtext)
@@ -214,6 +215,27 @@ bot.onEditText = function (chat, from, message_id, new_text) {
     console.log(from.first_name + " edited message " + message_id);
     console.log("in " + chat.first_name + " with " + new_text);
 };
+```
+
+### onError
+Calls when an error occurs in an instance event.
+
+*Arguments*
+* `event` **{String}** Name of the event.
+* `error` **{Error}** The error object that was returned.
+
+E.g
+
+```javascript
+bot.onError = function (event, error) {
+    console.error(event);
+    console.error(error);
+};
+bot.onStartup = function () {
+    undefinedFunction();
+}
+
+// undefinedFunction doesn't exist so bot.onError will get called.
 ```
 
 ### onFile
