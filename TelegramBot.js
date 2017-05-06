@@ -515,7 +515,11 @@ module.exports = function (token, declareSettings) {
             });
             result.on("end", function () {
                 if (typeof callback === "function") {
-                    callback(JSON.parse(data));
+                    try {
+                        callback(JSON.parse(data));
+                    } catch (error) {
+                        loop();
+                    }
                 }
             });
         });
