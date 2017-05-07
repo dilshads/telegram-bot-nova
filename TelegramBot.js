@@ -1,4 +1,3 @@
-/*jslint es6: true, node: true, this: true */
 const https = require("https");
 const querystring = require("querystring");
 

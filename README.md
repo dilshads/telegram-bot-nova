@@ -1,10 +1,11 @@
 # TelegramBot Node.js getUpdates Method
 
-[![completion](https://img.shields.io/badge/completion-88%25-orange.svg)]()
+[![completion](https://img.shields.io/badge/completion-90%25-orange.svg)]()
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![jslint_issues](https://img.shields.io/badge/eslint%20issues-none-brightgreen.svg)](http://eslint.org)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![status](https://img.shields.io/badge/status-stable-brightgreen.svg)]()
 
 Badges from [Shields.io](http://shields.io)
 
@@ -81,7 +82,7 @@ All the returned objects can be found under this section on the [Telegram Bot AP
 ## Setting Up
 In order to setup your bot. You'll need to download the .zip and extract the contents on your drive. Your Desktop will be fine.
 
-Next you'll need to open **example.js** in your preferred code editor. Some example software are:
+Next you'll need to open **example1.js** in your preferred code editor. Some example software are:
 
 * **Linux**: [Bluefish](http://bluefish.openoffice.nl), [Visual Studio Code](https://code.visualstudio.com)
 * **Mac**: Sorry I don't know what to suggest for Mac.
@@ -339,13 +340,13 @@ Gets called every time the bot sees a `callback_data` from a user pressing a but
 * `chat` **{Chat Object}** Chat were event occured.
 * `from` **{User Object}** User who pressed the button.
 * `message_id` **{Number}** The message reference.
-* `data` **{String}** The `callback_data` that was returned from the **{InlineKeyboardButton}** object.
+* `callback_data` **{String}** The `callback_data` that was returned from the **{InlineKeyboardButton}** object.
 
 E.g
 
 ```javascript
-bot.onKeyboardCallbackData = function (chat, from, message_id, data) {
-    console.log(from.first_name " pressed a button with this callback data: " + data);
+bot.onKeyboardCallbackData = function (chat, from, message_id, callback_data) {
+    console.log(from.first_name " pressed a button with this callback data: " + callback_data);
 };
 ```
 
@@ -673,7 +674,7 @@ Use this to replace a target message. Be aware bots can only replace their own m
 *Optional Perimeters*
 * `settings` **{Object}** Use for providing extra perimeters.
     * `disable_web_page_preview` **{Boolean}** Default false. If a link or @username exists in the message, setting this to true will prevent it sending a thumbnail image.
-    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
 
@@ -981,7 +982,7 @@ Use this to send a mp3 to a target chat. You'll need to collect the `audio.file_
     * `duration` **{Number}**
     * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `performer` **{String}**
-    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
     * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
     * `title` **{String}**
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
@@ -1023,7 +1024,7 @@ Use this to send a made contact.
 * `settings` **{Object}** Use for providing extra perimeters.
     * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `last_name` **{String}** Contact's last name.
-    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
     * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
@@ -1048,7 +1049,7 @@ Use this to send a file to a target chat. You'll need to collect the `file.file_
 * `settings` **{Object}** Use for providing extra perimeters.
     * `caption` **{String}** Adds a caption text message to the video. 0-200 characters max.
     * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
     * `message_id` **{Number}** Id of the sent content.
@@ -1072,7 +1073,7 @@ Use this to send a plain text message to a chat. Note that Telegram automaticall
 * `settings` **{Object}** Use for providing extra perimeters.
     * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `disable_web_page_preview` **{Boolean}** Default false. If a link or @username exists in the message, setting this to true will prevent it sending a thumbnail image.
-    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
     * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
@@ -1109,7 +1110,7 @@ Use this to send an image to a target chat. You'll need to collect the `photo[ph
 * `settings` **{Object}** Use for providing extra perimeters.
     * `caption` **{String}** Adds a caption text message to the video. 0-200 characters max.
     * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
     * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
@@ -1138,7 +1139,7 @@ Use this to send a map location.
     * `foursquare_id` **{String}** Foursquare identifyer for the venue.
     * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
-    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
     * `message_id` **{Number}** Id of the sent content.
@@ -1165,7 +1166,7 @@ Use this to send a video to a target chat. You'll need to collect the `video.fil
     * `height` **{Number}**
     * `caption` **{String}** Adds a caption text message to the video. 0-200 characters max.
     * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
     * `message_id` **{Number}** Id of the sent content.
@@ -1193,7 +1194,7 @@ Use this to send a ogg voice file to a target chat. You'll need to collect the `
     * `caption` **{String}** Adds a caption text message to the video. 0-200 characters max.
     * `duration` **{Number}**
     * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** Untested.
+    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
     * `reply_to_message_id` **{Number}** Use for sending a reply to a message id.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `isSuccess` **{Boolean}**
@@ -1208,7 +1209,7 @@ bot.sendVoice(chat_id, voice_file_id, {}, function (isSuccess) {
 ```
 
 ### setIsDebug
-Used for enabling or disabling console.log  debug messages of the getUpdates events. Default is false.
+Used for enabling or disabling console.log debug messages of the getUpdates events. Default is false.
 
 *Required Perimeters*
 * `isDebug` **{Boolean}** Enabled or disabled.
@@ -1244,7 +1245,7 @@ bot.setPort(port);
 ```
 
 ### unbanChatMember
-Unbans a user from a chat. The bot has to be present in the group and an administrator for this to work.
+Unbans a user from a group or supergroup. The bot has to be present and an administrator for this to work.
 
 *Required*
 * `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
@@ -1286,7 +1287,7 @@ More to come later...
 * Q: Missing methods?
     * A: I'm trying to add all the available methods. I can confirm these aren't available.
         * Events: onDeletedMessage, onUnPinnedMessage
-        * Actions: addMember, deleteMessage, joinChat, pinMessage
+        * Actions: addMember, deleteMessage, joinChat, pinMessage, unPinMessage
 * Q: Why did you make this class when there's already others available?
     * A: Some lacked how-to documentation and examples. Also, setting up a certifcate and domain for webhook method seems too complex.
 * Q: Will my bot token get misused using this class?
@@ -1296,7 +1297,7 @@ More to come later...
 * Q: There's typo and a bug.
     * A: You're more than free to fix document errors and help fill in the content here. Bugs can be reported under issues unless you know how to fix it and post a request fix with the changes.
 * Q: I don't know how to do something.
-    * A: I've written this project to hopefully be as easy as possible. You'll need to know some basic of JavaScript and have Node.js installed. If something not detailed enough post and issue and I see if I can explain something better.
+    * A: I've written this project to hopefully be as easy as possible. You'll need to know some basic of JavaScript and have Node.js installed. If something is not detailed enough. Post and issue and I see if I can explain something better.
 
 ## Contributing
 * Casing: CONSTANT_NAMING, ClassNaming, functionNaming, variableNaming
