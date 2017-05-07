@@ -3,7 +3,7 @@
 [![completion](https://img.shields.io/badge/completion-88%25-orange.svg)]()
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
-[![jslint_issues](https://img.shields.io/badge/jslint%20issues-none-brightgreen.svg)](http://jslint.com)
+[![jslint_issues](https://img.shields.io/badge/eslint%20issues-none-brightgreen.svg)](http://eslint.org)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Badges from [Shields.io](http://shields.io)
