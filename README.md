@@ -94,7 +94,7 @@ Now you're ready to run and test the example. You should already have Node.js in
 
 To test if it's installed. Open Command Prompt if you're on Windows or Terminal if you're on Linux and enter: `node --version` which just prints the current version of node installed.
 
-If success. Simple have your command terminal open and enter: `node "location/of/example.js"` Operating system directories are different so, if your command terminal supports it, you can just click-and-drag **app.js** into it after the space.
+If success. Simple have your command terminal open and enter: `node "location/of/example1.js"` Operating system directories are different so, if your command terminal supports it, you can just click-and-drag **app.js** into it after the space.
 
 ## Declaring
 In order to use this class. You'll need to require the TelegramBot.js class into your script and declare an instance.
@@ -109,7 +109,7 @@ const TelegramBot = require("./TelegramBot");
 var bot = new TelegramBot("YOUR_BOT_TOKEN");
 
 // From here. Just attach events and actions to "bot" directly.
-// See the examples under events and actions here or example.js file.
+// See the examples under events and actions here or example1.js file.
 ```
 
 ### Advanced Method
