@@ -26,6 +26,7 @@ Badges from [Shields.io](http://shields.io)
     * [onGroupLeft](#ongroupleft)
     * [onKeyboardCallbackData](#onkeyboardcallbackdata)
     * [onPhoto](#onphoto)
+    * [onPinnedAny](#onpinnedany)
     * [onPinnedAudio](#onpinnedaudio)
     * [onPinnedContact](#onpinnedcontact)
     * [onPinnedFile](#onpinnedfile)
@@ -374,6 +375,23 @@ bot.onPhoto = function (chat, from, message_id, caption, photo) {
 ```
 
 This example shows how to effectively make your bot memorize photos. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
+
+### onPinnedAny
+Calls on any pinned content. This excludes supergroups if the bot isn't an administrator. This function gets called before any other pinned content.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `message_id` **{Number}** The message reference that was pinned.
+* `message_user` **{User Object}** User who wrote the pinned message.
+* `pinned_user` **{User Object}** User who pinned the message.
+
+```javascript
+var counter = 0;
+bot.onPinnedAny = function (chat, message_id, message_user, pinned_user) {
+    counter += 1;
+    console.log("Number of pinned messages: " + counter);
+};
+```
 
 ### onPinnedAudio
 Calls when a user pins an audio. This excludes supergroups if the bot isn't an administrator.

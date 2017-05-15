@@ -165,6 +165,18 @@ module.exports = function (token, declareSettings) {
 
         // onPinned content.
         if (content.hasOwnProperty("pinned_message")) {
+            // onPinnedAny
+            try {
+                self.onPinnedAny(
+                    content.chat,
+                    content.message_id,
+                    content.pinned_message.from,
+                    content.from
+                );
+            } catch (onPinnedAnyError) {
+                self.onError("onPinnedAny", onPinnedAnyError);
+            }
+
             // onPinnedAudio
             if (content.pinned_message.hasOwnProperty("audio")) {
                 try {
