@@ -249,6 +249,21 @@ module.exports = function (token, declareSettings) {
                     self.onError("onForwardVideo", onForwardVideoError);
                 }
             }
+
+            // onForwardVoice
+            if (content.hasOwnProperty("voice")) {
+                try {
+                    self.onForwardVoice(
+                        content.chat,
+                        content.from,
+                        content.message_id,
+                        content.forward_from,
+                        content.voice
+                    );
+                } catch (onForwardVoiceError) {
+                    self.onError("onForwardVoice", onForwardVoiceError);
+                }
+            }
             // End of onForward content.
             return;
         }

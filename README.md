@@ -1,6 +1,6 @@
 # TelegramBot Node.js getUpdates Method
 
-[![completion](https://img.shields.io/badge/completion-90%25-orange.svg)]()
+[![completion](https://img.shields.io/badge/completion-93%25-orange.svg)]()
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![jslint_issues](https://img.shields.io/badge/eslint%20issues-none-brightgreen.svg)](http://eslint.org)
@@ -419,6 +419,27 @@ bot.onForwardVideo = function (chat, from, message_id, user, video) {
 ```
 
 This example shows how to effectively make your bot memorize videos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
+
+### onForwardVoice
+Gets called every time the bot sees a forwarded `.ogg` voice message. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the voice message.
+* `message_id` **{Number}** Content reference id.
+* `user` **{User Object}** The owner of the content that was forwarded.
+* `voice` **{Voice Object}** Voice information. Use `voice.file_id` to keep track of the voice messages seen.
+
+E.g
+
+```javascript
+var voices = [];
+bot.onForwardVoice = function (chat, from, message_id, caption, voice) {
+    if (chat.username === "ExampleChannel") {
+        voices.push(voice.file_id);
+    }
+};
+```
 
 ### onGroupJoin
 Gets called every time the bot sees someone joining the group.
