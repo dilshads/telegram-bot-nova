@@ -19,6 +19,7 @@ bot.onForwardFile = function (chat, from, message_id, user, file) {};
 bot.onForwardPhoto = function (chat, from, message_id, user, photo) {};
 bot.onForwardSticker = function (chat, from, message_id, user, sticker) {};
 bot.onForwardText = function (chat, from, message_id, user, text) {};
+bot.onForwardVenue = function (chat, from, message_id, user, venue) {};
 bot.onForwardVideo = function (chat, from, message_id, user, video) {};
 bot.onGroupJoin = function (chat, joining_user, message_id, triggering_user) {};
 bot.onGroupLeft = function (chat, leaving_user, message_id, triggering_user) {};

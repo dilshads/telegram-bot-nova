@@ -220,6 +220,21 @@ module.exports = function (token, declareSettings) {
                 }
             }
 
+            // onForwardVenue
+            if (content.hasOwnProperty("venue")) {
+                try {
+                    self.onForwardVenue(
+                        content.chat,
+                        content.from,
+                        content.message_id,
+                        content.forward_from,
+                        content.venue
+                    );
+                } catch (onForwardVenueError) {
+                    self.onError("onForwardVenue", onForwardVenueError);
+                }
+            }
+
             // onForwardVideo
             if (content.hasOwnProperty("video")) {
                 try {
@@ -875,6 +890,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onForwardText = function () {
+        return;
+    };
+
+    this.onForwardVenue = function () {
         return;
     };
 

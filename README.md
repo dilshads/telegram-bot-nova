@@ -379,6 +379,24 @@ bot.onForwardText = function (chat, from, message_id, user, text) {
 };
 ```
 
+### onForwardVenue
+Gets called every time the bot sees a forwarded venue. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the video.
+* `message_id` **{Number}** Message reference.
+* `user` **{User Object}** The owner of the content that was forwarded.
+* `venue` **{Venue Object}** Venue information.
+
+E.g
+
+```javascript
+bot.onForwardVenue = function (chat, from, message_id, user, venue) {
+    console.log(from.firstname + " sent this venue: " + JSON.stringify(venue));
+};
+```
+
 ### onForwardVideo
 Gets called every time the bot sees a forwarded video. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
 
@@ -721,7 +739,7 @@ bot.onText = function (chat, from, message_id, text) {
 When someone says "hello bot" in any part of the message. This example will respond with a hello back.
 
 ### onVenue
-Gets called every time the bot sees a new venue
+Gets called every time the bot sees a new venue.
 
 *Arguments*
 * `chat` **{Chat Object}** Chat were event occured.
