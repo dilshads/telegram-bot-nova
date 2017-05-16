@@ -279,6 +279,25 @@ bot.onForwardAny = function (chat, from, message_id, user) {
 };
 ```
 
+### onForwardContact
+Gets called every time the bot sees a forwarded contact. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the file.
+* `message_id` **{Number}** The message reference.
+* `user` **{User Object}** The owner of the content that was forwarded.
+* `contact` **{Contact Object}** Contact information.
+
+E.g
+
+```javascript
+bot.onForwardContact = function (chat, from, contact, user, message_id) {
+    console.log("Forwarded Name: " + contact.first_name);
+    console.log("Forwarded Number: " + contact.phone_number);
+};
+```
+
 ### onForwardPhoto
 Gets called every time the bot sees a forwarded photo. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
 
@@ -293,7 +312,7 @@ E.g
 
 ```javascript
 var photos = [];
-bot.onPhoto = function (chat, from, message_id, user, photo) {
+bot.onForwardPhoto = function (chat, from, message_id, user, photo) {
     if (chat.username === "@ExampleChannel") {
         photos.push(photo[photo.length - 1].file_id);
     }
@@ -319,6 +338,29 @@ bot.onForwardText = function (chat, from, message_id, user, text) {
     console.log(from.first_name + " forwarded " + user.firstname + "'s message.");
 };
 ```
+
+### onForwardVideo
+Gets called every time the bot sees a forwarded video. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the video.
+* `message_id` **{Number}** Message reference.
+* `user` **{User Object}** The owner of the content that was forwarded.
+* `video` **{Video Object}** Video information. Use `video.file_id` to keep track of the videos seen.
+
+E.g
+
+```javascript
+var videos = [];
+bot.onForwardVideo = function (chat, from, message_id, user, video) {
+    if (chat.username === "ExampleChannel") {
+        videos.push(video.file_id);
+    }
+};
+```
+
+This example shows how to effectively make your bot memorize videos. Note that PM, group, supergroup and channels may not return an `username` property so it needs to be checked first if it exists.
 
 ### onGroupJoin
 Gets called every time the bot sees someone joining the group.

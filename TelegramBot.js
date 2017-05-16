@@ -145,6 +145,21 @@ module.exports = function (token, declareSettings) {
                 }
             }
 
+            // onForwardContact
+            if (content.hasOwnProperty("contact")) {
+                try {
+                    self.onForwardContact(
+                        content.chat,
+                        content.from,
+                        content.message_id,
+                        content.forward_from,
+                        content.contact
+                    );
+                } catch (onForwardContactError) {
+                    self.onError("onForwardContact", onForwardContactError);
+                }
+            }
+
             // onForwardPhoto
             if (content.hasOwnProperty("photo")) {
                 try {
@@ -172,6 +187,21 @@ module.exports = function (token, declareSettings) {
                     );
                 } catch (onForwardTextError) {
                     self.onError("onForwardText", onForwardTextError);
+                }
+            }
+
+            // onForwardVideo
+            if (content.hasOwnProperty("video")) {
+                try {
+                    self.onForwardVideo(
+                        content.chat,
+                        content.from,
+                        content.message_id,
+                        content.forward_from,
+                        content.video
+                    );
+                } catch (onForwardVideoError) {
+                    self.onError("onForwardVideo", onForwardVideoError);
                 }
             }
             // End of onForward content.
@@ -798,11 +828,19 @@ module.exports = function (token, declareSettings) {
         return;
     };
 
+    this.onForwardContact = function () {
+        return;
+    };
+
     this.onForwardPhoto = function () {
         return;
     };
 
     this.onForwardText = function () {
+        return;
+    };
+
+    this.onForwardVideo = function () {
         return;
     };
 
