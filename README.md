@@ -298,6 +298,28 @@ bot.onForwardContact = function (chat, from, contact, user, message_id) {
 };
 ```
 
+### onForwardFile
+Gets called every time the bot sees a forwarded file. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who sent the file.
+* `message_id` **{Number}** The message reference.
+* `user` **{User Object}** The owner of the content that was forwarded.
+* `file` **{Document Object}** File information. Use `file.file_id` to keep track of the files seen.
+
+E.g
+
+```javascript
+var files = [];
+bot.onForwardFile = function (chat, from, message_id, user, file) {
+    if (chat.username === "ExampleChannel") {
+        files.push(file.file_id);
+    }
+};
+// This example shows how to effectively make your bot memorize files.
+```
+
 ### onForwardPhoto
 Gets called every time the bot sees a forwarded photo. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
 

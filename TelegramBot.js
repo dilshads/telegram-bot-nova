@@ -160,6 +160,21 @@ module.exports = function (token, declareSettings) {
                 }
             }
 
+            // onForwardFile
+            if (content.hasOwnProperty("document")) {
+                try {
+                    self.onForwardVideo(
+                        content.chat,
+                        content.from,
+                        content.message_id,
+                        content.forward_from,
+                        content.document
+                    );
+                } catch (onForwardFileError) {
+                    self.onError("onForwardFile", onForwardFileError);
+                }
+            }
+
             // onForwardPhoto
             if (content.hasOwnProperty("photo")) {
                 try {
@@ -829,6 +844,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onForwardContact = function () {
+        return;
+    };
+
+    this.onForwardFile = function () {
         return;
     };
 
