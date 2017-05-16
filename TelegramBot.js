@@ -145,6 +145,21 @@ module.exports = function (token, declareSettings) {
                 }
             }
 
+            // onForwardPhoto
+            if (content.hasOwnProperty("photo")) {
+                try {
+                    self.onForwardPhoto(
+                        content.chat,
+                        content.from,
+                        content.message_id,
+                        content.forward_from,
+                        content.photo
+                    );
+                } catch (onForwardPhotoError) {
+                    self.onError("onForwardPhoto", onForwardPhotoError);
+                }
+            }
+
             // onForwardText
             if (content.hasOwnProperty("forward_from") && content.hasOwnProperty("text")) {
                 try {
@@ -783,6 +798,10 @@ module.exports = function (token, declareSettings) {
         return;
     };
 
+    this.onForwardPhoto = function () {
+        return;
+    };
+
     this.onForwardText = function () {
         return;
     };
@@ -800,6 +819,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onPhoto = function () {
+        return;
+    };
+
+    this.onPinnedAny = function () {
         return;
     };
 

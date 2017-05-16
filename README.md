@@ -279,8 +279,31 @@ bot.onForwardAny = function (chat, from, message_id, user) {
 };
 ```
 
+### onForwardPhoto
+Gets called every time the bot sees a forwarded photo. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who forwarded the message.
+* `message_id` **{Number}** Message reference.
+* `user` **{User Object}** The owner of the content that was forwarded.
+* `photo` **{Array} of {PhotoSize Object}** Provides photo information.
+
+E.g
+
+```javascript
+var photos = [];
+bot.onPhoto = function (chat, from, message_id, user, photo) {
+    if (chat.username === "@ExampleChannel") {
+        photos.push(photo[photo.length - 1].file_id);
+    }
+};
+```
+
+This example shows how to effectively make your bot memorize photos. Index 0 of the array is the smallest quality version of the image so having photo.length in the index will get the largest photo file id.
+
 ### onForwardText
-Gets called every time the bot sees a new message. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots.
+Gets called every time the bot sees a forwarded text message. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots.
 
 *Arguments*
 * `chat` **{Chat Object}** Chat were event occured.

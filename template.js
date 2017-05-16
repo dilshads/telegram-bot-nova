@@ -14,6 +14,7 @@ bot.onEditText = function (chat, from, message_id, new_text) {};
 bot.onError = function (event, error) {};
 bot.onFile = function (chat, from, message_id, caption, file) {};
 bot.onForwardAny = function (chat, from, message_id, user) {};
+bot.onForwardPhoto = function (chat, from, message_id, user, photo) {};
 bot.onForwardText = function (chat, from, message_id, user, text) {};
 bot.onGroupJoin = function (chat, joining_user, message_id, triggering_user) {};
 bot.onGroupLeft = function (chat, leaving_user, message_id, triggering_user) {};
