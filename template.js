@@ -14,6 +14,7 @@ bot.onEditText = function (chat, from, message_id, new_text) {};
 bot.onError = function (event, error) {};
 bot.onFile = function (chat, from, message_id, caption, file) {};
 bot.onForwardAny = function (chat, from, message_id, user) {};
+bot.onForwardAudio = function (chat, from, message_id, user, audio) {};
 bot.onForwardContact = function (chat, from, message_id, user, contact) {};
 bot.onForwardFile = function (chat, from, message_id, user, file) {};
 bot.onForwardPhoto = function (chat, from, message_id, user, photo) {};

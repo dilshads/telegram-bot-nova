@@ -21,7 +21,15 @@ Badges from [Shields.io](http://shields.io)
     * [onError](#onerror)
     * [onFile](#onfile)
     * [onForwardAny](#onforwardany)
+    * [onForwardAudio](#onforwardaudio)
+    * [onForwardContact](#onforwardcontact)
+    * [onForwardFile](#onforwardfile)
+    * [onForwardPhoto](#onforwardphoto)
+    * [onForwardSticker](#onforwardsticker)
     * [onForwardText](#onforwardtext)
+    * [onForwardVenue](#onforwardvenue)
+    * [onForwardVideo](#onforwardVideo)
+    * [onForwardVoice](#onforwardvoice)
     * [onGroupJoin](#ongroupjoin)
     * [onGroupLeft](#ongroupleft)
     * [onKeyboardCallbackData](#onkeyboardcallbackdata)
@@ -277,6 +285,28 @@ E.g
 bot.onForwardAny = function (chat, from, message_id, user) {
     console.log(from.first_name + " forwarded " + user.firstname + "'s content.");
 };
+```
+
+### onForwardAudio
+Gets called every time the bot sees a forwarded `.mp3` sound file. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who send the audio.
+* `message_id` **{Number}** The message reference.
+* `user` **{User Object}** The owner of the content that was forwarded.
+* `audio` **{Audio Object}** Audio information. Use `audio.file_id` to keep track of the audios seen.
+
+E.g
+
+```javascript
+var audios = [];
+bot.onForwardAudio = function (chat, from, message_id, user, audio) {
+    if (chat.username === "ExampleGroup") {
+        audios.push(audio.file_id);
+    }
+};
+// This example shows how to effectively make your bot memorize audios.
 ```
 
 ### onForwardContact

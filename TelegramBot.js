@@ -145,6 +145,21 @@ module.exports = function (token, declareSettings) {
                 }
             }
 
+            // onForwardAudio
+            if (content.hasOwnProperty("audio")) {
+                try {
+                    self.onForwardContact(
+                        content.chat,
+                        content.from,
+                        content.message_id,
+                        content.forward_from,
+                        content.audio
+                    );
+                } catch (onForwardAudioError) {
+                    self.onError("onForwardAudio", onForwardAudioError);
+                }
+            }
+
             // onForwardContact
             if (content.hasOwnProperty("contact")) {
                 try {
@@ -888,6 +903,10 @@ module.exports = function (token, declareSettings) {
         return;
     };
 
+    this.onForwardAudio = function () {
+        return;
+    };
+
     this.onForwardContact = function () {
         return;
     };
@@ -913,6 +932,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onForwardVideo = function () {
+        return;
+    };
+
+    this.onForwardVoice = function () {
         return;
     };
 
