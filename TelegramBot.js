@@ -190,6 +190,21 @@ module.exports = function (token, declareSettings) {
                 }
             }
 
+            // onForwardSticker
+            if (content.hasOwnProperty("sticker")) {
+                try {
+                    self.onForwardSticker(
+                        content.chat,
+                        content.from,
+                        content.message_id,
+                        content.forward_from,
+                        content.sticker
+                    );
+                } catch (onForwardStickerError) {
+                    self.onError("onForwardSticker", onForwardStickerError);
+                }
+            }
+
             // onForwardText
             if (content.hasOwnProperty("forward_from") && content.hasOwnProperty("text")) {
                 try {
@@ -852,6 +867,10 @@ module.exports = function (token, declareSettings) {
     };
 
     this.onForwardPhoto = function () {
+        return;
+    };
+
+    this.onForwardSticker = function () {
         return;
     };
 

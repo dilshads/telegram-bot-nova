@@ -17,6 +17,7 @@ bot.onForwardAny = function (chat, from, message_id, user) {};
 bot.onForwardContact = function (chat, from, message_id, user, contact) {};
 bot.onForwardFile = function (chat, from, message_id, user, file) {};
 bot.onForwardPhoto = function (chat, from, message_id, user, photo) {};
+bot.onForwardSticker = function (chat, from, message_id, user, sticker) {};
 bot.onForwardText = function (chat, from, message_id, user, text) {};
 bot.onForwardVideo = function (chat, from, message_id, user, video) {};
 bot.onGroupJoin = function (chat, joining_user, message_id, triggering_user) {};
