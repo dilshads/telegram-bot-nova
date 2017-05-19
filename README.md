@@ -1,11 +1,11 @@
 # TelegramBot Node.js getUpdates Method
 
-[![completion](https://img.shields.io/badge/completion-93%25-orange.svg)]()
+![completion](https://img.shields.io/badge/completion-93%25-orange.svg)
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
-[![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
+![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)
 [![jslint_issues](https://img.shields.io/badge/eslint%20issues-none-brightgreen.svg)](http://eslint.org)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![status](https://img.shields.io/badge/status-stable-brightgreen.svg)]()
+![status](https://img.shields.io/badge/status-stable-brightgreen.svg)
 
 Badges from [Shields.io](http://shields.io)
 
@@ -51,6 +51,7 @@ Badges from [Shields.io](http://shields.io)
     * [onVideo](#onvideo)
     * [onVoice](#onvoice)
 * [Actions](#actions)
+    * [deleteMessage](#deletemessage)
     * [editHtml / editMarkdown / editText](#edithtml--editmarkdown--edittext)
     * [forwardMessage](#forwardmessage)
     * [getBotUsername](#getbotusername)
@@ -855,6 +856,41 @@ This example shows how to effectively make your bot memorize voices. Note that P
 ## Actions
 To setup up an action. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
 
+### deleteMessage
+Deletes a target message in the chat. This only works if the message was sent under 48 hours. The bot is capable of deleting its messages but requires group administrator to delete other user messsages.
+
+*Required Perimeters*
+* `chat_id_or_chat_username` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `message_id` **{Number}** Target id of the message to delete.
+
+*Optional Perimeters*
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+
+E.g
+
+```javascript
+bot.onCommand = function (chat, from, message_id, text, command, commandData) {
+    if (command === "run") {
+        // Send the first message.
+        bot.sendText(chat.id, "Now you see me...", {}, function (isSuccess, message_id) {
+            // Give a 3 second delay.
+            setTimeout(function () {
+                // Delete the last message.
+                bot.deleteMessage(chat.id, message_id, function (isSuccess) {
+                    // Send a replacement message if success.
+                    if (isSuccess) {
+                        bot.sendText(chat.id, "Now you don't.");
+                    }
+                });
+            }, 3000);
+        });
+        return;
+    }
+};
+```
+
+
 ### editHtml / editMarkdown / editText
 Use this to replace a target message. Be aware bots can only replace their own messages that were sent in the last 3 days.
 
@@ -1479,7 +1515,7 @@ More to come later...
 * Q: Missing methods?
     * A: I'm trying to add all the available methods. I can confirm these aren't available.
         * Events: onDeletedMessage, onUnPinnedMessage
-        * Actions: addMember, deleteMessage, joinChat, pinMessage, unPinMessage
+        * Actions: addMember, ~~deleteMessage~~, joinChat, pinMessage, unPinMessage
 * Q: Why did you make this class when there's already others available?
     * A: Some lacked how-to documentation and examples. Also, setting up a certifcate and domain for webhook method seems too complex.
 * Q: Will my bot token get misused using this class?

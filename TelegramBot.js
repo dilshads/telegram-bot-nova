@@ -510,14 +510,16 @@ module.exports = function (token, declareSettings) {
         }
 
         // onGroupJoin
-        if (content.hasOwnProperty("new_chat_member")) {
+        if (content.hasOwnProperty("new_chat_members")) {
             try {
-                self.onGroupJoin(
-                    content.chat,
-                    content.new_chat_member,
-                    content.message_id,
-                    content.from
-                );
+                content.new_chat_members.forEach(function (user) {
+                    self.onGroupJoin(
+                        content.chat,
+                        user,
+                        content.message_id,
+                        content.from
+                    );
+                });
             } catch (onGroupJoinError) {
                 self.onError("onJoinGroup", onGroupJoinError);
             }
@@ -659,6 +661,18 @@ module.exports = function (token, declareSettings) {
         });
         request.write(postData);
         request.end();
+    };
+
+    this.deleteMessage = function (chat_id_or_chat_username, message_id, callback) {
+        var urlQuery = {
+            "chat_id": chat_id_or_chat_username,
+            "message_id": message_id
+        };
+        web("deleteMessage", urlQuery, function (data) {
+            if (typeof callback === "function") {
+                callback(data.ok);
+            }
+        });
     };
 
     this.editHtml = function (chatIdOrUsername, messageId, html, settings, callback) {
