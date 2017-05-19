@@ -83,7 +83,6 @@ Badges from [Shields.io](http://shields.io)
     * [unbanChatMember](#unbanchatmember)
 * [Object Dictionary](#object-dictionary)
 * [FAQ](#faq)
-* [Contributing](#contributing)
 
 All the returned objects can be found under this section on the [Telegram Bot API/Available Types](https://core.telegram.org/bots/api#available-types) page. The first 2 **{Chat Object}** and **{User Object}** will be the most common ones. Keep note of their values that are optional since you'll need to condition check if they are given or not.
 
@@ -1526,47 +1525,3 @@ More to come later...
     * A: You're more than free to fix document errors and help fill in the content here. Bugs can be reported under issues unless you know how to fix it and post a request fix with the changes.
 * Q: I don't know how to do something.
     * A: I've written this project to hopefully be as easy as possible. You'll need to know some basic of JavaScript and have Node.js installed. If something is not detailed enough. Post and issue and I see if I can explain something better.
-
-## Contributing
-* Casing: CONSTANT_NAMING, ClassNaming, functionNaming, variableNaming
-
-I've replaced JSLint with ESLint. To global install for all your JavaScript/Node applications, run this in Command Prompt/Terminal:
-
-`npm install -g eslint`
-
-These are the ESLint rules found in the `.eslintrc.json` file. Some may change in the future.
-
-```json
-{
-    "env": {
-        "es6": true,
-        "node": true
-    },
-    "extends": "eslint:recommended",
-    "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "no-console": [
-            "off"
-        ],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
-    }
-}
-```
-
-Make sure your editor is set for 4 spaces and not tabs. Notepad++ is set to tab with a spacing of 4 but not actual spaces.
-
-Sorry if the guidelines aren't the best. I'm currently the only user working on this project.

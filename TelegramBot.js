@@ -60,10 +60,7 @@ module.exports = function (token, declareSettings) {
     };
 
     processEvent = function (result) {
-        var command = "",
-            commandData = "",
-            content,
-            split;
+        var content;
 
         updateId = result.update_id + 1;
 
@@ -455,7 +452,7 @@ module.exports = function (token, declareSettings) {
             if (content.text.charAt(0) !== "/") {
                 return;
             }
-            split = content.text.indexOf(" ");
+            let command = "", commandData = "", split = content.text.indexOf(" ");
             if (split > -1) {
                 command = content.text.substring(1, split).toLowerCase();
                 commandData = content.text.substr(split + 1).trim();
