@@ -512,7 +512,7 @@ bot.onGroupLeft = function (chat, leaving_user, message_id, triggering_user) {
 If you're wondering what is a good use of `leaving_user` and `triggering_user` user objects. You could compare `leaving_user.id === triggering_user.id` to check if that user left themselves or `leaving_user.id !== triggering_user.id` that someone else removed them.
 
 ### onInlineQuery
-Gets called every time the user starts typing a query after @BotName.
+Gets called every time the user starts typing a query after @BotName. Don't forget to use `/setinline` on your bot with [@BotFather](https://t.me/BotFather).
 
 * `from` **{User Object}** User who typing the query.
 * `query_id` **{String}** String of the query being typed. Be aware that this is a string and not a number `typeof` id.
