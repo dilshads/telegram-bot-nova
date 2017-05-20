@@ -1,6 +1,6 @@
 # TelegramBot Node.js getUpdates Method
 
-![completion](https://img.shields.io/badge/completion-93%25-orange.svg)
+![completion](https://img.shields.io/badge/completion-95%25-orange.svg)
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 ![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)
 [![jslint_issues](https://img.shields.io/badge/eslint%20issues-none-brightgreen.svg)](http://eslint.org)
@@ -32,6 +32,7 @@ Badges from [Shields.io](http://shields.io)
     * [onForwardVoice](#onforwardvoice)
     * [onGroupJoin](#ongroupjoin)
     * [onGroupLeft](#ongroupleft)
+    * [onInlineQuery](#oninlinequery)
     * [onKeyboardCallbackData](#onkeyboardcallbackdata)
     * [onPhoto](#onphoto)
     * [onPinnedAny](#onpinnedany)
@@ -51,6 +52,7 @@ Badges from [Shields.io](http://shields.io)
     * [onVideo](#onvideo)
     * [onVoice](#onvoice)
 * [Actions](#actions)
+    * [answerInlineQuery](#answerinlinequery)
     * [deleteMessage](#deletemessage)
     * [editHtml / editMarkdown / editText](#edithtml--editmarkdown--edittext)
     * [forwardMessage](#forwardmessage)
@@ -509,6 +511,56 @@ bot.onGroupLeft = function (chat, leaving_user, message_id, triggering_user) {
 
 If you're wondering what is a good use of `leaving_user` and `triggering_user` user objects. You could compare `leaving_user.id === triggering_user.id` to check if that user left themselves or `leaving_user.id !== triggering_user.id` that someone else removed them.
 
+### onInlineQuery
+Gets called every time the user starts typing a query after @BotName.
+
+* `from` **{User Object}** User who typing the query.
+* `query_id` **{String}** String of the query being typed. Be aware that this is a string and not a number `typeof` id.
+* `query_text` **{String}** String of the query being typed.
+
+E.g
+
+```javascript
+function htmlEscape(html) {
+    return html
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+bot.onInlineQuery = function (from, query_id, query_text) {
+    if (query_id.length < 1) {
+        return;
+    }
+
+    var results = [
+        {
+            "type": "article",
+            "id": "1",
+            "title": "Bold",
+            "input_message_content": {
+                "message_text": "<b>" + htmlEscape(query_text) + "</b>",
+                "parse_mode": "HTML"
+            }
+        },
+        {
+            "type": "article",
+            "id": "2",
+            "title": "Italic",
+            "input_message_content": {
+                "message_text": "<i>" + htmlEscape(query_text) + "</i>",
+                "parse_mode": "HTML"
+            }
+        }
+    ];
+
+    bot.answerInlineQuery(query_id, JSON.stringify(results));
+    // This example produces the near same result as Telegram's Official @bold bot.
+};
+```
+
 ### onKeyboardCallbackData
 Gets called every time the bot sees a `callback_data` from a user pressing a button from InlineKeyboardButton.
 
@@ -854,6 +906,27 @@ This example shows how to effectively make your bot memorize voices. Note that P
 
 ## Actions
 To setup up an action. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
+
+### answerInlineQuery
+Sends a response to the `onInlineQuery`.
+
+*Required Perimeters*
+* `query_id` **{String}** The inlineQueryId of answerInlineQuery event to respond to.
+* `results` **{Array of InlineQueryResult Object}** The media to respond with.
+
+*Optional Perimeters*
+* `settings` **Object** Use for providing extra perimeters.
+    * `cache_time` **{Integer}** The maximum seconds the result is cache on the server. Default 300.
+    * `is_personal` **{Boolean}** Having true may have results cache on server-side only for the user.
+    * `next_offset` **{String}**
+    * `switch_pm_text` **{String}** Passes the user to PM while sending the content.
+    * `switch_pm_parameter` **{String}**
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `isSuccess` **{Boolean}**
+
+E.g
+
+See [onInlineQuery](#oninlinequery) for an example.
 
 ### deleteMessage
 Deletes a target message in the chat. This only works if the message was sent under 48 hours. The bot is capable of deleting its messages but requires group administrator to delete other user messsages.

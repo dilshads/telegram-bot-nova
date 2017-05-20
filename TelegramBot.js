@@ -89,6 +89,21 @@ module.exports = function (token, declareSettings) {
             return;
         }
 
+        // onInlineQuery
+        if (result.hasOwnProperty("inline_query")) {
+            content = result.inline_query;
+            try {
+                self.onInlineQuery(
+                    content.from,
+                    content.id,
+                    content.query
+                );
+            } catch (onInlineQueryError) {
+                self.onError("onInlineQuery", onInlineQueryError);
+            }
+            return;
+        }
+
         // onKeyboardCallbackData
         if (result.hasOwnProperty("callback_query")) {
             content = result.callback_query;
@@ -660,6 +675,21 @@ module.exports = function (token, declareSettings) {
         request.end();
     };
 
+    this.answerInlineQuery = function (inlineQueryId, resultsJSON, settings, callback) {
+        var urlQuery = {
+            "inline_query_id": inlineQueryId,
+            "results": resultsJSON
+        };
+        if (typeof settings === "object") {
+            Object.assign(urlQuery, settings);
+        }
+        web("answerInlineQuery", urlQuery, function (data) {
+            if (typeof callback === "function") {
+                callback(data.ok);
+            }
+        });
+    };
+
     this.deleteMessage = function (chat_id_or_chat_username, message_id, callback) {
         var urlQuery = {
             "chat_id": chat_id_or_chat_username,
@@ -886,145 +916,42 @@ module.exports = function (token, declareSettings) {
         });
     };
 
-    this.onAudio = function () {
-        return;
-    };
-
-    this.onCommand = function () {
-        return;
-    };
-
-    this.onContact = function () {
-        return;
-    };
-
-    this.onEditText = function () {
-        return;
-    };
-
-    this.onError = function () {
-        return;
-    };
-
-    this.onFile = function () {
-        return;
-    };
-
-    this.onForwardAny = function () {
-        return;
-    };
-
-    this.onForwardAudio = function () {
-        return;
-    };
-
-    this.onForwardContact = function () {
-        return;
-    };
-
-    this.onForwardFile = function () {
-        return;
-    };
-
-    this.onForwardPhoto = function () {
-        return;
-    };
-
-    this.onForwardSticker = function () {
-        return;
-    };
-
-    this.onForwardText = function () {
-        return;
-    };
-
-    this.onForwardVenue = function () {
-        return;
-    };
-
-    this.onForwardVideo = function () {
-        return;
-    };
-
-    this.onForwardVoice = function () {
-        return;
-    };
-
-    this.onGroupJoin = function () {
-        return;
-    };
-
-    this.onGroupLeft = function () {
-        return;
-    };
-
-    this.onKeyboardCallbackData = function () {
-        return;
-    };
-
-    this.onPhoto = function () {
-        return;
-    };
-
-    this.onPinnedAny = function () {
-        return;
-    };
-
-    this.onPinnedAudio = function () {
-        return;
-    };
-
-    this.onPinnedContact = function () {
-        return;
-    };
-
-    this.onPinnedFile = function () {
-        return;
-    };
-
-    this.onPinnedPhoto = function () {
-        return;
-    };
-
-    this.onPinnedSticker = function () {
-        return;
-    };
-
-    this.onPinnedText = function () {
-        return;
-    };
-
-    this.onPinnedVenue = function () {
-        return;
-    };
-
-    this.onPinnedVideo = function () {
-        return;
-    };
-
-    this.onPinnedVoice = function () {
-        return;
-    };
-
-    this.onText = function () {
-        return;
-    };
-
-    this.onStartup = function () {
-        return;
-    };
-
-    this.onSticker = function () {
-        return;
-    };
-
-    this.onVideo = function () {
-        return;
-    };
-
-    this.onVoice = function () {
-        return;
-    };
+    this.onAudio = function () {};
+    this.onCommand = function () {};
+    this.onContact = function () {};
+    this.onEditText = function () {};
+    this.onError = function () {};
+    this.onFile = function () {};
+    this.onForwardAny = function () {};
+    this.onForwardAudio = function () {};
+    this.onForwardContact = function () {};
+    this.onForwardFile = function () {};
+    this.onForwardPhoto = function () {};
+    this.onForwardSticker = function () {};
+    this.onForwardText = function () {};
+    this.onForwardVenue = function () {};
+    this.onForwardVideo = function () {};
+    this.onForwardVoice = function () {};
+    this.onGroupJoin = function () {};
+    this.onGroupLeft = function () {};
+    this.onInlineQuery = function () {};
+    this.onKeyboardCallbackData = function () {};
+    this.onPhoto = function () {};
+    this.onPinnedAny = function () {};
+    this.onPinnedAudio = function () {};
+    this.onPinnedContact = function () {};
+    this.onPinnedFile = function () {};
+    this.onPinnedPhoto = function () {};
+    this.onPinnedSticker = function () {};
+    this.onPinnedText = function () {};
+    this.onPinnedVenue = function () {};
+    this.onPinnedVideo = function () {};
+    this.onPinnedVoice = function () {};
+    this.onText = function () {};
+    this.onStartup = function () {};
+    this.onSticker = function () {};
+    this.onVideo = function () {};
+    this.onVoice = function () {};
 
     this.sendAudio = function (chatIdOrUsername, fileIdOrLink, settings, callback) {
         var urlQuery = {
