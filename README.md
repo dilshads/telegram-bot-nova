@@ -501,9 +501,9 @@ Gets called every time the bot sees someone leaving the group.
 
 *Arguments*
 * `chat` **{Chat Object}** Chat were event occured.
-* `leaving_user` **{User Object}** The user who left.
+* `leavingUser` **{User Object}** The user who left.
 * `messageId` **{Number}** The message reference.
-* `triggering_user` **{User Object}**. This can be the user who's in the group who removed the user or the user who left themselves.
+* `triggeringUser` **{User Object}**. This can be the user who's in the group who removed the user or the user who left themselves.
 
 E.g
 
