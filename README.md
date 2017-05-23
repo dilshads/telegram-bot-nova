@@ -1605,5 +1605,5 @@ More to come later...
     * A: You're more than free to fix document errors and help fill in the content here. Bugs can be reported under issues unless you know how to fix it and post a request fix with the changes.
 * Q: I don't know how to do something.
     * A: I've written this project to hopefully be as easy as possible. You'll need to know some basic of JavaScript and have Node.js installed. If something is not detailed enough. Post and issue and I see if I can explain something better.
-* Q: for targetChat do I use chat.id or chat.username?
-    * A: chat.id. Not all chats are given a username but always an id.
+* Q: For `targetChat` do I use `chat.id` or `chat.username`?
+    * A: `chat.id`. Not all chats are given an username but always an id.
