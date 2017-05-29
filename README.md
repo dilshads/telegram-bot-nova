@@ -14,6 +14,7 @@ Badges from [Shields.io](http://shields.io)
     * [Simple Method](#simple-method)
     * [Advanced Method](#advanced-method)
 * [Events](#events)
+    * [onAny](#onany)
     * [onAudio](#onaudio)
     * [onCommand](#oncommand)
     * [onContact](#oncontact)
@@ -147,6 +148,24 @@ You can adjust these default settings during declaration under this example. Mis
 
 ## Events
 To setup up an event. You'll need to had required the bot class and declared a bot variable. I've added easy copy and paste examples under each event to make it easily to add to your script.
+
+### onAny
+Gets called on any type of event.
+
+*Arguments*
+* `chat` **{Chat Object}** Chat were event occured.
+* `from` **{User Object}** User who triggered the event.
+* `messageId` **{Number}** The message reference.
+
+E.g
+
+```javascript
+var userIds = []
+
+bot.onAny = function (chat, from, messageId) {
+  userIds.push(from.id)
+}
+```
 
 ### onAudio
 Gets called every time the bot sees a `.mp3` sound file.

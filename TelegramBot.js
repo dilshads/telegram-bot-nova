@@ -1,7 +1,7 @@
 const https = require('https')
 const querystring = require('querystring')
 
-module.exports = function (token, declareSettings) {
+module.exports = function TelegramBot (token, declareSettings) {
   'use strict'
   const TOKEN = token
 
@@ -314,6 +314,12 @@ module.exports = function (token, declareSettings) {
       }
       // End of pinned content.
       return
+    }
+
+    try {
+      self.onAny(content.chat, content.from, content.message_id)
+    } catch (error) {
+      self.onError('onAny', error)
     }
 
     // onAudio
@@ -720,6 +726,7 @@ module.exports = function (token, declareSettings) {
     })
   }
 
+  this.onAny = function () {}
   this.onAudio = function () {}
   this.onCommand = function () {}
   this.onContact = function () {}
