@@ -1,0 +1,29 @@
+{
+  "name": "telegrambot-getupdates",
+  "version": "1.0.0",
+  "description": "A TelegramBot module that only requires a bot token to run with minimum events and actions coded.",
+  "main": "telegrambot-getupdates.js",
+  "scripts": {
+    "test": "node example1.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NightfallAlicorn/telegrambot-getupdates.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "telegrambot",
+    "get",
+    "updates",
+    "getupdates",
+    "poll",
+    "polling"
+  ],
+  "author": "nightfallalicorn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NightfallAlicorn/telegrambot-getupdates/issues"
+  },
+  "homepage": "https://github.com/NightfallAlicorn/telegrambot-getupdates#readme"
+}

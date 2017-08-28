@@ -560,6 +560,23 @@ module.exports = function TelegramBot (token, declareSettings) {
     })
   }
 
+  this.exportChatInviteLink = function (chatIdOrUsername, callback) {
+    if (!chatIdOrUsername) throw new Error('Missing chatIdOrUsername on exportChatInviteLink')
+    if (!callback) throw new Error('Missing callback on exportChatInviteLink.')
+    var urlQuery = {
+      'chat_id': chatIdOrUsername
+    }
+    web('exportChatInviteLink', urlQuery, function (data) {
+      if (typeof callback === 'function') {
+        if (data.ok) {
+          callback(null, data.result)
+        } else {
+          callback(new Error(data.description))
+        }
+      }
+    })
+  }
+
   this.forwardMessage = function (chatIdOrUsername, sourceChat, messageId, settings, callback) {
     var urlQuery = {
       'chat_id': chatIdOrUsername,
