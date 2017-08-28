@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: off */
 
 // Require the TelegramBot class.
-const TelegramBot = require('./TelegramBot')
+const TelegramBot = require('./telegrambot-getupdates')
 
 // Declare a new instance and connect by your bot token.
 var bot = new TelegramBot('YOUR_BOT_TOKEN')

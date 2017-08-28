@@ -1,7 +1,7 @@
 # TelegramBot Node.js getUpdates Method
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![completion](https://img.shields.io/badge/completion-97%25-orange.svg)]()
+[![completion](https://img.shields.io/badge/completion-90%25-orange.svg)]()
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -89,7 +89,7 @@ Badges from [Shields.io](http://shields.io)
 
 All the returned objects can be found under this section on the [Telegram Bot API/Available Types](https://core.telegram.org/bots/api#available-types) page. The first 2 **{Chat Object}** and **{User Object}** will be the most common ones. Keep note of their values that are optional since you'll need to condition check if they are given or not.
 
-**Note: This documentation and class aren't yet complete.**
+**Note: This documentation and module aren't yet complete. Most functionality however is stable.**
 
 ## Setting Up
 In order to setup your bot. You'll need to download the .zip and extract the contents on your drive. Your Desktop will be fine.
@@ -115,7 +115,7 @@ In order to use this class. You'll need to require the TelegramBot.js class into
 
 ```javascript
 // Require the TelegramBot class.
-const TelegramBot = require('./TelegramBot')
+const TelegramBot = require('telegram-getupdates')
 
 // Declare a bot instance and connect by your bot token.
 var bot = new TelegramBot('YOUR_BOT_TOKEN')
@@ -128,7 +128,7 @@ var bot = new TelegramBot('YOUR_BOT_TOKEN')
 
 ```javascript
 // Require the TelegramBot class.
-const TelegramBot = require('./TelegramBot')
+const TelegramBot = require('telegram-getupdates')
 
 // Declare a bot instance and connect by your bot token with additional settings.
 var bot = new TelegramBot('YOUR_BOT_TOKEN', {
