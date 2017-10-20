@@ -1048,7 +1048,7 @@ Use this to get information about a **file_id**.
 * `fileId` **string** Target file you want to obtain information about.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `error` **{Error|Null}** Provides an error object else null if there isn't any.
-    * `file` **{File Object}** The target file.
+    * `file` **[object File]** The target file.
 
 E.g.
 
@@ -1063,7 +1063,7 @@ bot.getFile(fileId, (error, file) => {
 ```
 
 ### getInterval
-Use this to return a **number** of the bot poll interval per getUpdates in milliseconds.
+Returns a **number** of the bot poll interval per getUpdates in milliseconds.
 
 E.g.
 
@@ -1077,22 +1077,21 @@ Use this to get a user object of the bot account.
 *Required*
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `error` **{Error|Null}** Provides an error object else null if there isn't any.
-    * `result` **{User Object}**
+    * `me` **[object User]** Object containing information about the bot.
 
 E.g.
 
 ```javascript
-bot.getMe((error, result) => {
+bot.getMe((error, me) => {
   if (error) {
     // Handle after error.
     return
   }
-  console.log(result.first_name)
 })
 ```
 
 ### getPort
-Use this to return a **number** of the current port being used. By default it's **443**.
+Returns a **number** of the current port being used. By default it's 443.
 
 E.g.
 
@@ -1101,7 +1100,7 @@ console.log(bot.getPort())
 ```
 
 ### getStartupTime
-Use this to return a **number** millisecond value. This is a saved `Date.now()` value from when the bot was declared.
+Returns a **number** in milliseconds. This is a saved `Date.now()` value from when the bot was declared.
 
 E.g.
 
@@ -1118,7 +1117,7 @@ Use this to return a UserProfilePhotos object.
 * `limit` **number** Last index of photos to return. Default 100.
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `error` **{Error|Null}** Provides an error object else null if there isn't any.
-    * `photos`**{UserProfilePhotos Object}** An object containing information about the target profile photos.
+    * `photos`**[object UserProfilePhotos]** An object containing information about the target profile photos.
 
 E.g.
 
@@ -1315,6 +1314,9 @@ Use this to send a text message to a target chat.
     * `parse_mode` **string** This can be set to 'HTML' or 'Markdown' to apply their respective parsing.
     * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]** object.
     * `replyToMessageId` **number** Use for sending a reply to a message id.
+* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
+    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+    * `messageId` **number** Id of the sent content.
 
 E.g.
 
