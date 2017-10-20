@@ -1,29 +1,32 @@
 {
-  "name": "telegrambot-getupdates",
-  "version": "1.0.0",
-  "description": "A TelegramBot module that only requires a bot token to run with minimum events and actions coded.",
-  "main": "telegrambot-getupdates.js",
+  "name": "telegram-bot-nova",
+  "version": "2.0.0",
+  "description": "An easy to use Node.js bot handler.",
+  "main": "telegram-bot-nova.js",
   "scripts": {
-    "test": "node example1.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NightfallAlicorn/telegrambot-getupdates.git"
+    "url": "git+https://github.com/NightfallAlicorn/telegram-bot-nova.git"
   },
   "keywords": [
     "telegram",
     "bot",
     "telegrambot",
-    "get",
-    "updates",
     "getupdates",
     "poll",
-    "polling"
+    "polling",
+    "nova",
+    "nightfallalicorn"
   ],
   "author": "nightfallalicorn",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/NightfallAlicorn/telegrambot-getupdates/issues"
+    "url": "https://github.com/NightfallAlicorn/telegram-bot-nova/issues"
   },
-  "homepage": "https://github.com/NightfallAlicorn/telegrambot-getupdates#readme"
+  "homepage": "https://github.com/NightfallAlicorn/telegram-bot-nova#readme",
+  "engines": {
+    "node": ">=6.11.4"
+  }
 }

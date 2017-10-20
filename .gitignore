@@ -1,0 +1,15 @@
+# Ignore all files and directories.
+*
+
+# Allow project root directory contents.
+!*/
+
+# Include only.
+!/.gitignore
+!/CONTRIBUTING.md
+!/example1.js
+!/example2.js
+!/LICENSE
+!/package.json
+!/README.md
+!/telegram-bot-nova.js

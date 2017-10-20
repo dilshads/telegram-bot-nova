@@ -1,5 +1,5 @@
 // Require the TelegramBot class.
-const TelegramBot = require('./telegrambot-getupdates')
+const TelegramBot = require('./telegram-bot-nova')
 
 // Declare a new instance and connect by your bot token.
 var bot = new TelegramBot('YOUR_BOT_TOKEN')
@@ -7,8 +7,8 @@ var bot = new TelegramBot('YOUR_BOT_TOKEN')
 // Example value that can be changed by pressing the Inline Keyboard Toggle button.
 var bool = true
 
-// Setup catched events to make your bot responsive.
-bot.onCommand = function (chat, from, messageId, text, command, commandData) {
+// Setup events to make your bot responsive.
+bot.on('command', (chat, date, from, messageId, text, command, commandData) => {
   'use strict'
 
   if (command === 'start') {
@@ -21,8 +21,8 @@ bot.onCommand = function (chat, from, messageId, text, command, commandData) {
   }
 
   if (command === 'example1') {
-    // The first array determains the line of the button.
-    // The second array inside determains the column of that line.
+    // The first array determines the line of the button.
+    // The second array inside determines the column of that line.
     // The object inside the secondary array is the button objects.
     let keyboard = {
       'inline_keyboard': [
@@ -68,7 +68,7 @@ bot.onCommand = function (chat, from, messageId, text, command, commandData) {
   }
 
   if (command === 'close') {
-        // You'll need to use this to be able to close the keyboard.
+    // You'll need to use this to be able to close the keyboard.
     var keyboard = {
       'remove_keyboard': true
     }
@@ -79,9 +79,9 @@ bot.onCommand = function (chat, from, messageId, text, command, commandData) {
 
     bot.sendText(chat.id, 'Keyboard Closed', data)
   }
-}
+})
 
-bot.onKeyboardCallbackData = function (chat, from, messageId, callbackData) {
+bot.on('KeyboardCallbackData', (chat, from, messageId, callbackData) => {
   'use-strict'
 
   // The "callbackData" value contains the "callback_data" from this button above.
@@ -115,4 +115,4 @@ bot.onKeyboardCallbackData = function (chat, from, messageId, callbackData) {
     // This is so it'll display the new correct value while returning an updated keyboard.
     bot.editText(chat.id, messageId, 'Inline Keyboard\nSetting: ' + (bool ? 'On' : 'Off'), data)
   }
-}
+})
