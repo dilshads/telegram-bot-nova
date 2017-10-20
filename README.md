@@ -101,6 +101,7 @@ bot.on('command', (chat, date, from, messageId, text, command, commandData) => {
     * [sendHtml](#sendhtml)
     * [sendImage](#sendimage)
     * [sendMarkdown](#sendmarkdown)
+    * [sendMessage](#sendmessage)
     * [sendPhoto](#sendphoto)
     * [sendText](#sendtext)
     * [sendVenue](#sendvenue)
@@ -1302,6 +1303,34 @@ Alternative to [sendPhoto](#sendphoto).
 
 ### sendMarkdown
 Shortened version of [sendMessage](#sendmessage). Also appends Markdown parse_mode to settings. All Markdown tags must be closed else the message won't send.
+
+### sendMessage
+Use this to send a text message to a target chat.
+
+* `targetChat` Target chat id **{Number}** or chat username **{String}**. Chat username example "@MyGroup".
+* `text` The text to send. The format can be parsed to HTML or Markdown depending if `parse_mode` is set in the settings object.
+* `settings` **{Object}** Use for providing extra perimeters.
+    * `disable_notification` **{Boolean}** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+    * `disable_web_page_preview` **{Boolean}** default false. Prevents links from providing a preview below the message.
+    * `parse_mode` **{String}** This can be set to 'HTML' or 'Markdown' to apply their respective parsing.
+    * `reply_markup` **{String}** Stringify JSON of **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove** objects.
+    * `replyToMessageId` **{Number}** Use for sending a reply to a message id.
+
+E.g.
+
+```javascript
+// Minimum.
+bot.sendMessage(targetChat, text)
+
+// Optional settings with callback extended.
+bot.sendMessage(targetChat, text, {}, (error, messageId) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+```
 
 ### sendPhoto
 Use this to send an image to a target chat. You'll need to collect the `photo[photo.length - 1].file_id` with photo event. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.

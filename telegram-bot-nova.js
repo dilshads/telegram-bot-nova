@@ -1165,6 +1165,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {object} settings
    * @param {boolean} settings.disable_notification
    * @param {boolean} settings.disable_web_page_preview
+   * @param {string} settings.parse_mode
    * @param {string} settings.reply_markup
    * @param {number} settings.replyToMessageId
    * @param {function} callback { isSuccess: boolean, messageId: number }
