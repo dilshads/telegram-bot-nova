@@ -22,7 +22,7 @@ bot.on('command', (chat, date, from, messageId, text, command, commandData) => {
     bot.sendText(chat.id, 'Hello world.')
     return
   }
-}
+})
 ```
 
 ## Index
@@ -833,7 +833,7 @@ bot.on('voice', (chat, date, from, messageId, caption, voice) => {
 Sends a response to the `onInlineQuery`.
 
 * `queryId` **string** The inlineQueryId of answerInlineQuery event to respond to.
-* `results` **{Array of InlineQueryResult Object}** The media to respond with.
+* `results` **Array of [object InlineQueryResult]** The media to respond with.
 * `settings` **Object** Use for providing extra perimeters.
     * `cache_time` **number** The maximum seconds the result is cache on the server. Default 300.
     * `is_personal` **boolean** Having true may have results cache on server-side only for the user.
@@ -848,7 +848,7 @@ E.g.
 See [inlineQuery](#inlinequery) event for a full use example.
 
 ### deleteMessage
-Deletes a target message in the chat. This only works if the message was sent under 48 hours. The bot is capable of deleting its messages but requires group administrator to delete other user messages.
+Deletes a target message in a chat. This only works if the message was sent under 48 hours. The bot is capable of deleting its messages but requires group administrator to delete other user messages.
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `messageId` **number** Target id of the message to delete.
@@ -881,7 +881,7 @@ Shortened [editMessage](#editmessage). Also appends Markdown parse_mode to setti
 Shortened [editMessage](#editmessage).
 
 ### exportChatInviteLink
-Use this to callback an invite link of the target chat.
+Callbacks an invite link of the target chat.
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
@@ -901,7 +901,7 @@ bot.exportChatInviteLink(targetChat, (error, link) => {
 ```
 
 ### forwardMessage
-Use this to forward a message and its content.
+Forward a message and its content to a target chat.
 
 * `toChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `fromChat` Source chat id **number** or chat username **string**. Chat username example "@MyGroup".
@@ -943,7 +943,7 @@ Callbacks a **[object Chat]** of the target chat.
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `error` **{Error|Null}** Provides an error object else null if there isn't any.
-    * `obtainedChat` **{Chat Object}**
+    * `obtainedChat` **[object Chat]** Contains information about the target chat.
 
 E.g.
 
@@ -958,12 +958,12 @@ bot.getChat(targetChat, (error, obtainedChat) => {
 ```
 
 ### getChatAdministrators
-Returns an array containing all the users that are "administrator" status of the group. The "creator" will be the first index 0 while administrators are 1 and higher. If the bot itself is an administrator, it will also be included. However, other bots will not be included even if have administrator privileges.
+Callbacks an array containing all the users that are "administrator" status of the group. The "creator" will be the first index 0 while administrators are 1 and higher. If the bot itself is an administrator, it will also be included. However, other bots will not be included even if have administrator privileges.
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `error` **{Error|Null}** Provides an error object else null if there isn't any.
-    * `users` **{Array}** containing a **{User Object}** per chat authority.
+    * `users` **{Array}** containing a **[object User]** per chat authority.
     * `userIds` **{Array}** containing a **number** of the users' id.
 
 E.g.
@@ -991,14 +991,13 @@ bot.getChatAdministrators(targetChat, (error, users, userIds) => {
 Example prints all the chat authorities and their status. Be aware that this function doesn't work in PM.
 
 ### getChatMember
-Returns an **{User Object}** and a **string** of the user's chat status. The chat status can be either: "administrator", "creator", "kicked", "left" or "member".
+Callbacks an **[object User]** and a **string** of the user's chat status.
 
-*Required*
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `callback` **{Function}** Called after sending the content and returns the following result perimeters.
     * `error` **{Error|Null}** Provides an error object else null if there isn't any.
-    * `user` **{User Object}** User object of target.
-    * `status` **string** User group status.
+    * `user` **[object User]** User object of target.
+    * `status` **string** The chat status can either be: "administrator", "creator", "kicked", "left" or "member".
 
 E.g.
 
@@ -1013,7 +1012,7 @@ bot.getChatMember(targetChat, userId, (error, user, status) => {
 ```
 
 ### getChatMembersCount
-Returns an **number** of the number of members in a chat.
+Callbacks a **number** of members in a chat.
 
 *Required*
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".

@@ -1288,7 +1288,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {number} settings.height
    * @param {string} settings.reply_markup
    * @param {number} settings.width
-   * @param {function} callback - { error: Error | null, messageId: number }
+   * @param {function(Error, number):void} callback - arg0: (Error | null), arg1: messageId: number
    */
   sendVideo (targetChat, targetFile, settings, callback) {
     var urlQuery = { 'chat_id': targetChat, 'video': targetFile }
