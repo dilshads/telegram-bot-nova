@@ -5,6 +5,7 @@
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node->%3D6.11.4-blue.svg)]()
+[![npm](https://img.shields.io/badge/npm-2.0.1-blue.svg)]()
 
 Badges from [Shields.io](http://shields.io)
 
@@ -136,8 +137,8 @@ Called every time the bot sees a `.mp3` sound file.
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
 * `from` **[object User]** User who send the audio.
-* `messageId` **Number** The message reference.
-* `caption` **String** Caption text. No caption is "".
+* `messageId` **number** The message reference.
+* `caption` **string** Caption text. No caption is "".
 * `audio` **[object Audio]** Audio information. Use `audio.file_id` to keep track of the audios seen.
 
 E.g.

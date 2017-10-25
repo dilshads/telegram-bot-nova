@@ -594,7 +594,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {string} settings.next_offset
    * @param {string} settings.switch_pm_text
    * @param {string} settings.switch_pm_parameter
-   * @param {function} callback - { isSuccess: boolean }
+   * @param {function(Error):void} callback - arg0: Error
    */
   answerInlineQuery (inlineQueryId, resultsJSON, settings, callback) {
     var urlQuery = { 'inline_query_id': inlineQueryId, 'results': resultsJSON }
@@ -616,7 +616,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * Deletes the target chat message id that was sent under 48 hours.
    * @param {number|string} targetChat - The target chat id or username.
    * @param {number} messageId - The message id.
-   * @param {function} callback - { isSuccess: boolean }
+   * @param {function(Error):void} callback - arg0: Error
    */
   deleteMessage (targetChat, messageId, callback) {
     var urlQuery = { 'chat_id': targetChat, 'message_id': messageId }
@@ -638,7 +638,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {object} settings
    * @param {boolean} settings.disable_web_page_preview
    * @param {string} settings.reply_markup
-   * @param {function} callback - { isSuccess: boolean }
+   * @param {function(Error):void} callback - arg0: Error
    */
   editHtml (targetChat, messageId, html, settings, callback) {
     var setSettings = Object.assign((settings || {}), {'parse_mode': 'HTML'})
@@ -653,7 +653,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {object} settings
    * @param {boolean} settings.disable_web_page_preview
    * @param {string} settings.reply_markup
-   * @param {function} callback - { isSuccess: boolean }
+   * @param {function(Error):void} callback - arg0: Error
    */
   editMarkdown (targetChat, messageId, md, settings, callback) {
     var setSettings = Object.assign((settings || {}), {'parse_mode': 'Markdown'})
@@ -668,7 +668,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {object} settings
    * @param {boolean} settings.disable_web_page_preview
    * @param {string} settings.reply_markup
-   * @param {function} callback - { error: Error | null }
+   * @param {function(Error):void} callback - arg0: Error
    */
   editMessageText (targetChat, messageId, text, settings, callback) {
     var urlQuery = { 'chat_id': targetChat, 'message_id': messageId, 'text': text }
@@ -694,7 +694,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {object} settings
    * @param {boolean} settings.disable_web_page_preview
    * @param {string} settings.reply_markup
-   * @param {function} callback - { isSuccess: boolean }
+   * @param {function(Error):void} callback - arg0: Error
    */
   editText (targetChat, messageId, text, settings, callback) {
     this.editMessageText(targetChat, messageId, text, settings, callback)
@@ -703,7 +703,7 @@ module.exports = class TelegramBot extends EventEmitter {
   /**
    * Obtains the invite link for the target chat.
    * @param {number|string} targetChat - The target chat id or username.
-   * @param {function} callback { error: Error | null, link: string}
+   * @param {function(Error, string):void} callback - arg0: Error, arg1: link
    */
   exportChatInviteLink (targetChat, callback) {
     var urlQuery = { 'chat_id': targetChat }
@@ -726,7 +726,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {number} messageId - The message id.
    * @param {object} settings
    * @param {boolean} settings.disable_notification
-   * @param {function} callback - { error: Error | null, messageId: number}
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   forwardMessage (targetChat, sourceChat, messageId, settings, callback) {
     var urlQuery = { 'chat_id': targetChat, 'from_chat_id': sourceChat, 'message_id': messageId }
@@ -756,7 +756,7 @@ module.exports = class TelegramBot extends EventEmitter {
   /**
    * Callback a chat object of the target chat.
    * @param {number|string} targetChat - The target chat id or username.
-   * @param {function} callback - { error: Error | null, chat: ChatObject}
+   * @param {function(Error, {}):void} callback - arg0: Error, arg1: obtainedChat
    */
   getChat (targetChat, callback) {
     var urlQuery = { 'chat_id': targetChat }
@@ -775,7 +775,7 @@ module.exports = class TelegramBot extends EventEmitter {
   /**
    * Callback an array of UserObjects and an array of user ids. The first values is chat the owner.
    * @param {number|string} targetChat - The target chat id or username.
-   * @param {function} callback - { error: Error | null, array: UserObject, array: UserId}
+   * @param {function(Error, [], []):void} callback - arg0: Error, arg1: users, arg2: userIds
    */
   getChatAdministrators (targetChat, callback) {
     var urlQuery = {'chat_id': targetChat}
@@ -810,7 +810,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * Callback a user object of the target user from a target chat.
    * @param {number|string} targetChat - The target chat id or username to get the user from.
    * @param {number} userId - The target user's id to get the user object of.
-   * @param {function} callback - { error: Error | null, user: UserObject, status: string}
+   * @param {function(Error, {}, string):void} callback - arg0: Error, arg1: user, arg2: status
    */
   getChatMember (targetChat, userId, callback) {
     if (!(typeof targetChat === 'number' || typeof targetChat === 'string')) {
@@ -839,7 +839,7 @@ module.exports = class TelegramBot extends EventEmitter {
   /**
    * Callback a number of the chat count.
    * @param {number|string} targetChat - The target chat id or username to get the user from.
-   * @param {function} callback - { error: Error | null, count: number}
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: count
    */
   getChatMembersCount (targetChat, callback) {
     var urlQuery = { 'chat_id': targetChat }
@@ -925,7 +925,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {number} userId - The target user id.
    * @param {number} offset - The starting index of the photos to return. Default is 0.
    * @param {number} limit - The last index of the photos to return. Default is 100.
-   * @param {function} callback - { error: Error | null, UserProfilePhotosObject}
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: photos
    */
   getUserProfilePhotos (userId, offset, limit, callback) {
     var urlQuery = { 'user_id': userId, 'offset': offset, 'limit': limit }
@@ -945,7 +945,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * Kick a target user from a chat.
    * @param {number|string} targetChat - The target chat id or username.
    * @param {number} userId - The target user id.
-   * @param {function} callback - { error: Error | null, isSuccess: boolean }
+   * @param {function(Error, number):void} callback - arg0: Error
    */
   kickChatMember (targetChat, userId, callback) {
     var urlQuery = { 'chat_id': targetChat, 'user_id': userId }
@@ -964,7 +964,7 @@ module.exports = class TelegramBot extends EventEmitter {
   /**
    * Orders the bot to leave the target chat.
    * @param {number|string} targetChat - The target chat id or username.
-   * @param {function} callback - { error: Error | null, isSuccess: boolean }
+   * @param {function(Error):void} callback - arg0: Error
    */
   leaveChat (targetChat, callback) {
     var urlQuery = { 'chat_id': targetChat }
@@ -999,7 +999,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {string} settings.reply_markup
    * @param {number} settings.replyToMessageId
    * @param {boolean} settings.title
-   * @param {function} callback - { error: Error, messageId: number }
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendAudio (targetChat, targetFile, settings, callback) {
     var urlQuery = { 'chat_id': targetChat, 'audio': targetFile }
@@ -1023,7 +1023,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * Sends a status notification to the target chat. Recommended if the task is going to take some time.
    * @param {number|string} targetChat - The target chat id or username.
    * @param {string} action - Can either have: "find_location", "record_audio", "record_video", "typing", "upload_audio", "upload_document", "upload_photo", "upload_video".
-   * @param {function} callback { error: Error | null, isSuccess: boolean }
+   * @param {function(Error):void} callback - arg0: Error
    */
   sendChatAction (targetChat, action, callback) {
     var urlQuery = { 'chat_id': targetChat, 'action': action }
@@ -1049,7 +1049,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {string} settings.last_name
    * @param {string} settings.reply_markup
    * @param {number} settings.replyToMessageId
-   * @param {function} callback - { error: Error | null, isSuccess: boolean }
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendContact (targetChat, phoneNumber, firstName, settings, callback) {
     var urlQuery = { 'chat_id': targetChat, 'phone_number': phoneNumber, 'first_name': firstName }
@@ -1077,7 +1077,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {string} settings.caption
    * @param {boolean} settings.disable_notification
    * @param {string} settings.reply_markup
-   * @param {function} callback - { error: Error | null, isSuccess: boolean }
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendDocument (targetChat, targetFile, settings, callback) {
     var urlQuery = { 'chat_id': targetChat, 'document': targetFile }
@@ -1105,7 +1105,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {string} settings.caption
    * @param {boolean} settings.disable_notification
    * @param {string} settings.reply_markup
-   * @param {function} callback - { error: Error | null, isSuccess: boolean }
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendFile (targetChat, targetFile, settings, callback) {
     this.sendDocument(targetChat, targetFile, settings, callback)
@@ -1120,7 +1120,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {boolean} settings.disable_web_page_preview
    * @param {string} settings.reply_markup
    * @param {number} settings.replyToMessageId
-   * @param {function} callback { isSuccess: boolean, messageId: number }
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendHtml (targetChat, html, settings, callback) {
     var setSettings = Object.assign((settings || {}), {'parse_mode': 'HTML'})
@@ -1136,7 +1136,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {boolean} settings.disable_notification
    * @param {string} settings.reply_markup
    * @param {number} settings.replyToMessageId
-   * @param {function} callback - { error: Error | null, messageId: number }
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendImage (targetChat, targetFile, settings, callback) {
     this.sendPhoto(targetChat, targetFile, settings, callback)
@@ -1151,7 +1151,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {boolean} settings.disable_web_page_preview
    * @param {string} settings.reply_markup
    * @param {number} settings.replyToMessageId
-   * @param {function} callback { isSuccess: boolean, messageId: number }
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendMarkdown (targetChat, markdown, settings, callback) {
     var setSettings = Object.assign((settings || {}), {'parse_mode': 'Markdown'})
@@ -1168,7 +1168,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {string} settings.parse_mode
    * @param {string} settings.reply_markup
    * @param {number} settings.replyToMessageId
-   * @param {function} callback { isSuccess: boolean, messageId: number }
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendMessage (targetChat, text, settings, callback) {
     if (!(typeof targetChat === 'number' || typeof targetChat === 'string')) {
@@ -1204,7 +1204,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {boolean} settings.disable_notification
    * @param {string} settings.reply_markup
    * @param {number} settings.replyToMessageId
-   * @param {function} callback - { error: Error | null, messageId: number }
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendPhoto (targetChat, targetFile, settings, callback) {
     var urlQuery = { 'chat_id': targetChat, 'photo': targetFile }
@@ -1233,7 +1233,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {boolean} settings.disable_web_page_preview
    * @param {string} settings.reply_markup
    * @param {number} settings.replyToMessageId
-   * @param {function} callback { isSuccess: boolean, messageId: number }
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendText (targetChat, text, settings, callback) {
     this.sendMessage(targetChat, text, settings, callback)
@@ -1251,7 +1251,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {boolean} settings.disable_notification
    * @param {number} settings.reply_to_messageId
    * @param {string} settings.reply_markup
-   * @param {function} callback - { error: Error | null, messageId: number}
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendVenue (targetChat, latitude, longitude, title, address, settings, callback) {
     var urlQuery = {
@@ -1288,7 +1288,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {number} settings.height
    * @param {string} settings.reply_markup
    * @param {number} settings.width
-   * @param {function(Error, number):void} callback - arg0: (Error | null), arg1: messageId: number
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendVideo (targetChat, targetFile, settings, callback) {
     var urlQuery = { 'chat_id': targetChat, 'video': targetFile }
@@ -1318,7 +1318,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {number} settings.duration
    * @param {string} settings.reply_markup
    * @param {number} settings.replyToMessageId
-   * @param {function(Error, number):void} callback - arg0: (Error | null), arg1: messageId
+   * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendVoice (targetChat, targetFile, settings, callback) {
     var urlQuery = { 'chat_id': targetChat, 'voice': targetFile }
@@ -1382,7 +1382,7 @@ module.exports = class TelegramBot extends EventEmitter {
   /**
    * @param {number|string} targetChat - The target chat id or username to unban from.
    * @param {number} userId - The user's id to unban.
-   * @param {function(object):void} callback - If no error occurs, null is provided instead.
+   * @param {function(Error):void} callback - arg0: Error
    */
   unbanChatMember (targetChat, userId, callback) {
     if (!(typeof targetChat === 'number' || typeof targetChat === 'string')) {
