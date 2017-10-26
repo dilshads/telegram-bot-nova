@@ -5,7 +5,7 @@
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node->%3D6.11.4-blue.svg)]()
-[![npm](https://img.shields.io/badge/npm-2.0.1-blue.svg)]()
+[![npm](https://img.shields.io/badge/npm-2.0.2-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
 
 Badges from [Shields.io](http://shields.io)
 
@@ -26,10 +26,31 @@ bot.on('command', (chat, date, from, messageId, text, command, commandData) => {
 })
 ```
 
+## Installing
+
+First you'll need to install the latest [node](https://nodejs.org/en/). Either from downloading it from their website for Windows or through your Terminal's package program for Linux. Once installed, you can do it either by NPM or downloadable zip.
+
+### Via NPM (Recommended)
+
+Open Command Prompt/Terminal and enter either of the following.
+
+**Local**
+
+```npm install telegram-bot-nova```
+
+**Global**
+
+```npm install telegram-bot-nova -g```
+
+### Via Downloadable Zip
+
+Download the latest release from [GitHub](https://github.com/NightfallAlicorn/telegram-bot-nova/releases) and extract the `telegram-bot-nova.js` install your project folder. Beware that you got to `require('./telegram-bot-nova')` with ./ prefix for local directory when install by zip.
+
 ## Index
 
 * [TelegramBot](#telegrambot)
 * [Example](#example)
+* [Installing](#installing)
 * [Index](#index)
 * [Events](#events)
     * [onAny](#onany)
@@ -509,7 +530,7 @@ Called every time the bot sees a `callbackData` from a user pressing a button fr
 E.g.
 
 ```javascript
-bot.on('KeyboardCallbackData', (chat, messageDate, from, messageId, callbackData) => {
+bot.on('keyboardCallbackData', (chat, messageDate, from, messageId, callbackData) => {
   // Actions here...
 })
 ```
@@ -841,8 +862,8 @@ Sends a response to the `onInlineQuery`.
     * `next_offset` **string**
     * `switch_pm_text` **string** Passes the user to PM while sending the content.
     * `switch_pm_parameter` **string**
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
 
 E.g.
 
@@ -853,8 +874,8 @@ Deletes a target message in a chat. This only works if the message was sent unde
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `messageId` **number** Target id of the message to delete.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
 
 E.g.
 
@@ -885,8 +906,8 @@ Shortened [editMessage](#editmessage).
 Callbacks an invite link of the target chat.
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `link` **string** The group invite link.
 
 E.g.
@@ -909,8 +930,8 @@ Forward a message and its content to a target chat.
 * `messageId` **number** Message id you want to forward.
 * `settings` **[object Object]** Use for providing extra perimeters.
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `newMessageId` **number** Use this to keep a reference of the new sent forwardMessage.
 
 E.g.
@@ -942,8 +963,8 @@ console.log(bot.getUsername())
 Callbacks a **[object Chat]** of the target chat.
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `obtainedChat` **[object Chat]** Contains information about the target chat.
 
 E.g.
@@ -962,8 +983,8 @@ bot.getChat(targetChat, (error, obtainedChat) => {
 Callbacks an array containing all the users that are "administrator" status of the group. The "creator" will be the first index 0 while administrators are 1 and higher. If the bot itself is an administrator, it will also be included. However, other bots will not be included even if have administrator privileges.
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `users` **{Array}** containing a **[object User]** per chat authority.
     * `userIds` **{Array}** containing a **number** of the users' id.
 
@@ -976,7 +997,7 @@ bot.getChatAdministrators(targetChat, (error, users, userIds) => {
     return
   }
 
-  var i
+  var i = 0
   var length = users.length
   while (i < length) {
     if (i === 0) {
@@ -995,8 +1016,8 @@ Example prints all the chat authorities and their status. Be aware that this fun
 Callbacks an **[object User]** and a **string** of the user's chat status.
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `user` **[object User]** User object of target.
     * `status` **string** The chat status can either be: "administrator", "creator", "kicked", "left" or "member".
 
@@ -1017,8 +1038,8 @@ Callbacks a **number** of members in a chat.
 
 *Required*
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `count` **number** Number of users in target chat.
 
 E.g.
@@ -1046,8 +1067,8 @@ console.log(bot.getDevMode())
 Use this to get information about a **file_id**.
 
 * `fileId` **string** Target file you want to obtain information about.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `file` **[object File]** The target file.
 
 E.g.
@@ -1075,8 +1096,8 @@ console.log(bot.getInterval())
 Use this to get a user object of the bot account.
 
 *Required*
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `me` **[object User]** Object containing information about the bot.
 
 E.g.
@@ -1115,8 +1136,8 @@ Use this to return a UserProfilePhotos object.
 * `userId` **number** Target user id.
 * `offset` **number** Starting index of photos to return. Default 0.
 * `limit` **number** Last index of photos to return. Default 100.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `photos`**[object UserProfilePhotos]** An object containing information about the target profile photos.
 
 E.g.
@@ -1136,8 +1157,8 @@ Use this to remove a member from the target chat. Supergroups will require an un
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `targetUserId` **number** Target user id to kick.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
 
 E.g.
 
@@ -1159,8 +1180,8 @@ bot.kickChatMember(targetChat, targetUserId, (error) => {
 Use this to make your bot leave the target chat.
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
 
 E.g.
 
@@ -1192,11 +1213,11 @@ Use this to send a mp3 to a target chat. You'll need to collect the `audio.file_
     * `duration` **number**
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `performer` **string**
-    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]** object.
+    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
     * `replyToMessageId` **number** Use for sending a reply to a message id.
     * `title` **string**
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `messageId` **number** Id of the sent content.
 
 E.g
@@ -1212,8 +1233,8 @@ Use this to send a status notification about your bot in the target chat. It's r
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `action` **string** Can either have: "find_location", "record_audio", "record_video", "typing", "upload_audio", "upload_document", "upload_photo" or "upload_video". Sending a string not matching any of those will cause the action to fail.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
 
 E.g.
 
@@ -1270,9 +1291,9 @@ Use this to send a file to a target chat. You'll need to collect the `file.file_
 * `settings` **[object Object]** Use for providing extra perimeters.
     * `caption` **string** Adds a caption text message to the video. 0-200 characters max.
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]** object.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `messageId` **number** Id of the sent content.
 
 E.g.
@@ -1312,10 +1333,10 @@ Use this to send a text message to a target chat.
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `disable_web_page_preview` **boolean** default false. Prevents links from providing a preview below the message.
     * `parse_mode` **string** This can be set to 'HTML' or 'Markdown' to apply their respective parsing.
-    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]** object.
+    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
     * `replyToMessageId` **number** Use for sending a reply to a message id.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `messageId` **number** Id of the sent content.
 
 E.g.
@@ -1342,10 +1363,10 @@ Use this to send an image to a target chat. You'll need to collect the `photo[ph
 * `settings` **[object Object]** Use for providing extra perimeters.
     * `caption` **string** Adds a caption text message to the video. 0-200 characters max.
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]** object.
+    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
     * `replyToMessageId` **number** Use for sending a reply to a message id.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `messageId` **number** Id of the sent content.
 
 E.g.
@@ -1376,12 +1397,12 @@ Use this to send a map location.
 * `title` **string** The title of the location. Doesn't have to be real.
 * `address` **string** The address of the location. Doesn't have to be real.
 * `settings` **[object Object]** Use for providing extra perimeters.
-    * `foursquare_id` **string** Foursquare identifyer for the venue.
+    * `foursquare_id` **string** Foursquare identifier for the venue.
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `reply_to_messageId` **number** Use for sending a reply to a message id.
-    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]** object.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `messageId` **number** Id of the sent content.
 
 E.g.
@@ -1414,8 +1435,8 @@ Use this to send a video to a target chat. You'll need to collect the `video.fil
     * `caption` **string** Adds a caption text message to the video. 0-200 characters max.
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `messageId` **number** Id of the sent content.
 
 E.g.
@@ -1443,10 +1464,10 @@ Use this to send a ogg voice file to a target chat. You'll need to collect the `
     * `caption` **string** Adds a caption text message to the video. 0-200 characters max.
     * `duration` **number**
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]** object.
+    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
     * `replyToMessageId` **number** Use for sending a reply to a message id.
-* `callback` **{Function}** Called after sending the content and returns the following result perimeters.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `messageId` **number** Id of the sent content.
 
 E.g.
@@ -1501,8 +1522,8 @@ Unbans a target user from a target group or supergroup. The bot has to be presen
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `targetUser` **number** Target user id to unban.
-* `callback` **{Function}** Called after the action response.
-    * `error` **{Error|Null}** Provides an error object else null if there isn't any.
+* `callback` **function** Called after the action response.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
 
 E.g.
 

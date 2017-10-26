@@ -1373,6 +1373,7 @@ module.exports = class TelegramBot extends EventEmitter {
     if (typeof port !== 'number') {
       throw new Error('port has to be a number.')
     }
+    // Ports available: https://core.telegram.org/bots/api#setwebhook
     if ([80, 88, 443, 8443].indexOf(port) === -1) {
       throw new Error(`Port ${port} is not supported.`)
     }
