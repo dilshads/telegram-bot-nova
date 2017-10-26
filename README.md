@@ -980,7 +980,7 @@ bot.getChat(targetChat, (error, obtainedChat) => {
 ```
 
 ### getChatAdministrators
-Callbacks an array containing all the users that are "administrator" status of the group. The "creator" will be the first index 0 while administrators are 1 and higher. If the bot itself is an administrator, it will also be included. However, other bots will not be included even if have administrator privileges.
+Callbacks an array of **[object User]** with the first index being the group "creator" and the others with "administrator" status. If the bot itself is an administrator, it will also be included. However, other bots will not be included even if have administrator privileges.
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `callback` **function** Called after sending the content and returns the following result perimeters.
@@ -1064,7 +1064,7 @@ console.log(bot.getDevMode())
 ```
 
 ### getFile
-Use this to get information about a **file_id**.
+Callbacks an **[object File]** file from a **file_id**.
 
 * `fileId` **string** Target file you want to obtain information about.
 * `callback` **function** Called after sending the content and returns the following result perimeters.
@@ -1093,7 +1093,7 @@ console.log(bot.getInterval())
 ```
 
 ### getMe
-Use this to get a user object of the bot account.
+Callbacks an **[object User]** of the bot itself.
 
 *Required*
 * `callback` **function** Called after sending the content and returns the following result perimeters.
@@ -1130,9 +1130,8 @@ console.log(bot.getStartupTime())
 ```
 
 ### getUserProfilePhotos
-Use this to return a UserProfilePhotos object.
+Callbacks an **[object UserProfilePhotos]** of the user.
 
-*Required*
 * `userId` **number** Target user id.
 * `offset` **number** Starting index of photos to return. Default 0.
 * `limit` **number** Last index of photos to return. Default 100.
@@ -1220,11 +1219,15 @@ Use this to send a mp3 to a target chat. You'll need to collect the `audio.file_
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `messageId` **number** Id of the sent content.
 
-E.g
+E.g.
 
 ```javascript
-bot.sendAudio(targetChat, targetMp3, {}, function (isSuccess) {
-  console.log('MP3 sent successfully: ' + isSuccess)
+bot.sendAudio(targetChat, targetMp3, {}, (error, messageId) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
 })
 ```
 
