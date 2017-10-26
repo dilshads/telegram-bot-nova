@@ -114,7 +114,6 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [getUserProfilePhotos](#getuserprofilephotos)
     * [kickChatMember](#kickchatmember)
     * [leaveChat](#leavechat)
-    * [toString](#tostring)
     * [sendAudio](#sendaudio)
     * [sendChatAction](#sendchataction)
     * [sendContact](#sendcontact)
@@ -132,6 +131,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [setDevMode](#setdevmode)
     * [setInterval](#setinterval)
     * [setPort](#setport)
+    * [toString](#tostring)
     * [unbanChatMember](#unbanchatmember)
 
 ## Events
@@ -1095,7 +1095,6 @@ console.log(bot.getInterval())
 ### getMe
 Callbacks an **[object User]** of the bot itself.
 
-*Required*
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `me` **[object User]** Object containing information about the bot.
