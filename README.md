@@ -980,13 +980,13 @@ bot.getChat(targetChat, (error, obtainedChat) => {
 ```
 
 ### getChatAdministrators
-Callbacks an array of **[object User]** with the first index being the group "creator" and the others with "administrator" status. If the bot itself is an administrator, it will also be included. However, other bots will not be included even if have administrator privileges.
+Callbacks an array of **[object User]** with the first index being the group "creator" and the others with "administrator" status. If the bot itself is an administrator, it will also be included. However, other bots will not be included even if have administrator privileges. The second array contains the users' ids for easy access.
 
 * `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
-    * `users` **{Array}** containing a **[object User]** per chat authority.
-    * `userIds` **{Array}** containing a **number** of the users' id.
+    * `users` **array of [object User]** Contains an array of the chat authority users' object.
+    * `userIds` **array of number** Contains an array of the chat authority users' id.
 
 E.g.
 
