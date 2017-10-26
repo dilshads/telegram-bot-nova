@@ -44,7 +44,7 @@ Open Command Prompt/Terminal and enter either of the following.
 
 ### Via Downloadable Zip
 
-Download the latest release from [GitHub](https://github.com/NightfallAlicorn/telegram-bot-nova/releases) and extract the `telegram-bot-nova.js` install your project folder. Beware that you got to `require('./telegram-bot-nova')` with ./ prefix for local directory when install by zip.
+Download the latest release from [GitHub](https://github.com/NightfallAlicorn/telegram-bot-nova/releases) and extract the `telegram-bot-nova.js` into your project folder. Beware that you have got to `require('./telegram-bot-nova')` with ./ prefix for local directory when you install by zip.
 
 ## Index
 
@@ -1261,7 +1261,7 @@ Use this to send a made contact.
 * `settings` **[object Object]** Use for providing extra perimeters.
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
     * `last_name` **string** Contact's last name.
-    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
+    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
     * `replyToMessageId` **number** Use for sending a reply to a message id.
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **Error|null** Provides an error object else null if there isn't any.
@@ -1434,7 +1434,7 @@ Use this to send a video to a target chat. You'll need to collect the `video.fil
     * `height` **number**
     * `caption` **string** Adds a caption text message to the video. 0-200 characters max.
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-    * `reply_markup` **ForceReply**, **InlineKeyboardMarkup**, **ReplyKeyboardMarkup** or **ReplyKeyboardRemove**.
+    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `messageId` **number** Id of the sent content.
