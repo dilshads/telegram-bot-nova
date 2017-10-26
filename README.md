@@ -1107,6 +1107,7 @@ bot.getMe((error, me) => {
     // Handle after error.
     return
   }
+  // Handle after action success.
 })
 ```
 
