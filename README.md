@@ -872,7 +872,7 @@ See [inlineQuery](#inlinequery) event for a full use example.
 ### deleteMessage
 Deletes a target message in a chat. This only works if the message was sent under 48 hours. The bot is capable of deleting its messages but requires group administrator to delete other user messages.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `messageId` **number** Target id of the message to delete.
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
@@ -905,7 +905,7 @@ Shortened [editMessage](#editmessage).
 ### exportChatInviteLink
 Callbacks an invite link of the target chat.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `link` **string** The group invite link.
@@ -962,7 +962,7 @@ console.log(bot.getUsername())
 ### getChat
 Callbacks a **[object Chat]** of the target chat.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `obtainedChat` **[object Chat]** Contains information about the target chat.
@@ -982,7 +982,7 @@ bot.getChat(targetChat, (error, obtainedChat) => {
 ### getChatAdministrators
 Callbacks an array of **[object User]** with the first index being the group "creator" and the others with "administrator" status. If the bot itself is an administrator, it will also be included. However, other bots will not be included even if have administrator privileges. The second array contains the users' ids for easy access.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `users` **array of [object User]** Contains an array of the chat authority users' object.
@@ -1015,7 +1015,7 @@ Example prints all the chat authorities and their status. Be aware that this fun
 ### getChatMember
 Callbacks an **[object User]** and a **string** of the user's chat status.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `user` **[object User]** User object of target.
@@ -1037,7 +1037,7 @@ bot.getChatMember(targetChat, userId, (error, user, status) => {
 Callbacks a **number** of members in a chat.
 
 *Required*
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
     * `count` **number** Number of users in target chat.
@@ -1154,7 +1154,7 @@ bot.getUserProfilePhotos(userId, offset, limit, (error, photos) => {
 ### kickChatMember
 Use this to remove a member from the target chat. Supergroups will require an unban unfortunately due to how the Telegram server handles this method.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `targetUserId` **number** Target user id to kick.
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
@@ -1178,7 +1178,7 @@ bot.kickChatMember(targetChat, targetUserId, (error) => {
 ### leaveChat
 Use this to make your bot leave the target chat.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
 
@@ -1205,7 +1205,7 @@ Returns a string object type of the parent class.
 ### sendAudio
 Use this to send a mp3 to a target chat. You'll need to collect the `audio.file_id` with photo event. Be aware that `file_id` is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work. Also they can only send up to 50 mb.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `targetMp3` **string** Target mp3 file id or url.
 * `settings` **[object Object]** Use for providing extra perimeters.
     * `caption` **string** Adds a caption text message to the video. 0-200 characters max.
@@ -1234,7 +1234,7 @@ bot.sendAudio(targetChat, targetMp3, {}, (error, messageId) => {
 ### sendChatAction
 Use this to send a status notification about your bot in the target chat. It's recommended only to use this if it going to perform a long action such as sending a video.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `action` **string** Can either have: "find_location", "record_audio", "record_video", "typing", "upload_audio", "upload_document", "upload_photo" or "upload_video". Sending a string not matching any of those will cause the action to fail.
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
@@ -1258,7 +1258,7 @@ bot.sendChatAction(targetChat, "typing", (error) => {
 ### sendContact
 Use this to send a made contact.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `phoneNumber` **string** Contact's phone number.
 * `firstName` **string** Contact's first name.
 * `settings` **[object Object]** Use for providing extra perimeters.
@@ -1289,7 +1289,7 @@ bot.sendContact(targetChat, phoneNumber, firstName, {}, (error, messageId) => {
 ### sendDocument
 Use this to send a file to a target chat. You'll need to collect the `file.file_id` with files. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `targetFile` **string** Target document id or url.
 * `settings` **[object Object]** Use for providing extra perimeters.
     * `caption` **string** Adds a caption text message to the video. 0-200 characters max.
@@ -1330,7 +1330,7 @@ Shortened version of [sendMessage](#sendmessage). Also appends Markdown parse_mo
 ### sendMessage
 Use this to send a text message to a target chat.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `text` The text to send. The format can be parsed to HTML or Markdown depending if `parse_mode` is set in the settings object.
 * `settings` **[object Object]** Use for providing extra perimeters.
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
@@ -1361,7 +1361,7 @@ bot.sendMessage(targetChat, text, {}, (error, messageId) => {
 ### sendPhoto
 Use this to send an image to a target chat. You'll need to collect the `photo[photo.length - 1].file_id` with photo event. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `targetImage` **string** Target image id or url.
 * `settings` **[object Object]** Use for providing extra perimeters.
     * `caption` **string** Adds a caption text message to the video. 0-200 characters max.
@@ -1394,7 +1394,7 @@ Shortened version of [sendMessage](#sendmessage).
 ### sendVenue
 Use this to send a map location.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `latitude` **{Float Number}** The latitude point of the location.
 * `longitude` **{Float Number}** The longitude point of the location.
 * `title` **string** The title of the location. Doesn't have to be real.
@@ -1429,7 +1429,7 @@ Note the example is just random but it works.
 ### sendVideo
 Use this to send a video to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `targetVideo` **string** Target video id or url.
 * `settings` **[object Object]** Use for providing extra perimeters.
     * `duration` **number**
@@ -1461,7 +1461,7 @@ bot.sendVideo(targetChat, targetVideo, {}, (error, messageId) => {
 ### sendVoice
 Use this to send a ogg voice file to a target chat. You'll need to collect the `voice.file_id` with onVoice. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work. If uploading from external source. The file needs to be .ogg with OPUS encoding to send.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `targetOgg` **string** Target ogg file id or url. 50 mb is the size limit.
 * `settings` **[object Object]** Use for providing extra perimeters.
     * `caption` **string** Adds a caption text message to the video. 0-200 characters max.
@@ -1523,7 +1523,7 @@ bot.setPort(port)
 ### unbanChatMember
 Unbans a target user from a target group or supergroup. The bot has to be present and have administrator priviages for this to work.
 
-* `targetChat` Target chat id **number** or chat username **string**. Chat username example "@MyGroup".
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `targetUser` **number** Target user id to unban.
 * `callback` **function** Called after the action response.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.

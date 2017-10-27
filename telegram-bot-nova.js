@@ -434,7 +434,7 @@ const getUpdates = function getUpdates (context) {
 
   web(context, 'getUpdates', urlQuery, (data) => {
     if (!data.ok) {
-      context.emit('error', new Error('Failed to getUpdate.'))
+      context.emit('error', new Error(data.message))
       return
     }
     data.result.forEach((result) => {
