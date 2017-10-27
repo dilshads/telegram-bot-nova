@@ -4,11 +4,6 @@ const { EventEmitter } = require('events')
 const https = require('https')
 const querystring = require('querystring')
 
- // TODO: Find a better way to provide botEvents maybe?
- // TODO: Find a fix for jsdoc for vscode for objects.
- // TODO: Check and update the documentation.
- // TODO: Add a shield for jsdoc documented on the documentation. Possibly.
-
 /**
  * The TelegramBot event handler.
  * @param {object} context - The 'this' context of the bot instance calling this method.
