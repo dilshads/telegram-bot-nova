@@ -489,12 +489,17 @@ const web = function web (context, urlMethod, urlData, callback) {
 
           callback(data)
         } catch (error) {
-          loop(context)
+          // Catches class problems.
+          // Having a loop here will cause getUpdates to overflow.
+          console.error('web error')
+          console.error(error)
         }
       }
     })
   })
   request.on('error', () => {
+    // Catches connection problems.
+    // It will keep trying to reconnect until success.
     loop(context)
   })
   request.write(postData)
@@ -674,9 +679,11 @@ module.exports = class TelegramBot extends EventEmitter {
 
     web(this, 'editMessageText', urlQuery, (data) => {
       if (typeof callback === 'function') {
-        callback(null)
-      } else {
-        callback(new Error(data.description))
+        if (data.ok) {
+          callback(null)
+        } else {
+          callback(new Error(data.description))
+        }
       }
     })
   }
