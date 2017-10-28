@@ -56,7 +56,7 @@ const botEvent = function botEvent (context, result) {
       message
     } = result.callback_query
     try {
-      context.emit('keyboardCallbackData', message.chat, message.date, message.date, from, message.message_id, data)
+      context.emit('keyboardCallbackData', message.chat, message.date, from, message.message_id, data)
     } catch (error) {
       context.emit('error', error)
     }
