@@ -895,10 +895,10 @@ bot.deleteMessage(targetChat, messageId, (error) => {
 ```
 
 ### editHtml
-Shortened [editMessage](#editmessage). Also appends HTML parse_mode to settings. All HTML tags must be closed else the message won't edit.
+Shortened [editMessageText](#editmessagetext). Also appends HTML parse_mode to settings. All HTML tags must be closed else the message won't edit.
 
 ### editMarkdown
-Shortened [editMessage](#editmessage). Also appends Markdown parse_mode to settings. All Markdown tags must be closed else the message won't edit.
+Shortened [editMessageText](#editmessagetext). Also appends Markdown parse_mode to settings. All Markdown tags must be closed else the message won't edit.
 
 ### editMessageText
 Use this to edit a target chat's message by its id.
@@ -927,7 +927,7 @@ bot.editMessageText(targetChat, messageId, text, {}, (error) => {
 ```
 
 ### editText
-Shortened [editMessage](#editmessage).
+Shortened [editMessageText](#editmessagetext).
 
 ### exportChatInviteLink
 Callbacks an invite link of the target chat.
