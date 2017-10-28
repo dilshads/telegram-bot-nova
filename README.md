@@ -97,6 +97,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [deleteMessage](#deletemessage)
     * [editHtml](#edithtml)
     * [editMarkdown](#editmarkdown)
+    * [editMessage](#editmessage)
     * [editText](#edittext)
     * [exportChatInviteLink](#exportchatinvitelink)
     * [forwardMessage](#forwardmessage)
@@ -899,6 +900,32 @@ Shortened [editMessage](#editmessage). Also appends HTML parse_mode to settings.
 ### editMarkdown
 Shortened [editMessage](#editmessage). Also appends Markdown parse_mode to settings. All Markdown tags must be closed else the message won't edit.
 
+### editMessageText
+Use this to edit a target chat's message by its id.
+
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
+* `messageId` **number** Message id you want to forward.
+* `text` **string** The text to replace with.
+* `settings` **[object Object]** Use for providing extra perimeters.
+    * `disable_web_page_preview` **boolean** Default false. Prevents links from providing a preview below the message.
+    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
+
+```javascript
+// Minimum.
+bot.editMessageText(targetChat, messageId, text)
+
+// Optional settings with callback extended.
+bot.editMessageText(targetChat, messageId, text, {}, (error) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+```
+
 ### editText
 Shortened [editMessage](#editmessage).
 
@@ -1334,7 +1361,7 @@ Use this to send a text message to a target chat.
 * `text` The text to send. The format can be parsed to HTML or Markdown depending if `parse_mode` is set in the settings object.
 * `settings` **[object Object]** Use for providing extra perimeters.
     * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
-    * `disable_web_page_preview` **boolean** default false. Prevents links from providing a preview below the message.
+    * `disable_web_page_preview` **boolean** Default false. Prevents links from providing a preview below the message.
     * `parse_mode` **string** This can be set to 'HTML' or 'Markdown' to apply their respective parsing.
     * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
     * `replyToMessageId` **number** Use for sending a reply to a message id.

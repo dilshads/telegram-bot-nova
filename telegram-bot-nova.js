@@ -976,13 +976,6 @@ module.exports = class TelegramBot extends EventEmitter {
   }
 
   /**
-   * Returns a string object type of the parent class.
-   */
-  toString () {
-    return `[object ${this.constructor.name}]`
-  }
-
-  /**
    * Sends a audio file to the target chat.
    * @param {number|string} targetChat - The target chat id or username.
    * @param {string} targetFile - The file id or URL to the file.
@@ -1373,6 +1366,13 @@ module.exports = class TelegramBot extends EventEmitter {
       throw new Error(`Port ${port} is not supported.`)
     }
     this._botSettings.port = port
+  }
+
+  /**
+   * Returns a string object type of the parent class.
+   */
+  toString () {
+    return `[object ${this.constructor.name}]`
   }
 
   /**
