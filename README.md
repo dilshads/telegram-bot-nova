@@ -97,7 +97,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [deleteMessage](#deletemessage)
     * [editHtml](#edithtml)
     * [editMarkdown](#editmarkdown)
-    * [editMessage](#editmessage)
+    * [editMessageText](#editmessagetext)
     * [editText](#edittext)
     * [exportChatInviteLink](#exportchatinvitelink)
     * [forwardMessage](#forwardmessage)
