@@ -52,6 +52,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
 * [Example](#example)
 * [Installing](#installing)
 * [Index](#index)
+* [Declaring](#declaring)
 * [Events](#events)
     * [onAny](#onany)
     * [onAudio](#onaudio)
@@ -142,6 +143,28 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [setPort](#setport)
     * [toString](#tostring)
     * [unbanChatMember](#unbanchatmember)
+
+## Declaring
+
+* `token` **string** The bot token provided by [@BotFather](https://t.me./botfather).
+* `settings` **[object Object]** Use for providing extra perimeters.
+    * `devMode` **boolean** Used for providing console log debugging logs. Default false.
+    * `interval` **number** The rate in reach the bot checks updates in milliseconds. Default 1000.
+    * `method` **string** The https method to use. Can either be 'GET' or 'POST'. Default 'POST'.
+    * `port` **number** The https port to use. Ports currently supported are: 80, 88, 443, 8443. Default 443.
+
+```javascript
+// Minimum.
+var bot = new TelegramBot('YOUR_BOT_TOKEN')
+
+// Optional settings.
+var bot = new TelegramBot('YOUR_BOT_TOKEN', {
+  'devMode': false,
+  'interval': 1000,
+  'method': 'POST',
+  'port': 443
+})
+```
 
 ## Events
 
