@@ -5,7 +5,7 @@
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node->%3D6.11.4-blue.svg)]()
-[![npm](https://img.shields.io/badge/npm-2.0.4-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
+[![npm](https://img.shields.io/badge/npm-2.1.0-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
 
 Badges from [Shields.io](http://shields.io)
 
@@ -64,32 +64,38 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [onForwardAudio](#onforwardaudio)
     * [onForwardContact](#onforwardcontact)
     * [onForwardFile](#onforwardfile)
+    * [onForwardLocation](#onforwardlocation)
     * [onForwardPhoto](#onforwardphoto)
     * [onForwardSticker](#onforwardsticker)
     * [onForwardText](#onforwardtext)
     * [onForwardVenue](#onforwardvenue)
     * [onForwardVideo](#onforwardvideo)
+    * [onForwardVideoNote](#onforwardvideonote)
     * [onForwardVoice](#onforwardvoice)
     * [onGroupJoin](#ongroupjoin)
     * [onGroupLeft](#ongroupleft)
     * [onInlineQuery](#oninlinequery)
     * [onKeyboardCallbackData](#onkeyboardcallbackdata)
+    * [onLocation](#onlocation)
     * [onPhoto](#onphoto)
     * [onPinnedAny](#onpinnedany)
     * [onPinnedAudio](#onpinnedaudio)
     * [onPinnedContact](#onpinnedcontact)
     * [onPinnedFile](#onpinnedfile)
+    * [onPinnedLocation](#onpinnedlocation)
     * [onPinnedPhoto](#onpinnedphoto)
     * [onPinnedSticker](#onpinnedsticker)
     * [onPinnedText](#onpinnedtext)
     * [onPinnedVenue](#onpinnedvenue)
     * [onPinnedVideo](#onpinnedvideo)
+    * [onPinnedVideoNote](#onpinnedvideonote)
     * [onPinnedVoice](#onpinnedvoice)
     * [onStartup](#onstartup)
     * [onSticker](#onsticker)
     * [onText](#ontext)
     * [onVenue](#onvenue)
     * [onVideo](#onvideo)
+    * [onVideoNote](#onvideonote)
     * [onVoice](#onvoice)
 * [Actions](#actions)
     * [answerInlineQuery](#answerinlinequery)
@@ -122,12 +128,14 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [sendFile](#sendfile)
     * [sendHtml](#sendhtml)
     * [sendImage](#sendimage)
+    * [sendLocation](#sendlocation)
     * [sendMarkdown](#sendmarkdown)
     * [sendMessage](#sendmessage)
     * [sendPhoto](#sendphoto)
     * [sendText](#sendtext)
     * [sendVenue](#sendvenue)
     * [sendVideo](#sendvideo)
+    * [sendVideoNote](#sendvideonote)
     * [sendVoice](#sendvoice)
     * [setDevMode](#setdevmode)
     * [setInterval](#setinterval)
@@ -260,9 +268,9 @@ Called every time the bot sees any forward content. However, this excludes super
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
-* `from` **[object User]** User who forwarded the message.
+* `from` **[object User]** User who forwarded the content.
 * `messageId` **number** Message reference.
-* `user` **[object User]** The owner of the content that was forwarded.
+* `user` **[object User]** User who had sent the content before it was forwarded.
 
 E.g.
 
@@ -277,9 +285,9 @@ Called every time the bot sees a forwarded `.mp3` sound file. However, this excl
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
-* `from` **[object User]** User who send the audio.
+* `from` **[object User]** User who forwarded the audio.
 * `messageId` **number** The message reference.
-* `user` **[object User]** The owner of the content that was forwarded.
+* `user` **[object User]** User who had sent the audio before it was forwarded.
 * `audio` **[object Audio]** Audio information. Use `audio.file_id` to keep track of the audios seen.
 
 E.g.
@@ -295,9 +303,9 @@ Called every time the bot sees a forwarded contact. However, this excludes super
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
-* `from` **[object User]** User who sent the file.
+* `from` **[object User]** User who forwarded the contact.
 * `messageId` **number** The message reference.
-* `user` **[object User]** The owner of the content that was forwarded.
+* `user` **[object User]** User who had sent the contact before it was forwarded.
 * `contact` **[object Contact]** Contact information.
 
 E.g.
@@ -313,9 +321,9 @@ Called every time the bot sees a forwarded file. However, this excludes supergro
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
-* `from` **[object User]** User who sent the file.
+* `from` **[object User]** User who forwarded the file.
 * `messageId` **number** The message reference.
-* `user` **[object User]** The owner of the content that was forwarded.
+* `user` **[object User]** User who had sent the file before it was forwarded.
 * `file` **[object Document]** File information. Use `file.file_id` to keep track of the files seen.
 
 E.g.
@@ -326,14 +334,32 @@ bot.on('forwardFile', (chat, date, from, messageId, user, file) => {
 })
 ```
 
+### onForwardLocation
+Called every time the bot sees a forwarded location. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots.
+
+* `chat` **[object Chat]** Chat were event occurred.
+* `date` **number** Date in milliseconds when event triggered.
+* `from` **[object User]** User who forwarded the location.
+* `messageId` **number** Message reference.
+* `user` **[object User]** User who had sent the location before it was forwarded.
+* `location` **[object Location]** Location information.
+
+E.g.
+
+```javascript
+bot.on('forwardLocation', (chat, date, from, messageId, user, location) => {
+  // Actions here...
+})
+```
+
 ### onForwardPhoto
 Called every time the bot sees a forwarded photo. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
-* `from` **[object User]** User who forwarded the message.
+* `from` **[object User]** User who forwarded the photo.
 * `messageId` **number** Message reference.
-* `user` **[object User]** The owner of the content that was forwarded.
+* `user` **[object User]** User who had sent the photo before it was forwarded.
 * `photo` **Array of [object PhotoSize]** Provides photo information.
 
 E.g.
@@ -349,9 +375,9 @@ Called every time the bot sees a forwarded sticker. However, this excludes super
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
-* `from` **[object User]** User who sent the message.
+* `from` **[object User]** User who forwarded the sticker.
 * `messageId` **Number** Message reference.
-* `user` **[object User]** The owner of the content that was forwarded.
+* `user` **[object User]** User who had sent the sticker before it was forwarded.
 * `sticker` **[object Sticker]** Sticker information. Use `sticker.file_id` to keep track of the stickers seen.
 
 E.g.
@@ -367,9 +393,9 @@ Called every time the bot sees a forwarded text message. However, this excludes 
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
-* `from` **[object User]** User who forwarded the message.
+* `from` **[object User]** User who forwarded the text.
 * `messageId` **number** Message reference.
-* `user` **[object User]** The owner of the content that was forwarded.
+* `user` **[object User]** User who had sent the text before it was forwarded.
 * `text` **string** Message text.
 
 E.g.
@@ -385,9 +411,9 @@ Called every time the bot sees a forwarded venue. However, this excludes supergr
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
-* `from` **[object User]** User who sent the video.
+* `from` **[object User]** User who forwarded the venue.
 * `messageId` **number** Message reference.
-* `user` **[object User]** The owner of the content that was forwarded.
+* `user` **[object User]** User who had sent the venue before it was forwarded.
 * `venue` **[object Venue]** Venue information.
 
 E.g.
@@ -403,9 +429,9 @@ Called every time the bot sees a forwarded video. However, this excludes supergr
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
-* `from` **[object User]** User who sent the video.
+* `from` **[object User]** User who forwarded the video.
 * `messageId` **number** Message reference.
-* `user` **[object User]** The owner of the content that was forwarded.
+* `user` **[object User]** User who had sent the video before it was forwarded.
 * `video` **[object Video]** Video information. Use `video.file_id` to keep track of the videos seen.
 
 E.g.
@@ -416,14 +442,32 @@ bot.on('forwardVideo', (chat, date, from, messageId, user, video) => {
 })
 ```
 
+### onForwardVideoNote
+Called every time the bot sees a forwarded round video note. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
+
+* `chat` **[object Chat]** Chat were event occurred.
+* `date` **number** Date in milliseconds when event triggered.
+* `from` **[object User]** User who forwarded the round video note.
+* `messageId` **number** Message reference.
+* `user` **[object User]** User who had sent the round video note before it was forwarded.
+* `videoNote` **[object VideoNote]** Video note information. Use `videoNote.file_id` to keep track of the round videos seen.
+
+E.g.
+
+```javascript
+bot.on('forwardVideoNote', (chat, date, from, messageId, user, videoNote) => {
+  // Actions here...
+})
+```
+
 ### onForwardVoice
 Called every time the bot sees a forwarded `.ogg` voice message. However, this excludes supergroups if the bot isn't an administrator. Also, bots can't see messages from other bots. Doesn't contain the caption.
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
-* `from` **[object User]** User who sent the voice message.
+* `from` **[object User]** User who forwarded the voice message.
 * `messageId` **number** Content reference id.
-* `user` **[object User]** The owner of the content that was forwarded.
+* `user` **[object User]** User who had sent the voice before it was forwarded.
 * `voice` **[object Voice]** Voice information. Use `voice.file_id` to keep track of the voice messages seen.
 
 E.g.
@@ -538,6 +582,23 @@ bot.on('keyboardCallbackData', (chat, messageDate, from, messageId, callbackData
 
 Don't forget you can use this call back to change the content of the reference messageId without sending a new message.
 
+### onLocation
+Called every time the bot sees a new location.
+
+* `chat` **[object Chat]** Chat were event occurred.
+* `date` **number** Date in milliseconds when event triggered.
+* `from` **[object User]** User who sent the location.
+* `messageId` **number** Message reference.
+* `location` **[object Location]** Location information.
+
+E.g.
+
+```javascript
+bot.on('location', (chat, date, from, messageId, location) => {
+  // Actions here...
+})
+```
+
 ### onPhoto
 Called every time the bot sees a new photo.
 
@@ -567,8 +628,8 @@ Calls on any pinned content. This excludes supergroups if the bot isn't an admin
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
 * `messageId` **number** The message reference that was pinned.
-* `messageUser` **[object User]** User who wrote the pinned message.
-* `pinnedUser` **[object User]** User who pinned the message.
+* `messageUser` **[object User]** User who sent the pinned content.
+* `pinnedUser` **[object User]** User who pinned the content.
 
 E.g.
 
@@ -584,7 +645,7 @@ Calls when a user pins an audio. This excludes supergroups if the bot isn't an a
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
 * `messageId` **number** The message reference that was pinned.
-* `messageUser` **[object User]** User who wrote the pinned message.
+* `messageUser` **[object User]** User who wrote sent pinned audio.
 * `pinnedUser` **[object User]** User who pinned the message.
 * `audio` **[object Audio]** Provides audio information.
 
@@ -602,7 +663,7 @@ Calls when a user pins a contact. This excludes supergroups if the bot isn't an 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
 * `messageId` **number** The message reference that was pinned.
-* `messageUser` **[object User]** User who wrote the pinned message.
+* `messageUser` **[object User]** User who sent the pinned file.
 * `pinnedUser` **[object User]** User who pinned the message.
 * `contact` **[object Contact]** Provides contact information.
 
@@ -620,7 +681,7 @@ Calls when a user pins a file. This excludes supergroups if the bot isn't an adm
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
 * `messageId` **number** The message reference that was pinned.
-* `messageUser` **[object User]** User who wrote the pinned message.
+* `messageUser` **[object User]** User who sent the pinned file.
 * `pinnedUser` **[object User]** User who pinned the message.
 * `file` **[object File]** Provides video information.
 
@@ -632,13 +693,31 @@ bot.on('pinnedFile', (chat, date, messageId, messageUser, pinnedUser, file) => {
 })
 ```
 
+### onPinnedLocation
+Calls when a user pins a venue. This excludes supergroups if the bot isn't an administrator.
+
+* `chat` **[object Chat]** Chat were event occurred.
+* `date` **number** Date in milliseconds when event triggered.
+* `messageId` **number** The message reference that was pinned.
+* `messageUser` **[object User]** User who sent the pinned location.
+* `pinnedUser` **[object User]** User who pinned the message.
+* `location` **[object Location]** Provides location information.
+
+E.g.
+
+```javascript
+bot.on('pinnedLocation', (chat, date, messageUser, messageId, pinnedUser, location) => {
+  // Actions here...
+})
+```
+
 ### onPinnedPhoto
 Calls when a user pins a photo. This excludes supergroups if the bot isn't an administrator.
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
 * `messageId` **number** The message reference that was pinned.
-* `messageUser` **[object User]** User who wrote the pinned message.
+* `messageUser` **[object User]** User who sent the pinned photo.
 * `pinnedUser` **[object User]** User who pinned the message.
 * `photo` **Array of [object PhotoSize]** Provides photo information.
 
@@ -656,7 +735,7 @@ Calls when a user pins a sticker. This excludes supergroups if the bot isn't an 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
 * `messageId` **number** The message reference that was pinned.
-* `messageUser` **[object User]** User who wrote the pinned message.
+* `messageUser` **[object User]** User who sent the pinned sticker.
 * `pinnedUser` **[object User]** User who pinned the message.
 * `sticker` **[object Sticker]** Provides sticker information.
 
@@ -692,7 +771,7 @@ Calls when a user pins a venue. This excludes supergroups if the bot isn't an ad
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
 * `messageId` **number** The message reference that was pinned.
-* `messageUser` **[object User]** User who wrote the pinned message.
+* `messageUser` **[object User]** User who sent the pinned venue.
 * `pinnedUser` **[object User]** User who pinned the message.
 * `venue` **[object Venue]** Provides venue information.
 
@@ -718,6 +797,24 @@ E.g.
 
 ```javascript
 bot.on('pinnedVideo', (chat, date, messageUser, messageId, pinnedUser, video) => {
+  // Actions here...
+})
+```
+
+### onPinnedVideoNote
+Calls when a user pins a round video note. This excludes supergroups if the bot isn't an administrator.
+
+* `chat` **[object Chat]** Chat were event occurred.
+* `date` **number** Date in milliseconds when event triggered.
+* `messageId` **number** The message reference that was pinned.
+* `messageUser` **[object User]** User who wrote the pinned message.
+* `pinnedUser` **[object User]** User who pinned the message.
+* `videoNote` **[object VideoNote]** Provides video note information.
+
+E.g.
+
+```javascript
+bot.on('pinnedVideoNote', (chat, date, messageUser, messageId, pinnedUser, videoNote) => {
   // Actions here...
 })
 ```
@@ -828,6 +925,23 @@ E.g.
 
 ```javascript
 bot.on('video', (chat, date, from, messageId, caption, video) => {
+  // Actions here...
+}
+```
+
+### onVideoNote
+Called every time the bot sees a new round video note.
+
+* `chat` **[object Chat]** Chat were event occurred.
+* `date` **number** Date in milliseconds when event triggered.
+* `from` **[object User]** User who sent the video.
+* `messageId` **number** Message reference.
+* `videoNote` **[object VideoNote]** Video note information. Use `videoNote.file_id` to keep track of the video notes seen.
+
+E.g.
+
+```javascript
+bot.on('videoNote', (chat, date, from, messageId, videoNote) => {
   // Actions here...
 }
 ```
@@ -1351,6 +1465,37 @@ Shortened version of [sendMessage](#sendmessage). Also appends HTML parse_mode t
 ### sendImage
 Alternative to [sendPhoto](#sendphoto).
 
+### sendLocation
+Send a live map location.
+
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
+* `latitude` **float number** The latitude point of the location.
+* `longitude` **float number** The longitude point of the location.
+* `settings` **[object Object]** Use for providing extra perimeters.
+    * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+    * `live_period` **number** Period in seconds per live update. Value should be between 60 to 86400.
+    * `reply_to_messageId` **number** Use for sending a reply to a message id.
+    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
+    * `messageId` **number** Id of the sent content.
+
+E.g.
+
+```javascript
+// Minimum.
+bot.sendLocation(targetChat, latitude, longitude)
+
+// Optional settings with callback extended.
+bot.sendLocation(targetChat, latitude, longitude, {}, (error, messageId) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+```
+
 ### sendMarkdown
 Shortened version of [sendMessage](#sendmessage). Also appends Markdown parse_mode to settings. All Markdown tags must be closed else the message won't send.
 
@@ -1419,11 +1564,11 @@ bot.sendPhoto(targetChat, targetImage, {}, (error, messageId) => {
 Shortened version of [sendMessage](#sendmessage).
 
 ### sendVenue
-Use this to send a map location.
+Use this to send a map marked location.
 
 * `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
-* `latitude` **{Float Number}** The latitude point of the location.
-* `longitude` **{Float Number}** The longitude point of the location.
+* `latitude` **float number** The latitude point of the location.
+* `longitude` **float number** The longitude point of the location.
 * `title` **string** The title of the location. Doesn't have to be real.
 * `address` **string** The address of the location. Doesn't have to be real.
 * `settings` **[object Object]** Use for providing extra perimeters.
@@ -1451,8 +1596,6 @@ bot.sendVenue(targetChat, latitude, longitude, title, address, {}, (error, messa
 })
 ```
 
-Note the example is just random but it works.
-
 ### sendVideo
 Use this to send a video to a target chat. You'll need to collect the `video.file_id` with onVideo. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
@@ -1477,6 +1620,36 @@ bot.sendVideo(targetChat, targetVideo)
 
 // Optional settings with callback extended.
 bot.sendVideo(targetChat, targetVideo, {}, (error, messageId) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+```
+
+### sendVideoNote
+Use this to send a round video note to a target chat. You'll need to collect the `videoNote.file_id` with onVideoNote. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
+
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
+* `targetVideo` **string** Target round video note id. URL is currently not supported.
+* `settings` **[object Object]** Use for providing extra perimeters.
+    * `duration` **number**
+    * `disable_notification` **boolean** Default false. Sends the message silently. Android users will still get a notification but with no sound.
+    * `length` **number**
+    * `reply_markup` **string** Stringify JSON of **[object ForceReply]**, **[object InlineKeyboardMarkup]**, **[object ReplyKeyboardMarkup]** or **[object ReplyKeyboardRemove]**.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
+    * `messageId` **number** Id of the sent content.
+
+E.g.
+
+```javascript
+// Minimum.
+bot.sendVideoNote(targetChat, targetVideo)
+
+// Optional settings with callback extended.
+bot.sendVideoNote(targetChat, targetVideo, {}, (error, messageId) => {
   if (error) {
     // Handle after error.
     return
