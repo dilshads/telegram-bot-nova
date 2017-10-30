@@ -122,6 +122,8 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [getUserProfilePhotos](#getuserprofilephotos)
     * [kickChatMember](#kickchatmember)
     * [leaveChat](#leavechat)
+    * [promoteChatMember](#promotechatmember)
+    * [restrictChatMember](#restrictchatmember)
     * [sendAudio](#sendaudio)
     * [sendChatAction](#sendchataction)
     * [sendContact](#sendcontact)
@@ -1319,7 +1321,7 @@ bot.getUserProfilePhotos(userId, offset, limit, (error, photos) => {
 Use this to remove a member from the target chat. Supergroups will require an unban unfortunately due to how the Telegram server handles this method.
 
 * `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
-* `targetUserId` **number** Target user id to kick.
+* `userId` **number** Target user id to kick.
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
 
@@ -1327,10 +1329,10 @@ E.g.
 
 ```javascript
 // Minimum.
-bot.kickChatMember(targetChat, targetUserId)
+bot.kickChatMember(targetChat, userId)
 
 // Optional callback extended.
-bot.kickChatMember(targetChat, targetUserId, (error) => {
+bot.kickChatMember(targetChat, userId, (error) => {
   if (error) {
     // Handle after error.
     return
@@ -1360,11 +1362,35 @@ bot.leaveChat(targetChat, (error) => {
   }
   // Handle after action success.
 })
-
 ```
 
-### toString
-Returns a string object type of the parent class.
+### promoteChatMember
+Use this to promote or demote a target user in a target chat.
+
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
+* `userId` **number** Target user id to change admin rights for.
+* `settings` **[object Object]** Object containing user settings to change to.
+    * `can_change_info` **boolean** If true, the user can change chat title, photo and other settings.
+    * `can_post_messages` **boolean** If true, the user can create channel posts. Channels only.
+    * `can_edit_messages` **boolean** If true, the user can edit messages of other users. Channels only.
+    * `can_delete_messages` **boolean** If true, the user can delete messages of other users.
+    * `can_invite_users` **boolean** If true, the user can invite new users to the chat.
+    * `can_restrict_members` **boolean** If true, the user can restrict, ban or unban chat members.
+    * `can_pin_messages` **boolean** If true, the user can pin messages. Supergroups only.
+    * `can_promote_members` **boolean** If true, the user can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him).
+
+### restrictChatMember
+Use this to add or remove a target user restrictions in a target chat.
+
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
+* `userId` **number** Target user id to change restrictions for.
+* `settings` **[object Object]** Object containing user settings to change to.
+    * `until_date` **number** Date in unix time. If set for more than 366 days or less than 30 seconds, they are considered restricted forever.
+    * `can_send_messages` **boolean** If true, the user can send text messages, contacts, locations and venues.
+    * `can_send_media_messages` **boolean** If true, the user can send audios, documents, photos, videos, video notes and voice notes. Implies can_send_messages.
+    * `can_send_other_messages` **boolean** If true, the user can send animations, games, stickers and use inline bots. Implies can_send_media_messages.
+    * `can_add_web_page_previews` **boolean** If true, the user may add web page previews to their messages. Implies can_send_media_messages.
+
 
 ### sendAudio
 Use this to send a mp3 to a target chat. You'll need to collect the `audio.file_id` with photo event. Be aware that `file_id` is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work. Also they can only send up to 50 mb.
@@ -1741,6 +1767,13 @@ E.g.
 
 ```javascript
 bot.setPort(port)
+```
+
+### toString
+Returns a string object type of the parent class containing '[object TelegramBot]'.
+
+```javascript
+console.log(bot.toString())
 ```
 
 ### unbanChatMember

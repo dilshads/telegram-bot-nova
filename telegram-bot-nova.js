@@ -1030,6 +1030,73 @@ module.exports = class TelegramBot extends EventEmitter {
   }
 
   /**
+   * Promote or demote a target user in a supergroup or channel.
+   *
+   * The bot must be an administrator with appropriate admin rights.
+   * @param {number|string} targetChat - The target chat id or username.
+   * @param {number} userId - The target user id.
+   * @param {object} settings
+   * @param {boolean} settings.can_change_info
+   * @param {boolean} settings.can_post_messages
+   * @param {boolean} settings.can_edit_messages
+   * @param {boolean} settings.can_delete_messages
+   * @param {boolean} settings.can_invite_users
+   * @param {boolean} settings.can_restrict_members
+   * @param {boolean} settings.can_pin_messages
+   * @param {boolean} settings.can_promote_members
+   * @param {function(Error):void} callback - arg0: Error
+   */
+  promoteChatMember (targetChat, userId, settings, callback) {
+    var urlQuery = { 'chat_id': targetChat, 'user_id': userId }
+
+    if (typeof settings === 'object') {
+      Object.assign(urlQuery, settings)
+    }
+
+    web(this, 'promoteChatMember', urlQuery, (data) => {
+      if (typeof callback === 'function') {
+        if (data.ok) {
+          callback(null)
+        } else {
+          callback(new Error(data.description))
+        }
+      }
+    })
+  }
+
+  /**
+   * Adds or removes a target user's restriction in a target chat.
+   *
+   * The bot must be an administrator with appropriate admin rights.
+   * @param {number|string} targetChat - The target chat id or username.
+   * @param {number} userId - The target user id.
+   * @param {object} settings
+   * @param {number} settings.until_date
+   * @param {boolean} settings.can_send_messages
+   * @param {boolean} settings.can_send_media_messages
+   * @param {boolean} settings.can_send_other_messages
+   * @param {boolean} settings.can_add_web_page_previews
+   * @param {function(Error):void} callback - arg0: Error
+   */
+  restrictChatMember (targetChat, userId, settings, callback) {
+    var urlQuery = { 'chat_id': targetChat, 'user_id': userId }
+
+    if (typeof settings === 'object') {
+      Object.assign(urlQuery, settings)
+    }
+
+    web(this, 'restrictChatMember', urlQuery, (data) => {
+      if (typeof callback === 'function') {
+        if (data.ok) {
+          callback(null)
+        } else {
+          callback(new Error(data.description))
+        }
+      }
+    })
+  }
+
+  /**
    * Send a audio file to the target chat.
    * @param {number|string} targetChat - The target chat id or username.
    * @param {string} targetFile - The file id or URL to the file.
