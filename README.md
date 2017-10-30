@@ -155,10 +155,10 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
 
 ```javascript
 // Minimum.
-var bot = new TelegramBot('YOUR_BOT_TOKEN')
+var bot = new TelegramBot(token)
 
 // Optional settings.
-var bot = new TelegramBot('YOUR_BOT_TOKEN', {
+var bot = new TelegramBot(token, {
   'devMode': false,
   'interval': 1000,
   'method': 'POST',
