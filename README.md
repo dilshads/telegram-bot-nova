@@ -1379,6 +1379,26 @@ Use this to promote or demote a target user in a target chat.
     * `can_pin_messages` **boolean** If true, the user can pin messages. Supergroups only.
     * `can_promote_members` **boolean** If true, the user can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him).
 
+E.g.
+
+```javascript
+// Minimum.
+bot.promoteChatMember(targetChat, userId, {
+  // Least 1 setting here.
+})
+
+// Callback extended.
+bot.promoteChatMember(targetChat, userId, {
+  // Least 1 setting here.
+}, (error) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+```
+
 ### restrictChatMember
 Use this to add or remove a target user restrictions in a target chat.
 
@@ -1391,6 +1411,25 @@ Use this to add or remove a target user restrictions in a target chat.
     * `can_send_other_messages` **boolean** If true, the user can send animations, games, stickers and use inline bots. Implies can_send_media_messages.
     * `can_add_web_page_previews` **boolean** If true, the user may add web page previews to their messages. Implies can_send_media_messages.
 
+E.g.
+
+```javascript
+// Minimum.
+bot.restrictChatMember(targetChat, userId, {
+  // Least 1 setting here.
+})
+
+// Callback extended.
+bot.restrictChatMember(targetChat, userId, {
+  // Least 1 setting here.
+}, (error) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+```
 
 ### sendAudio
 Use this to send a mp3 to a target chat. You'll need to collect the `audio.file_id` with photo event. Be aware that `file_id` is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work. Also they can only send up to 50 mb.
