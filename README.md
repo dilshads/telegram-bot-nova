@@ -5,7 +5,7 @@
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node->%3D6.11.4-blue.svg)]()
-[![npm](https://img.shields.io/badge/npm-2.1.0-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
+[![npm](https://img.shields.io/badge/npm-2.2.0-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
 
 Badges from [Shields.io](http://shields.io)
 
@@ -123,6 +123,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [getUserProfilePhotos](#getuserprofilephotos)
     * [kickChatMember](#kickchatmember)
     * [leaveChat](#leavechat)
+    * [pinChatMessage](#pinchatmessage)
     * [promoteChatMember](#promotechatmember)
     * [restrictChatMember](#restrictchatmember)
     * [sendAudio](#sendaudio)
@@ -149,6 +150,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [setPort](#setport)
     * [toString](#tostring)
     * [unbanChatMember](#unbanchatmember)
+    * [unpinChatMessage](#unpinchatmessage)
 
 ## Declaring
 
@@ -1026,7 +1028,7 @@ E.g.
 // Minimum.
 bot.deleteChatPhoto(targetChat)
 
-// Optional callback extended.
+// Optional callback.
 bot.deleteChatPhoto(targetChat, (error) => {
   if (error) {
     // Handle after error.
@@ -1050,7 +1052,7 @@ E.g.
 // Minimum.
 bot.deleteMessage(targetChat, messageId)
 
-// Optional callback extended.
+// Optional callback.
 bot.deleteMessage(targetChat, messageId, (error) => {
   if (error) {
     // Handle after error.
@@ -1082,7 +1084,7 @@ Use this to edit a target chat's message by its id.
 // Minimum.
 bot.editMessageText(targetChat, messageId, text)
 
-// Optional settings with callback extended.
+// Optional settings with callback.
 bot.editMessageText(targetChat, messageId, text, {}, (error) => {
   if (error) {
     // Handle after error.
@@ -1133,7 +1135,7 @@ E.g.
 // Minimum.
 bot.forwardMessage(toChat, fromChat, messageId)
 
-// Optional settings with callback extended.
+// Optional settings with callback.
 bot.forwardMessage(toChat, fromChat, messageId, settings, (error, newMessageId) => {
   if (error) {
     // Handle after error.
@@ -1229,7 +1231,6 @@ bot.getChatMember(targetChat, userId, (error, user, status) => {
 ### getChatMembersCount
 Callbacks a **number** of members in a chat.
 
-*Required*
 * `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `callback` **function** Called after sending the content and returns the following result perimeters.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
@@ -1358,7 +1359,7 @@ E.g.
 // Minimum.
 bot.kickChatMember(targetChat, userId)
 
-// Optional callback extended.
+// Optional callback.
 bot.kickChatMember(targetChat, userId, (error) => {
   if (error) {
     // Handle after error.
@@ -1381,8 +1382,34 @@ E.g.
 // Minimum.
 bot.leaveChat(targetChat)
 
-// Optional callback extended.
+// Optional callback.
 bot.leaveChat(targetChat, (error) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+```
+
+### pinChatMessage
+Use this to pin a target message in a group or supergroup. The bot requires the appropriate admin privileges.
+
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
+* `messageId` **number** The id of the message to pin.
+* `settings` **[object Object]** Object containing user settings to change to.
+    * `disable_notification` **boolean** If true, it will send a notification to all group members about the new pinned message.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
+
+E.g.
+
+```javascript
+// Minimum.
+bot.pinChatMessage(targetChat, messageId)
+
+// Optional settings with callback.
+bot.pinChatMessage(targetChat, messageId, {}, (error) => {
   if (error) {
     // Handle after error.
     return
@@ -1414,7 +1441,7 @@ bot.promoteChatMember(targetChat, userId, {
   // Least 1 setting here.
 })
 
-// Callback extended.
+// Optional callback.
 bot.promoteChatMember(targetChat, userId, {
   // Least 1 setting here.
 }, (error) => {
@@ -1446,7 +1473,7 @@ bot.restrictChatMember(targetChat, userId, {
   // Least 1 setting here.
 })
 
-// Callback extended.
+// Optional callback.
 bot.restrictChatMember(targetChat, userId, {
   // Least 1 setting here.
 }, (error) => {
@@ -1478,6 +1505,10 @@ Use this to send a mp3 to a target chat. You'll need to collect the `audio.file_
 E.g.
 
 ```javascript
+// Minimum.
+bot.sendAudio(targetChat, targetMp3)
+
+// Optional settings with callback.
 bot.sendAudio(targetChat, targetMp3, {}, (error, messageId) => {
   if (error) {
     // Handle after error.
@@ -1501,7 +1532,7 @@ E.g.
 // Minimum.
 bot.sendChatAction(targetChat, "typing")
 
-// Optional callback extended.
+// Optional callback.
 bot.sendChatAction(targetChat, "typing", (error) => {
   if (error) {
     // Handle after error.
@@ -1532,7 +1563,7 @@ E.g.
 // Minimum.
 bot.sendContact(targetChat, phoneNumber, firstName);
 
-// Optional settings with callback extended.
+// Optional settings with callback.
 bot.sendContact(targetChat, phoneNumber, firstName, {}, (error, messageId) => {
   if (error) {
     // Handle after error.
@@ -1561,7 +1592,7 @@ E.g.
 // Minimum.
 bot.sendDocument(targetChat, targetFile)
 
-// Optional settings with callback extended.
+// Optional settings with callback.
 bot.sendDocument(targetChat, targetFile, {}, (error, messageId) => {
   if (error) {
     // Handle after error.
@@ -1601,7 +1632,7 @@ E.g.
 // Minimum.
 bot.sendLocation(targetChat, latitude, longitude)
 
-// Optional settings with callback extended.
+// Optional settings with callback.
 bot.sendLocation(targetChat, latitude, longitude, {}, (error, messageId) => {
   if (error) {
     // Handle after error.
@@ -1635,7 +1666,7 @@ E.g.
 // Minimum.
 bot.sendMessage(targetChat, text)
 
-// Optional settings with callback extended.
+// Optional settings with callback.
 bot.sendMessage(targetChat, text, {}, (error, messageId) => {
   if (error) {
     // Handle after error.
@@ -1665,7 +1696,7 @@ E.g.
 // Minimum.
 bot.sendPhoto(targetChat, targetImage)
 
-// Optional settings with callback extended.
+// Optional settings with callback.
 bot.sendPhoto(targetChat, targetImage, {}, (error, messageId) => {
   if (error) {
     // Handle after error.
@@ -1701,7 +1732,7 @@ E.g.
 // Minimum.
 bot.sendVenue(targetChat, latitude, longitude, title, address)
 
-// Optional settings with callback extended.
+// Optional settings with callback.
 bot.sendVenue(targetChat, latitude, longitude, title, address, {}, (error, messageId) => {
   if (error) {
     // Handle after error.
@@ -1733,7 +1764,7 @@ E.g.
 // Minimum.
 bot.sendVideo(targetChat, targetVideo)
 
-// Optional settings with callback extended.
+// Optional settings with callback.
 bot.sendVideo(targetChat, targetVideo, {}, (error, messageId) => {
   if (error) {
     // Handle after error.
@@ -1763,7 +1794,7 @@ E.g.
 // Minimum.
 bot.sendVideoNote(targetChat, targetVideo)
 
-// Optional settings with callback extended.
+// Optional settings with callback.
 bot.sendVideoNote(targetChat, targetVideo, {}, (error, messageId) => {
   if (error) {
     // Handle after error.
@@ -1794,7 +1825,7 @@ E.g.
 // Minimum.
 bot.sendVoice(targetChat, targetOgg)
 
-// Optional settings with callback extended.
+// Optional settings with callback.
 bot.sendVoice(targetChat, targetOgg, {}, (error, messageId) => {
   if (error) {
     // Handle after error.
@@ -1908,8 +1939,31 @@ E.g.
 // Minimum.
 bot.unbanChatMember(targetChat, userId)
 
-// Callback extended.
+// Optional callback.
 bot.unbanChatMember(targetChat, userId, (error) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+```
+
+### unpinChatMessage
+Use this to unpin the currently used message in a group or supergroup. The bot requires the appropriate admin privileges.
+
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
+* `callback` **function** Called after the action response.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
+
+E.g.
+
+```javascript
+// Minimum.
+bot.unpinChatMessage(targetChat)
+
+// Optional callback.
+bot.unpinChatMessage(targetChat, (error) => {
   if (error) {
     // Handle after error.
     return

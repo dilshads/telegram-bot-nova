@@ -1049,6 +1049,34 @@ module.exports = class TelegramBot extends EventEmitter {
   }
 
   /**
+   * Pins a target message in a group or supergroup.
+   *
+   * The bot must be an administrator with appropriate admin rights.
+   * @param {number|string} targetChat - The target chat id or username.
+   * @param {number} messageId - The message id.
+   * @param {object} settings
+   * @param {boolean} settings.disable_notification
+   * @param {function(Error):void} callback - arg0: Error
+   */
+  pinChatMessage (targetChat, messageId, settings, callback) {
+    var urlQuery = { 'chat_id': targetChat, 'message_id': messageId }
+
+    if (typeof settings === 'object') {
+      Object.assign(urlQuery, settings)
+    }
+
+    web(this, 'pinChatMessage', urlQuery, (data) => {
+      if (typeof callback === 'function') {
+        if (data.ok) {
+          callback(null)
+        } else {
+          callback(new Error(data.description))
+        }
+      }
+    })
+  }
+
+  /**
    * Promote or demote a target user in a supergroup or channel.
    *
    * The bot must be an administrator with appropriate admin rights.
@@ -1626,7 +1654,7 @@ module.exports = class TelegramBot extends EventEmitter {
    * Unban a target group or supergroup member.
    *
    * The bot must be an administrator with appropriate admin rights.
-   * @param {number|string} targetChat - The target chat id or username to unban from.
+   * @param {number|string} targetChat - The target chat id or username.
    * @param {number} userId - The user's id to unban.
    * @param {function(Error):void} callback - arg0: Error
    */
@@ -1641,6 +1669,27 @@ module.exports = class TelegramBot extends EventEmitter {
     var urlQuery = { 'chat_id': targetChat, 'user_id': userId }
 
     web(this, 'unbanChatMember', urlQuery, (data) => {
+      if (typeof callback === 'function') {
+        if (data.ok) {
+          callback(null)
+        } else {
+          callback(new Error(data.description))
+        }
+      }
+    })
+  }
+
+  /**
+   * Unpin the target group or supergroup message.
+   *
+   * The bot must be an administrator with appropriate admin rights.
+   * @param {number|string} targetChat - The target chat id or username.
+   * @param {function(Error):void} callback - arg0: Error
+   */
+  unpinChatMessage (targetChat, callback) {
+    var urlQuery = { 'chat_id': targetChat }
+
+    web(this, 'unpinChatMessage', urlQuery, (data) => {
       if (typeof callback === 'function') {
         if (data.ok) {
           callback(null)
