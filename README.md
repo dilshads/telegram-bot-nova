@@ -143,7 +143,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [sendVideoNote](#sendvideonote)
     * [sendVoice](#sendvoice)
     * [setChatDescription](#setchatdescription)
-    * [setChatPhoto](#setchatphoto)
+    * [setChatPhoto](#setchatphoto) «Not available.»
     * [setChatTitle](#setchattitle)
     * [setDevMode](#setdevmode)
     * [setInterval](#setinterval)
