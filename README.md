@@ -100,7 +100,8 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [onVoice](#onvoice)
 * [Actions](#actions)
     * [answerInlineQuery](#answerinlinequery)
-      * ... More inline query types to be added.
+        * ... More inline query types to be added.
+    * [deleteChatPhoto](#deletechatphoto)
     * [deleteMessage](#deletemessage)
     * [editHtml](#edithtml)
     * [editMarkdown](#editmarkdown)
@@ -140,6 +141,8 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [sendVideo](#sendvideo)
     * [sendVideoNote](#sendvideonote)
     * [sendVoice](#sendvoice)
+    * [setChatPhoto](#setchatphoto)
+    * [setChatTitle](#setchattitle)
     * [setDevMode](#setdevmode)
     * [setInterval](#setinterval)
     * [setPort](#setport)
@@ -1009,6 +1012,29 @@ E.g.
 
 See [inlineQuery](#inlinequery) event for a full use example.
 
+### deleteChatPhoto
+Deletes a target channel, group or supergroup photo. The bot requires the appropriate admin privileges.
+
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
+
+E.g.
+
+```javascript
+// Minimum.
+bot.deleteChatPhoto(targetChat)
+
+// Optional callback extended.
+bot.deleteChatPhoto(targetChat, (error) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+```
+
 ### deleteMessage
 Deletes a target message in a chat. This only works if the message was sent under 48 hours. The bot is capable of deleting its messages but requires group administrator to delete other user messages.
 
@@ -1365,7 +1391,7 @@ bot.leaveChat(targetChat, (error) => {
 ```
 
 ### promoteChatMember
-Use this to promote or demote a target user in a target chat.
+Use this to promote or demote a target user in a target chat. The bot requires the appropriate admin privileges.
 
 * `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `userId` **number** Target user id to change admin rights for.
@@ -1400,7 +1426,7 @@ bot.promoteChatMember(targetChat, userId, {
 ```
 
 ### restrictChatMember
-Use this to add or remove a target user restrictions in a target chat.
+Use this to add or remove a target user restrictions in a target chat. The bot requires the appropriate admin privileges.
 
 * `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `userId` **number** Target user id to change restrictions for.
@@ -1777,6 +1803,18 @@ bot.sendVoice(targetChat, targetOgg, {}, (error, messageId) => {
 })
 ```
 
+### setChatPhoto
+
+**Not currently available...**
+
+### setChatTitle
+Changes the title of the target channel, group or supergroup. The bot has to be present and have administrator priviages for this to work.
+
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
+* `title` **string** The new title.
+* `callback` **function** Called after the action response.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
+
 ### setDevMode
 Enables and disables console log messages of events and actions. Used for debugging.
 
@@ -1831,10 +1869,15 @@ bot.unbanChatMember(targetChat, userId)
 
 // Callback extended.
 bot.unbanChatMember(targetChat, userId, (error) => {
-    if (error) {
-        // Handle after error.
-        return
-    }
-    // Handle after action success.
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
 })
 ```
+
+## FAQ
+
+* Q: Why is setChatPhoto not available?
+    * A: It requires 'multipart/form-data' method to upload an image. Currently, I don't know how to make this without using third party dependences.

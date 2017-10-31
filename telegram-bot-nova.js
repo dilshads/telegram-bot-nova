@@ -660,6 +660,25 @@ module.exports = class TelegramBot extends EventEmitter {
   }
 
   /**
+   * Delete the target channel, group or supergroup photo.
+   *
+   * The bot must be an administrator with appropriate admin rights.
+   * @param {number|string} targetChat - The target chat id or username.
+   * @param {function(Error):void} callback - arg0: Error
+   */
+  deleteChatPhoto (targetChat, callback) {
+    var urlQuery = { 'chat_id': targetChat }
+
+    web(this, 'deleteChatPhoto', urlQuery, (data) => {
+      if (typeof callback === 'function') {
+        callback(null)
+      } else {
+        callback(new Error(data.description))
+      }
+    })
+  }
+
+  /**
    * Delete a target chat message by id that was sent under 48 hours.
    * @param {number|string} targetChat - The target chat id or username.
    * @param {number} messageId - The message id.
@@ -1511,6 +1530,28 @@ module.exports = class TelegramBot extends EventEmitter {
   }
 
   /**
+   * Change the current channel, group or supergroup title.
+   *
+   * The bot must be an administrator with appropriate admin rights.
+   * @param {number|string} targetChat - The target chat id or username.
+   * @param {string} title - New chat title.
+   * @param {function(Error):void} callback - arg0: Error
+   */
+  setChatTitle (targetChat, title, callback) {
+    var urlQuery = { 'chat_id': targetChat, 'title': title }
+
+    web(this, 'setChatTitle', urlQuery, (data) => {
+      if (typeof callback === 'function') {
+        if (data.ok) {
+          callback(null)
+        } else {
+          callback(new Error(data.description))
+        }
+      }
+    })
+  }
+
+  /**
    * Enable or disable console log messages for getUpdates. Testing purposes only.
    * @param {boolean} boolean - true or false.
    */
@@ -1561,6 +1602,8 @@ module.exports = class TelegramBot extends EventEmitter {
 
   /**
    * Unban a target group or supergroup member.
+   *
+   * The bot must be an administrator with appropriate admin rights.
    * @param {number|string} targetChat - The target chat id or username to unban from.
    * @param {number} userId - The user's id to unban.
    * @param {function(Error):void} callback - arg0: Error
