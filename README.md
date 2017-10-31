@@ -141,6 +141,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [sendVideo](#sendvideo)
     * [sendVideoNote](#sendvideonote)
     * [sendVoice](#sendvoice)
+    * [setChatDescription](#setchatdescription)
     * [setChatPhoto](#setchatphoto)
     * [setChatTitle](#setchattitle)
     * [setDevMode](#setdevmode)
@@ -1807,6 +1808,30 @@ bot.sendVoice(targetChat, targetOgg, {}, (error, messageId) => {
 
 **Not currently available...**
 
+### setChatDescription
+Changes the description of the target channel, group or supergroup. The bot has to be present and have administrator priviages for this to work.
+
+* `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
+* `description` **string** The new description.
+* `callback` **function** Called after the action response.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
+
+E.g.
+
+```javascript
+// Minimum.
+bot.setChatDescription(targetChat, description)
+
+// Optional callback.
+bot.setChatDescription(targetChat, description, (error) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+```
+
 ### setChatTitle
 Changes the title of the target channel, group or supergroup. The bot has to be present and have administrator priviages for this to work.
 
@@ -1814,6 +1839,22 @@ Changes the title of the target channel, group or supergroup. The bot has to be 
 * `title` **string** The new title.
 * `callback` **function** Called after the action response.
     * `error` **[object Error] | null** Provides an error object else null if there isn't any.
+
+E.g.
+
+```javascript
+// Minimum.
+bot.setChatTitle(targetChat, title)
+
+// Optional callback.
+bot.setChatTitle(targetChat, title, (error) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+```
 
 ### setDevMode
 Enables and disables console log messages of events and actions. Used for debugging.

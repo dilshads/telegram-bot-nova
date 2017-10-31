@@ -1530,11 +1530,33 @@ module.exports = class TelegramBot extends EventEmitter {
   }
 
   /**
+   * Change the current channel, group or supergroup description.
+   *
+   * The bot must be an administrator with appropriate admin rights.
+   * @param {number|string} targetChat - The target chat id or username.
+   * @param {string} description - New chat description. 1 to 255 characters maximum.
+   * @param {function(Error):void} callback - arg0: Error
+   */
+  setChatDescription (targetChat, description, callback) {
+    var urlQuery = { 'chat_id': targetChat, 'description': description }
+
+    web(this, 'setChatDescription', urlQuery, (data) => {
+      if (typeof callback === 'function') {
+        if (data.ok) {
+          callback(null)
+        } else {
+          callback(new Error(data.description))
+        }
+      }
+    })
+  }
+
+  /**
    * Change the current channel, group or supergroup title.
    *
    * The bot must be an administrator with appropriate admin rights.
    * @param {number|string} targetChat - The target chat id or username.
-   * @param {string} title - New chat title.
+   * @param {string} title - New chat title. 1 to 255 characters maximum.
    * @param {function(Error):void} callback - arg0: Error
    */
   setChatTitle (targetChat, title, callback) {
