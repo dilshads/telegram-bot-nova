@@ -5,7 +5,7 @@
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node->%3D6.11.4-blue.svg)]()
-[![npm](https://img.shields.io/badge/npm-2.2.0-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
+[![npm](https://img.shields.io/badge/npm-2.2.1-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
 
 Badges from [Shields.io](http://shields.io)
 
@@ -878,7 +878,7 @@ E.g.
 ```javascript
 bot.on('startup', (isSuccess) => {
   if (isSuccess) {
-    console.log('Loaded: ' + bot.getUsername())
+    console.log('Loaded: ' + bot.getBotUsername())
     console.log('Loop calling every ' + bot.getInterval() + ' milliseconds.')
     console.log('Startup Time: ' + (new Date().toLocaleTimeString()))
   } else {
@@ -1151,7 +1151,7 @@ Returns a **string** of the bot username. Example "MyBot". This is obtained auto
 E.g.
 
 ```javascript
-console.log(bot.getUsername())
+console.log(bot.getBotUsername())
 ```
 
 ### getChat
