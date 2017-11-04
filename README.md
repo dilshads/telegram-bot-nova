@@ -2,7 +2,7 @@
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)]()
+[![dependencies](https://img.shields.io/badge/dependences-0-blue.svg)]()
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node->%3D6.11.4-blue.svg)]()
 [![npm](https://img.shields.io/badge/npm-2.2.1-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
@@ -25,6 +25,11 @@ bot.on('command', (chat, date, from, messageId, text, command, commandData) => {
   }
 })
 ```
+
+More examples:
+
+* [example1.js](example1.js) Basic commands.
+* [example2.js](example2.js) Inline keyboard.
 
 ## Installing
 
@@ -1837,7 +1842,7 @@ bot.sendVoice(targetChat, targetOgg, {}, (error, messageId) => {
 
 ### setChatPhoto
 
-**Not currently available...**
+Not available. Please read [FAQ](#faq) for more information.
 
 ### setChatDescription
 Changes the description of the target channel, group or supergroup. The bot has to be present and have administrator priviages for this to work.

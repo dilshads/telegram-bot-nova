@@ -476,7 +476,7 @@ const getUpdates = function getUpdates (context) {
 
   web(context, 'getUpdates', urlQuery, (data) => {
     if (!data.ok) {
-      context.emit('error', new Error(data.message))
+      context.emit('error', new Error(data.description))
       return
     }
     data.result.forEach((result) => {
@@ -503,7 +503,7 @@ const loop = function loop (context) {
  * @param {Object} context - The 'this' context of the bot instance calling this method.
  * @param {string} urlMethod - The URL method to call.
  * @param {Object} urlData - An object containing the query data to send.
- * @param {function} callback - {data: Object}
+ * @param {function(object):void} callback - arg0: object
  * @private TelegramBot internal handler.
  * @protected Modifying this will break the class functionality.
  */
@@ -527,8 +527,9 @@ const web = function web (context, urlMethod, urlData, callback) {
     })
     result.on('end', () => {
       if (typeof callback === 'function') {
+        let data
         try {
-          var data = JSON.parse(rawData)
+          data = JSON.parse(rawData)
 
           if (context._botSettings.devMode) {
             devLog(data, urlMethod)
@@ -537,17 +538,20 @@ const web = function web (context, urlMethod, urlData, callback) {
           callback(data)
         } catch (error) {
           // Catches class problems.
-          // Having a loop here will cause getUpdates to overflow.
-          console.error('web error')
-          console.error(error)
+          // This is coded to avoid having to pass an unnecessary extra
+          // error object when one is already provided.
+          data = { ok: false, description: error.message }
+          callback(data)
         }
       }
     })
   })
   request.on('error', () => {
     // Catches connection problems.
-    // It will keep trying to reconnect until success.
-    loop(context)
+    if (urlMethod === 'getUpdates') {
+      // Makes sure only getUpdates stays looping without it overflowing.
+      loop(context)
+    }
   })
   request.write(postData)
   request.end()
