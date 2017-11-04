@@ -1,5 +1,9 @@
 # Contributing Guidelines
 
+## Coding Rules
+
+* Method and variable declaration has to be in alphabetical order. Only time this is excluded for variables is if it shortens and avoids writing unnecessary code.
+
 ## Coding Style
 
 The following coding style must be used: [Standard](https://standardjs.com)

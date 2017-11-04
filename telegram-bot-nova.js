@@ -656,9 +656,31 @@ module.exports = class TelegramBot extends EventEmitter {
 
     web(this, 'answerInlineQuery', urlQuery, (data) => {
       if (typeof callback === 'function') {
-        callback(null)
-      } else {
-        callback(new Error(data.description))
+        if (data.ok) {
+          callback(null)
+        } else {
+          callback(new Error(data.description))
+        }
+      }
+    })
+  }
+
+  /**
+   * Use this to send a custom action for the bot to perform.
+   *
+   * Only use if the method isn't available yet and if you know what you're doing.
+   * @param {string} method - The custom method to perform.
+   * @param {object} settings
+   * @param {function(Error, {}):void} callback - arg0: Error, arg1: result
+   */
+  customAction (method, settings, callback) {
+    web(this, method, settings, (data) => {
+      if (typeof callback === 'function') {
+        if (data.ok) {
+          callback(null, data.result)
+        } else {
+          callback(new Error(data.description))
+        }
       }
     })
   }
@@ -675,9 +697,11 @@ module.exports = class TelegramBot extends EventEmitter {
 
     web(this, 'deleteChatPhoto', urlQuery, (data) => {
       if (typeof callback === 'function') {
-        callback(null)
-      } else {
-        callback(new Error(data.description))
+        if (data.ok) {
+          callback(null)
+        } else {
+          callback(new Error(data.description))
+        }
       }
     })
   }
@@ -693,9 +717,11 @@ module.exports = class TelegramBot extends EventEmitter {
 
     web(this, 'deleteMessage', urlQuery, (data) => {
       if (typeof callback === 'function') {
-        callback(null)
-      } else {
-        callback(new Error(data.description))
+        if (data.ok) {
+          callback(null)
+        } else {
+          callback(new Error(data.description))
+        }
       }
     })
   }
@@ -856,20 +882,18 @@ module.exports = class TelegramBot extends EventEmitter {
       var admins = []
       var creator = []
       var ids
-      if (data.ok) {
-        data.result.forEach((value) => {
-          if (value.status === 'creator') {
-            creator.push(value.user)
-          } else {
-            admins.push(value.user)
-          }
-        })
-        ids = creator.concat(admins).map((user) => {
-          return user.id
-        })
-      }
       if (typeof callback === 'function') {
         if (data.ok) {
+          data.result.forEach((value) => {
+            if (value.status === 'creator') {
+              creator.push(value.user)
+            } else {
+              admins.push(value.user)
+            }
+          })
+          ids = creator.concat(admins).map((user) => {
+            return user.id
+          })
           callback(null, creator.concat(admins), ids)
         } else {
           callback(new Error(data.description))
@@ -885,16 +909,6 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {function(Error, {}, string):void} callback - arg0: Error, arg1: user, arg2: status
    */
   getChatMember (targetChat, userId, callback) {
-    if (!(typeof targetChat === 'number' || typeof targetChat === 'string')) {
-      throw new Error('targetChat is not a number or string.')
-    }
-    if (typeof userId !== 'number') {
-      throw new Error('userId is not a number.')
-    }
-    if (typeof callback !== 'function') {
-      throw new Error('A callback if needed to make use of this function.')
-    }
-
     var urlQuery = { 'chat_id': targetChat, 'user_id': userId }
 
     web(this, 'getChatMember', urlQuery, (data) => {
@@ -965,10 +979,6 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {function} callback { error: Error | null, bot: UserObject}
    */
   getMe (callback) {
-    if (typeof callback !== 'function') {
-      throw new Error('No callback was provided for getMe.')
-    }
-
     web(this, 'getMe', {}, (data) => {
       if (data.ok) {
         callback(null, data.result)
@@ -1365,13 +1375,6 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {function(Error, number):void} callback - arg0: Error, arg1: messageId
    */
   sendMessage (targetChat, text, settings, callback) {
-    if (!(typeof targetChat === 'number' || typeof targetChat === 'string')) {
-      throw new Error('targetChat is not a number or string.')
-    }
-    if (typeof text !== 'string' || text.length < 1) {
-      throw new Error('text is not a string or does not contain any characters.')
-    }
-
     var urlQuery = { 'chat_id': targetChat, 'text': text }
 
     if (typeof settings === 'object') {
@@ -1625,20 +1628,36 @@ module.exports = class TelegramBot extends EventEmitter {
       throw new Error('Value has to be a number.')
     }
     if (interval < 1000) {
-      throw new Error('Value is too small. Recommended 1000 or greater.')
+      throw new Error('Value is set too small. Recommended 1000 or greater.')
     }
     this._botSettings.interval = interval
   }
 
   /**
-   * Change the currently used port.
+   * Change the http method to use.
+   *
+   * Methods currently supported are: 'GET', 'POST'. Default is 'POST'.
+   * @param {string} method - The method to change to.
+   */
+  setMethod (method) {
+    if (typeof method !== 'string') {
+      throw new Error('Value has to be a string.')
+    }
+    if (['GET', 'POST'].indexOf(method) === -1) {
+      throw new Error("Value can only either be 'GET' or 'POST'.")
+    }
+    this._botSettings.method = method
+  }
+
+  /**
+   * Change the http port to use.
    *
    * Ports currently supported are: 80, 88, 443, 8443. Default is 443.
    * @param {number} port - The port to change to.
    */
   setPort (port) {
     if (typeof port !== 'number') {
-      throw new Error('port has to be a number.')
+      throw new Error('Value has to be a number.')
     }
     // Ports available: https://core.telegram.org/bots/api#setwebhook
     if ([80, 88, 443, 8443].indexOf(port) === -1) {
@@ -1648,7 +1667,7 @@ module.exports = class TelegramBot extends EventEmitter {
   }
 
   /**
-   * Returns a string object type of the parent class.
+   * Returns a string of the class object type.
    */
   toString () {
     return `[object ${this.constructor.name}]`
@@ -1663,13 +1682,6 @@ module.exports = class TelegramBot extends EventEmitter {
    * @param {function(Error):void} callback - arg0: Error
    */
   unbanChatMember (targetChat, userId, callback) {
-    if (!(typeof targetChat === 'number' || typeof targetChat === 'string')) {
-      throw new Error('targetChat is not a number or string.')
-    }
-    if (typeof userId !== 'number') {
-      throw new Error('userId is not a number.')
-    }
-
     var urlQuery = { 'chat_id': targetChat, 'user_id': userId }
 
     web(this, 'unbanChatMember', urlQuery, (data) => {

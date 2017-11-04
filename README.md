@@ -16,7 +16,7 @@ Badges from [Shields.io](http://shields.io)
 
 const TelegramBot = require('telegram-bot-nova')
 
-var bot = new TelegramBot('YOUR_BOT_TOKEN')
+var bot = new TelegramBot('YOUR_BOT_TOKEN_HERE')
 
 bot.on('command', (chat, date, from, messageId, text, command, commandData) => {
   if (command === 'start') {
@@ -106,6 +106,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
 * [Actions](#actions)
     * [answerInlineQuery](#answerinlinequery)
         * ... More inline query types to be added.
+    * [customAction](#customaction)
     * [deleteChatPhoto](#deletechatphoto)
     * [deleteMessage](#deletemessage)
     * [editHtml](#edithtml)
@@ -152,6 +153,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [setChatTitle](#setchattitle)
     * [setDevMode](#setdevmode)
     * [setInterval](#setinterval)
+    * [setMethod](#setmethod)
     * [setPort](#setport)
     * [toString](#tostring)
     * [unbanChatMember](#unbanchatmember)
@@ -1019,6 +1021,40 @@ Sends a response to the `onInlineQuery`.
 E.g.
 
 See [inlineQuery](#inlinequery) event for a full use example.
+
+### customAction
+Sends a custom action for the bot to perform. Use this if a method isn't listed and if you know what you're doing.
+
+* `method` **string** The method to perform.
+* `settings` **Object** Use for providing extra perimeters.
+* `callback` **function** Called after sending the content and returns the following result perimeters.
+    * `error` **[object Error] | null** Provides an error object else null if there isn't any.
+    * `result` **any** Privides a result value or object.
+
+E.g.
+
+```javascript
+// Minimum.
+bot.customAction(method, settings)
+
+// Optional callback.
+bot.customAction(method, settings, (error, result) => {
+  if (error) {
+    // Handle after error.
+    return
+  }
+  // Handle after action success.
+})
+
+// Insight example based on sendMessage.
+var settings = {
+  'chat_id': chat.id,
+  'text': 'Hello world.'
+}
+bot.customAction('sendMessage', settings)
+```
+
+Lookup [core.telegram.org/bots/api#sendmessage](https://core.telegram.org/bots/api#sendmessage) and compare the last example for better understanding on how this works.
 
 ### deleteChatPhoto
 Deletes a target channel, group or supergroup photo. The bot requires the appropriate admin privileges.
@@ -1912,10 +1948,22 @@ E.g.
 bot.setInterval(interval)
 ```
 
-### setPort
-Changes the current active port being used. Ports currently supported are: 80, 88, 443, 8443. Default is 443.
+### setMethod
 
-* `port` **number** The port to change to.
+Changes the current http method being used. Methods currently supported are: 'GET', 'POST'. Default is 'POST'.
+
+* `method` **string** The http method to change to.
+
+E.g.
+
+```javascript
+bot.setMethod(method)
+```
+
+### setPort
+Changes the current http port being used. Ports currently supported are: 80, 88, 443, 8443. Default is 443.
+
+* `port` **number** The http port to change to.
 
 E.g.
 
@@ -1979,5 +2027,9 @@ bot.unpinChatMessage(targetChat, (error) => {
 
 ## FAQ
 
+* Q: Are you accepting contributions?
+    * A: Of course. Any help would be appreciated. Just be sure to read the [Contributing Guidelines](contributing.md).
 * Q: Why is setChatPhoto not available?
     * A: It requires 'multipart/form-data' method to upload an image. Currently, I don't know how to make this without using third party dependences.
+* Q: What is the goal of this Node module?
+    * A: I want to make an easy-to-use, well documented, light without any third-party dependecies Telegram bot making module.
