@@ -5,7 +5,7 @@
 [![dependencies](https://img.shields.io/badge/dependences-0-blue.svg)]()
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node->%3D6.11.4-blue.svg)]()
-[![npm](https://img.shields.io/badge/npm-2.2.1-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
+[![npm](https://img.shields.io/badge/npm-2.3.0-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
 
 Badges from [Shields.io](http://shields.io)
 
