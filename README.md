@@ -158,6 +158,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [toString](#tostring)
     * [unbanChatMember](#unbanchatmember)
     * [unpinChatMessage](#unpinchatmessage)
+* [FAQ](#faq)
 
 ## Declaring
 
@@ -1615,7 +1616,7 @@ bot.sendContact(targetChat, phoneNumber, firstName, {}, (error, messageId) => {
 ```
 
 ### sendDocument
-Use this to send a file to a target chat. You'll need to collect the `file.file_id` with files. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
+Use this to send a file to a target chat. You'll need to collect the `file.file_id` with file event. Be aware that file_id is unique per bot, meaning if you give the id to another bot and tried to send it. It won't work.
 
 * `targetChat` **number | string** Number for target chat's id, which is recommended. Or string for target chat's username, which only works in public groups and channels. For example "@MyGroup".
 * `targetFile` **string** Target document id or url.
