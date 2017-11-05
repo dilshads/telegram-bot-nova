@@ -2028,7 +2028,7 @@ bot.unpinChatMessage(targetChat, (error) => {
 ## FAQ
 
 * Q: Are you accepting contributions?
-    * A: Of course. Any help would be appreciated. Just be sure to read the [Contributing Guidelines](contributing.md).
+    * A: Of course. Any help would be appreciated. Just be sure to read the [Contributing Guidelines](CONTRIBUTING.md).
 * Q: Why is setChatPhoto not available?
     * A: It requires 'multipart/form-data' method to upload an image. Currently, I don't know how to make this without using third party dependences.
 * Q: What is the goal of this Node module?
