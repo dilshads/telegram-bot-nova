@@ -16,7 +16,7 @@ Badges from [Shields.io](http://shields.io)
 
 const TelegramBot = require('telegram-bot-nova')
 
-var bot = new TelegramBot('YOUR_BOT_TOKEN_HERE')
+var bot = new TelegramBot('YOUR_BOT_TOKEN')
 
 bot.on('command', (chat, date, from, messageId, text, command, commandData) => {
   if (command === 'start') {
