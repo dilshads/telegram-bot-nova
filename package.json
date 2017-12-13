@@ -1,6 +1,6 @@
 {
   "name": "telegram-bot-nova",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "An easy to use Node.js bot handler.",
   "main": "telegram-bot-nova.js",
   "scripts": {
