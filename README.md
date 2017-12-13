@@ -226,8 +226,8 @@ Called every time the bot sees a command.
 * `from` **[object User]** User who triggered the command.
 * `messageId` **number** The message reference.
 * `text` **string** Full command message.
-* `command` **string** The command that was used. (E.g. "start" when the user enters "/start".).
-* `commandData` **string** The remaining text after the first space. No data is "". (E.g. "hi" when user enters "/start hi".)
+* `command` **string** The command that was used. This is provided in lowercase. (E.g. "start" when the user enters "/Start".).
+* `commandData` **string** The remaining text after the first space. No data is "". (E.g. "Hi" when user enters "/start Hi".)
 
 E.g.
 
