@@ -1,3 +1,5 @@
+'use strict'
+
 // Require the TelegramBot class.
 const TelegramBot = require('./telegram-bot-nova')
 
@@ -9,8 +11,6 @@ var bool = true
 
 // Setup events to make your bot responsive.
 bot.on('command', (chat, date, from, messageId, text, command, commandData) => {
-  'use strict'
-
   if (command === 'start') {
     var lines = [
       '/example1 Inline Keyboard',

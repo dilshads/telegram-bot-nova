@@ -1,3 +1,5 @@
+'use strict'
+
 // Require the TelegramBot class.
 const TelegramBot = require('./telegram-bot-nova')
 
@@ -6,8 +8,6 @@ var bot = new TelegramBot('YOUR_BOT_TOKEN')
 
 // Setup catched events to make your bot responsive.
 bot.on('command', (chat, date, from, messageId, text, command, commandData) => {
-  'use strict'
-
   // start command example.
   if (command === 'start') {
     bot.sendText(chat.id, 'Hi ' + from.first_name + '. Try typing: /run hello world')

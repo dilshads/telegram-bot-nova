@@ -5,7 +5,7 @@
 [![dependencies](https://img.shields.io/badge/dependences-0-blue.svg)]()
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node->%3D6.11.4-blue.svg)]()
-[![npm](https://img.shields.io/badge/npm-2.3.1-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
+[![npm](https://img.shields.io/badge/npm-2.3.2-blue.svg)](https://www.npmjs.com/package/telegram-bot-nova)
 
 Badges from [Shields.io](http://shields.io)
 
@@ -1473,7 +1473,7 @@ Use this to promote or demote a target user in a target chat. The bot requires t
     * `can_invite_users` **boolean** If true, the user can invite new users to the chat.
     * `can_restrict_members` **boolean** If true, the user can restrict, ban or unban chat members.
     * `can_pin_messages` **boolean** If true, the user can pin messages. Supergroups only.
-    * `can_promote_members` **boolean** If true, the user can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him).
+    * `can_promote_members` **boolean** If true, the user can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by them).
 
 E.g.
 
