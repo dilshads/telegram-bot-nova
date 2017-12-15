@@ -24,6 +24,8 @@ The following coding style must be used: [Standard](https://standardjs.com)
 
 Ignoring errors is allowed only if necessary. Say if ignoring the rule will prevent typing more code than needed.
 
+Arrow functions `=>`, which are used for callbacks for example, must always have circler brackets around the arguments. This is a personal rule to make it easier to read and for coding consistency.
+
 ### Deprecated Code Use
 
 Not allowed.
