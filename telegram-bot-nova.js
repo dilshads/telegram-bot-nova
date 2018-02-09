@@ -475,13 +475,13 @@ const getUpdates = function getUpdates (context) {
   var urlQuery = { 'offset': context._process.updateId }
 
   web(context, 'getUpdates', urlQuery, (data) => {
-    if (!data.ok) {
-      context.emit('error', new Error(data.description))
-      return
+    if (data.ok) {
+      data.result.forEach((result) => {
+        botEvent(context, result)
+      })
+    } else {
+      context.emit('error', new Error('TelegramBot: Warning. Telegram server returned data.ok = false.'))
     }
-    data.result.forEach((result) => {
-      botEvent(context, result)
-    })
     loop(context)
   })
 }
@@ -540,7 +540,7 @@ const web = function web (context, urlMethod, urlData, callback) {
           // Catches class problems.
           // This is coded to avoid having to pass an unnecessary extra
           // error object when one is already provided.
-          data = { ok: false, description: error.message }
+          data = { ok: false, 'description': 'TelegramBot: Error pausing JSON in web end.' }
           callback(data)
         }
       }
