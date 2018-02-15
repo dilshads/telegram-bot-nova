@@ -1,0 +1,32 @@
+{
+  "name": "telegram-bot-nova",
+  "version": "2.3.3",
+  "description": "An easy to use Node.js bot handler.",
+  "main": "telegram-bot-nova.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NightfallAlicorn/telegram-bot-nova.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "telegrambot",
+    "getupdates",
+    "poll",
+    "polling",
+    "nova",
+    "nightfallalicorn"
+  ],
+  "author": "nightfallalicorn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NightfallAlicorn/telegram-bot-nova/issues"
+  },
+  "homepage": "https://github.com/NightfallAlicorn/telegram-bot-nova#readme",
+  "engines": {
+    "node": ">=6.11.4"
+  }
+}
