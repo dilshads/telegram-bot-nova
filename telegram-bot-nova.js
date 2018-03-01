@@ -78,6 +78,7 @@ const botEvent = function botEvent (context, result) {
     new_chat_members,
     photo,
     pinned_message,
+    reply_to_message,
     sticker,
     text,
     venue,
@@ -311,7 +312,7 @@ const botEvent = function botEvent (context, result) {
     }
   }
 
-  // command
+  // command & replyCommand
   if (text && text.charAt(0) === '/') {
     let command = ''
     let commandData = ''
@@ -326,10 +327,18 @@ const botEvent = function botEvent (context, result) {
         command = command.substring(0, command.length - (context._process.username.length + 1))
       }
     }
-    try {
-      context.emit('command', chat, date, from, message_id, text, command, commandData)
-    } catch (error) {
-      context.emit('error', error)
+    if (reply_to_message) { // eslint-disable-line camelcase
+      try {
+        context.emit('replyCommand', chat, date, from, message_id, text, command, commandData, reply_to_message.from)
+      } catch (error) {
+        context.emit('error', error)
+      }
+    } else {
+      try {
+        context.emit('command', chat, date, from, message_id, text, command, commandData)
+      } catch (error) {
+        context.emit('error', error)
+      }
     }
   }
 

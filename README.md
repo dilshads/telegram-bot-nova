@@ -96,6 +96,7 @@ Download the latest release from [GitHub](https://github.com/NightfallAlicorn/te
     * [onPinnedVideo](#onpinnedvideo)
     * [onPinnedVideoNote](#onpinnedvideonote)
     * [onPinnedVoice](#onpinnedvoice)
+    * [onReplyCommand](#onreplycommand)
     * [onStartup](#onstartup)
     * [onSticker](#onsticker)
     * [onText](#ontext)
@@ -219,7 +220,7 @@ bot.on('audio', (chat, date, from, messageId, caption, audio) => {
 ```
 
 ### onCommand
-Called every time the bot sees a command.
+Called every time the bot sees a command. Note that this will only work with non-replies.
 
 * `chat` **[object Chat]** Chat were event occurred.
 * `date` **number** Date in milliseconds when event triggered.
@@ -873,6 +874,28 @@ E.g.
 ```javascript
 bot.on('pinnedVoice', (chat, messageUser, messageId, pinnedUser, voice) => {
   // Actions here...
+})
+```
+
+### onReplyCommand
+Called every time the bot sees a reply command. Note that this will only trigger when used with reply.
+
+* `chat` **[object Chat]** Chat were event occurred.
+* `date` **number** Date in milliseconds when event triggered.
+* `from` **[object User]** User who triggered the command.
+* `messageId` **number** The message reference.
+* `text` **string** Full command message.
+* `command` **string** The command that was used. This is provided in lowercase. (E.g. "start" when the user enters "/Start".).
+* `commandData` **string** The remaining text after the first space. No data is "". (E.g. "Hi" when user enters "/start Hi".)
+* `target` **[object User]** The target user that the command is being used on.
+
+E.g.
+
+```javascript
+bot.on('replyCommand', (chat, date, from, messageId, text, command, commandData, target) => {
+  if (command === 'getname') {
+    bot.sendText(chat.id, `Target name: ${target.first_name}`)
+  }
 })
 ```
 
